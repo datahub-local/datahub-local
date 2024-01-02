@@ -1,0 +1,9 @@
+site_name: MicroDataForge
+
+theme:
+  name: material
+  icon:
+    logo: material/library
+  palette:
+    primary: blue grey
+    scheme: slate
