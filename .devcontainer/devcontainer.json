@@ -1,16 +1,19 @@
-
 {
 	"name": "Python 3",
 	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/poetry:2": {}
 	},
+	"mounts": [
+		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/root/.ssh,readonly"
+	],
 	"postCreateCommand": "poetry install",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"donjayamanne.python-extension-pack",
-				"redhat.vscode-yaml"
+				"redhat.vscode-yaml",
+				"github.vscode-github-actions"
 			]
 		}
 	}
