@@ -1,6 +1,6 @@
-# Home
+# MicroDataflake
 
-MicroDataForge is a powerful data platform designed for edge devices, enabling seamless analytics and insights in your home environment.
+MicroDataflake is a powerful data platform designed for edge devices, enabling seamless analytics and insights at home. The idea is to create a fully functional data platform like [Snowflake](https://www.snowflake.com/) but that could run in low-end devices.
 
 ## Features
 
@@ -13,7 +13,7 @@ MicroDataForge is a powerful data platform designed for edge devices, enabling s
 
 1. Create a local cluster with Raspberry or similar micro devices.
 2. Follow the installation instructions in the [docs](docs/installation.md).
-3. Check out the [usage guide](docs/usage.md) for detailed instructions on using MicroDataForge.
+3. Check out the [usage guide](docs/usage.md) for detailed instructions on using MicroDataflake.
 
 ## Contributing
 
