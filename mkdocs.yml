@@ -1,12 +1,12 @@
-site_name: MicroDataflake
-site_url: https://alvsanand.github.io/micro-dataflake/
+site_name: DataHub.local
+site_url: https://alvsanand.github.io/datahub.local/
 site_author: Alvaro Santos Andres
 site_description: >-
-  MicroDataflake is a powerful data platform designed for edge devices, enabling seamless analytics and insights in your home environment.
+  DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights in your home environment.
 
 
-repo_name: alvsanand/micro-dataflake
-repo_url: https://github.com/alvsanand/micro-dataflake
+repo_name: alvsanand/datahub.local
+repo_url: https://github.com/alvsanand/datahub.local
 
 theme:
   name: material

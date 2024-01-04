@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "micro-dataflake"
+name = "datahub.local"
 version = "0.1.0"
 description = "Empower your edge with a cutting-edge data platform for seamless analytics and insights at home"
 authors = ["Alvaro Santos Andres <alvsanand@gmail.com>"]

@@ -1,6 +1,6 @@
-# Contributing to MicroDataflake
+# Contributing to DataHub.local
 
-Thank you for considering contributing to MicroDataflake! This guide outlines how you can contribute to the project.
+Thank you for considering contributing to DataHub.local! This guide outlines how you can contribute to the project.
 
 ## Code of Conduct
 
@@ -8,7 +8,7 @@ Please review and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md) when parti
 
 ## Issues
 
-If you find any issues or have suggestions, please open an issue on the [issue tracker](https://github.com/your-username/MicroDataflake/issues).
+If you find any issues or have suggestions, please open an issue on the [issue tracker](https://github.com/your-username/DataHub.local/issues).
 
 ## Pull Requests
 
@@ -31,6 +31,6 @@ Please follow the coding style guidelines outlined in [docs/coding-style.md](doc
 
 ## License
 
-By contributing to MicroDataflake, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing to DataHub.local, you agree that your contributions will be licensed under the [MIT License](LICENSE).
 
-Thank you for contributing to MicroDataflake!
+Thank you for contributing to DataHub.local!
