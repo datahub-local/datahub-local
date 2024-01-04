@@ -1,12 +1,12 @@
 site_name: DataHub.local
-site_url: https://alvsanand.github.io/datahub.local/
+site_url: https://alvsanand.github.io/datahub-local/
 site_author: Alvaro Santos Andres
 site_description: >-
-  DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights in your home environment.
+  DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights at home.
 
 
-repo_name: alvsanand/datahub.local
-repo_url: https://github.com/alvsanand/datahub.local
+repo_name: alvsanand/datahub-local
+repo_url: https://github.com/alvsanand/datahub-local
 
 theme:
   name: material

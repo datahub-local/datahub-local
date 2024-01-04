@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "datahub.local"
+name = "datahub-local"
 version = "0.1.0"
 description = "Empower your edge with a cutting-edge data platform for seamless analytics and insights at home"
 authors = ["Alvaro Santos Andres <alvsanand@gmail.com>"]
@@ -9,7 +9,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 mkdocs-material = "^9.5.3"
-
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.4"
