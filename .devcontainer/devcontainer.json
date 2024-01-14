@@ -4,13 +4,14 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/poetry:2": {}
 	},
-	"postCreateCommand": "poetry install",
+	"postCreateCommand": "poetry install && echo 'source .venv/bin/activate' >> $HOME/.bashrc",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"donjayamanne.python-extension-pack",
 				"redhat.vscode-yaml",
-				"github.vscode-github-actions"
+				"github.vscode-github-actions",
+				"eamodio.gitlens"
 			]
 		}
 	}
