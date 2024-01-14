@@ -18,17 +18,21 @@ theme:
   features:
     - content.code.copy
     - content.tooltips
-    - navigation.footer
-    - navigation.indexes
-    - navigation.sections
     - navigation.tabs
     - navigation.top
-    - navigation.tracking
+    - navigation.expand
+    - navigation.integration
     - search.highlight
     - search.share
     - search.suggest
     - toc.follow
     - toc.integrate
 
+markdown_extensions:
+  - attr_list
+  - md_in_html
+
 plugins:
-  - macros
+  - macros:
+      include_dir: .
+  - glightbox
