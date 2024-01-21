@@ -11,7 +11,9 @@
 				"donjayamanne.python-extension-pack",
 				"redhat.vscode-yaml",
 				"github.vscode-github-actions",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"darkriszty.markdown-table-prettify",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	}

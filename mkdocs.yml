@@ -4,7 +4,6 @@ site_author: Alvaro Santos Andres
 site_description: >-
   DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights at home.
 
-
 repo_name: alvsanand/datahub-local
 repo_url: https://github.com/alvsanand/datahub-local
 
@@ -31,8 +30,17 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - macros:
       include_dir: .
   - glightbox
+
+nav:
+  - Home: index.md
+  - Cluster Setup:
+      - Hardware: cluster_setup/hardware.md
+      - Bootstrapping: cluster_setup/bootstrapping.md

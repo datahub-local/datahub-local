@@ -1,19 +1,31 @@
 # DataHub.local
 
-DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights at home. The idea is to create a fully functional data platform like [Snowflake](https://www.snowflake.com/) but that could run in low-end devices.
+![Logo]("../../assets/img/logo.png){ align=right width="40%" }
 
-## Features
+DataHub.local is a home laboratory that will enable you to create an complete data platform like [Snowflake](https://www.snowflake.com/) but that could run in low-end devices such as RaspberryPi, or OrangePi at home.
 
-- Efficient data processing
-- Edge device compatibility
-- Seamless analytics
-- Easy deployment
+As a home laboratory its main personal benefits are:
 
-## Getting Started
+- **Hands-On Experience**
+- **Experimentation and Innovation**
+- **Problem-Solving Skills**
+- **Portfolio Development**
+- **Self-Directed Learning**
+- **Understanding of Hardware and Networking**
+- **Passion and Motivation**
 
-1. Create a local cluster with Raspberry or similar micro devices.
-2. Follow the installation instructions in the [docs](docs/installation.md).
-3. Check out the [usage guide](docs/usage.md) for detailed instructions on using DataHub.local.
+## Goals
+
+- Deploy and maintain a general purpose architecture based on Kubernetes.
+- Implement the lastest Devops pratices to automate the building, testing, and deployment of software.
+- Incorporate monitoring and security tools to track the performance of software and identify potential issues of any kind.
+- Desing and implement a scalable system that allows for the efficient collection, storage, processing, and analysis of Data.
+
+## What have I achevied until today?
+
+- ???
+- ???
+- ???
 
 ## Contributing
 

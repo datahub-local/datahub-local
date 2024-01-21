@@ -30,6 +30,8 @@ echo -n bar | kubectl create secret generic mysecret --dry-run=client --from-fil
 kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
 
+winget install mkcert
+
 
 k3d cluster create -p "8443:443@loadbalancer" --agents 2
 
