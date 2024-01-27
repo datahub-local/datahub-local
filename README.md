@@ -1,6 +1,6 @@
 # DataHub.local
 
-![Logo]("../../assets/img/logo.png){ align=right width="40%" }
+<img src="docs/assets/img/logo.png" style="float: right;" alt="Logo" width="40%"/>
 
 DataHub.local is a home laboratory that will enable you to create an complete data platform like [Snowflake](https://www.snowflake.com/) but that could run in low-end devices such as RaspberryPi, or OrangePi at home.
 
