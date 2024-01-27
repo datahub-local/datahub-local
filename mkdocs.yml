@@ -13,7 +13,6 @@ theme:
     logo: material/library
   palette:
     primary: blue grey
-    scheme: slate
   features:
     - content.code.copy
     - content.tooltips
@@ -35,6 +34,10 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
+  - drawio-exporter:
+      drawio_args:
+        - "--no-sandbox"
+      format: png
   - macros:
       include_dir: .
   - glightbox

@@ -1,10 +1,50 @@
 # Hardware
 
-A cluster is a collection of single-board computers connected together to form a distributed computing system. In this section, we will create a simple cluster of micro-ARM devices with multiple nodes, typically used for educational purposes, testing, or small-scale distributed computing experiments.
+This document outlines the hardware montage for our **Homelab**. It is designed to serve various purposes, including server hosting, network management, or any kind of porject not related to this.
 
-## Shopping cart
+## Architecture
 
-This is the list of hardware needed in order to setup a Kubernetes cluster with enough cpu and memory capacity for our needs:
+![Architecture](../assets/diagrams.drawio#0)
+
+Our homelab is designed with the following server architecture:
+
+1. **Main Server (RapberriPi 3)**
+    - Will host the control plane of our Kuberenetes cluster because it requires less resources.
+    - Acts as the bastion host for the homelab.
+2. **Secondary Servers (OrangePi 5)**
+    - Will host the worker nodes of Kubernetes.
+    - Enhances the overall processing capacity of the homelab.
+3. **Ethernet Switch**
+    - Will connect all the devices with the Home network.
+    - It is important to use a Gigabit Ethernet network for better performance.
+4. **Power Supply**
+    - A +160W Power Supply with USB ports will supplu power to all our devices.
+5. **HDMI Switch**
+    - All devices are connected to a HDMI switch so we can connect to any of them using a single HDMI cable.
+
+### Networking
+
+1. **Local Network**
+    - Gigabit Ethernet Switch is connected to the Home network.
+    - Gigabit Ethernet Switch connects all Raspberry Pi devices within the local network.
+    - Each Raspberry Pi has a static IP address and a hostname.
+2. **Communication Flow**
+    - Devices communicate through the local switch.
+    - Traffic is routed through Home Internet router for external communication.
+    - External Traffic will be routed by the router to the cluster using NAT.
+
+### Storage
+
+1. **SD Card**
+    - OS will be stored in MicroSDXC Class 10.
+2. **SSD**
+    - Important data is stored in the SSD disks of the Orangepi devices.
+    - Additional, several Kubernetes storage services will be installed to add additional redundancy and backups.
+
+
+## Hardware Components
+
+This is the list of Hardware Components needed in order to setup our Homelab with enough cpu and memory capacity for our needs:
 
 | Name                                                       | Link                                                                                                            |
 |------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|

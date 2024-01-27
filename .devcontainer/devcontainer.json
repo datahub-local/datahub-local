@@ -1,10 +1,12 @@
 {
 	"name": "Python 3",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/poetry:2": {}
+		"ghcr.io/devcontainers-contrib/features/poetry:2": {
+			"version": "1.7.1"
+		}
 	},
-	"postCreateCommand": "poetry install && echo 'source .venv/bin/activate' >> $HOME/.bashrc",
+	"postCreateCommand": "bash .devcontainer/init.sh",
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -13,7 +15,8 @@
 				"github.vscode-github-actions",
 				"eamodio.gitlens",
 				"darkriszty.markdown-table-prettify",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"hediet.vscode-drawio"
 			]
 		}
 	}

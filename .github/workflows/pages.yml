@@ -16,6 +16,19 @@ jobs:
           python-version: 3.12
       - name: Install Poetry
         uses: snok/install-poetry@v1
+      - name: Install Draw.io Desktop
+        run: |
+          set -euo pipefail
+
+          ARCH=$(uname -m | grep 'x86_64' > /dev/null && echo 'amd64' || echo 'arm64')
+
+          drawio_version=23.0.2
+
+          drawio_deb="drawio-${ARCH}-${drawio_version}.deb"
+          drawio_url="https://github.com/jgraph/drawio-desktop/releases/download/v${drawio_version}/${drawio_deb}"
+
+          curl -L -o "$drawio_deb" "$drawio_url"
+          sudo apt-get update && sudo apt-get install -y libgbm-dev libasound2 xvfb ./"$drawio_deb"
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
       - uses: actions/cache@v3
         with:
@@ -24,4 +37,4 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: poetry install
-      - run: poetry run mkdocs gh-deploy --force
+      - run: xvfb-run -a poetry run mkdocs gh-deploy --force

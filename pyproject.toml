@@ -11,6 +11,7 @@ python = "^3.10"
 mkdocs-material = "^9.5.3"
 mkdocs-macros-plugin = "^1.0.5"
 mkdocs-glightbox = "^0.3.6"
+mkdocs-drawio-exporter = "^0.8.0"
 
 [build-system]
 requires = ["poetry-core"]
