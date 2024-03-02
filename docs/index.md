@@ -21,8 +21,6 @@ As a home laboratory its main personal benefits are:
 - Incorporate monitoring and security tools to track the performance of software and identify potential issues of any kind.
 - Desing and implement a scalable system that allows for the efficient collection, storage, processing, and analysis of Data.
 
-## What have I achevied until today?
+## Current Status
 
-- ???
-- ???
-- ???
+- :white_check_mark: Cluster Setup - Hardware
