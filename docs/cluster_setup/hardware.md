@@ -199,7 +199,8 @@ Here's how to proceed:
 2. Flash the DietPi Image:
       1. Use a third-party program such as [balenaEtcher](https://etcher.balena.io/) to flash the DietPi image onto the microSD cards.
 3. Prepare for First Boot:
-      1. Modify the configuration file located at ```{SD_CARD}/dietpi.txt``` to set up initial configurations as needed.
+      1. Modify the configuration file located at ```{SD_CARD}/dietpi.txt``` to set up initial configurations as needed. See [dietpi.txt configuration](#dietpitxt-configuration).
+      2. Modify the configuration file located at ```{SD_CARD}/dietpiEnv.txt``` to set up initial boot configurations as needed. See [dietpiEnv.txt configuration](#dietpienvtxt-configuration).
 4. Initial Boot:
       1. Insert the prepared microSD cards into the devices.
       2. Power on the devices and wait for the boot process to complete.
@@ -235,3 +236,12 @@ SOFTWARE_DIETPI_DASHBOARD_BACKEND=1
 !!! info
 
     For more info, go to [How to do an automatic base installation at first boot](https://dietpi.com/docs/usage/#how-to-do-an-automatic-base-installation-at-first-boot-dietpi-automation)
+
+
+### dietpiEnv.txt configuration
+
+In case of DietPi, **Orange PI 5B** is not specifically supported, so it is neccesary to execute several commands to support of the hardware. Add the following line:
+
+```bash
+fdtfile=rockchip/rk3588s-orangepi-5b.dtb
+```
