@@ -16,7 +16,8 @@
 				"eamodio.gitlens",
 				"darkriszty.markdown-table-prettify",
 				"yzhang.markdown-all-in-one",
-				"hediet.vscode-drawio"
+				"hediet.vscode-drawio",
+				"TakumiI.markdowntable"
 			]
 		}
 	}

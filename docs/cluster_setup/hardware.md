@@ -6,14 +6,14 @@ This document outlines the hardware montage for our Homelab. It is designed to s
 
 ![Architecture](../assets/diagrams.drawio#0)
 
-Our homelab is designed with the following server architecture:
+Our Homelab is designed with the following server architecture:
 
-1. Main Server (RapberriPi 3)
-    - Will host the control plane of our Kuberenetes cluster because it requires less resources.
-    - Acts as the bastion host for the homelab.
+1. Main Server (OrangePi 3B)
+    - Will host the control plane of our Kubernetes cluster because it requires less resources.
+    - Acts as the bastion host for the Homelab.
 2. Secondary Servers (OrangePi 5)
     - Will host the worker nodes of Kubernetes.
-    - Enhances the overall processing capacity of the homelab.
+    - Enhances the overall processing capacity of the Homelab.
 3. Ethernet Switch
     - Will connect all the devices with the Home network.
     - It is important to use a Gigabit Ethernet network for better performance.
@@ -21,8 +21,8 @@ Our homelab is designed with the following server architecture:
     - A +160W Power Supply with USB ports will supply power to all our devices.
 5. HDMI Splitter
     - All devices are connected to a HDMI switch so we can connect to any of them using a single HDMI cable.
-5. USB Splitter
-    - If neccesary, using a wireless keyboard we will able to connect to the devices.
+6. USB Splitter
+    - If necessary, using a wireless keyboard we will able to connect to the devices.
 
 ### Networking
 
@@ -43,15 +43,14 @@ Our homelab is designed with the following server architecture:
     - Important data is stored in the SSD disks of the Orangepi devices.
     - Additional, several Kubernetes storage services will be installed to add additional redundancy and backups.
 
-
 ## Hardware Components
 
 This is the list of Hardware Components needed in order to setup our Homelab with enough cpu and memory capacity for our needs:
 
-| Name                                                       | Link                                                                                                                 |
-|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
-| 1x Raspberri Pi 3 or later (2 GB Ram or better)            | I reuse an old one.                                                                                                  |
-| >3x OrangePi 5 with >=16 GB Ram.                           | In my case I will use OrangePi 5 model B which includes internal storage.                                            |
+| Name                                                       | Link                                                                                                                |
+|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| 1x OrangePi 3B with >=4 GB Ram                             | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005005919873216.html)                                    |
+| >3x OrangePi 5 with >=16 GB Ram.                           | In my case I will use OrangePi 5 model B which includes internal storage.                                           |
 |                                                            | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005005057630718.html)                                    |
 | Case + Fan for all devices                                 | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005005057630718.html)                                    |
 | 4x 64 GB microSDXC card (Samsung EVO Plus MicroSDXC 64 GB) | [:simple-amazon: Buy](https://www.amazon.com/SAMSUNG-microSDXC-Expanded-MB-MC64KA-AM/dp/B09THJ25JR/)                |
@@ -62,11 +61,13 @@ This is the list of Hardware Components needed in order to setup our Homelab wit
 | +200W power supply Splitter 5x1                            | [:simple-amazon: Buy](https://www.amazon.com/Aluminum-Charger-Charging-Station-Compatible/dp/B0BFN6JKMV/ref=sr_1_5) |
 | Mini PC case                                               | [:simple-amazon: Buy](https://www.amazon.es/dp/B0CGV9Q3VP)                                                          |
 | PC Chassis Cooling Dust Mesh                               | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005005677590985.html)                                    |
+| Computer Case Fan                                          | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005006312278478.html)                                    |
 | RJ45 female-female connector                               | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005002947244816.html)                                    |
-| HDMI female-female connector                               | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005002946714841.html)                                    |
-| HDMI, USB and Ethernet cables (sort 0.5m)                  |                                                                                                                      |
-| Nuts, washers, screws, clamps, etc.                        |                                                                                                                      |
-
+| HDMI female-female connector                               | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005005079286074.html)                                    |
+| USB A to USB M connector                                   | [:simple-amazon: Buy](https://www.amazon.es/dp/B00DELCYP6)                                                          |
+| Cables M-F Jumper Breadboard Wire Colorful GPIO            | [:simple-aliexpress: Buy](https://www.aliexpress.com/item/1005002231462251.html)                                    |
+| HDMI, USB and Ethernet cables (sort 0.5m)                  |                                                                                                                     |
+| Nuts, washers, screws, clamps, etc.                        |                                                                                                                     |
 
 ## Montage
 
@@ -83,7 +84,7 @@ The first crucial step in assembling your cluster is unboxing the devices and te
 1. Placement in the Case:
       1. Install each Raspberry Pi into the bottom part of the case, 
       2. Ensure they are securely seated.
-2. Connecting the Cases: 
+2. Connecting the Cases:
       1. Using the longer screws provided, connect the cases together.
       2. Finally, close the device by placing the top case.
 3. SD Card Installation:
@@ -103,7 +104,6 @@ The first crucial step in assembling your cluster is unboxing the devices and te
   <figcaption>Assembly example by Sheldonwl</figcaption>
 </figure>
 
-
 ### Step 2: Adapting a PC Case as the Cluster Cabinet
 
 Now, let's proceed with adapting a PC case to serve as the cabinet for our cluster. This step involves mounting the ARM cluster in the center of the case, adding a visually striking element to your setup.
@@ -121,7 +121,6 @@ Now, let's proceed with adapting a PC case to serve as the cabinet for our clust
 4. Ensuring Security and Alignment:
       1. Double-check that all components are securely installed within the case and properly aligned.
       2. This step ensures stability and prevents any movement or misalignment during operation.
-
 
 <figure markdown="span">
   ![Squad installation](../../assets/img/hardware_case_squad.jpg){ width="500" }
@@ -160,10 +159,10 @@ Now, let's move on to installing and connecting additional components to our clu
       3. Connect the USB ports of the devices to the output of the USB splitter.
       4. Connect the Ethernet ports of the devices to the Ethernet switch.
 4. Connecting External Ports:
-      1.  Connect the connectors installed at the back of the case to the HDMI splitter and Ethernet switch.
-      2.  Ensure all connections are secure to prevent any interruptions or loose connections.
-5.  Final Touches:
-      1.  Connect a USB mouse receiver to the input of the USB splitter for user interaction.
+      1. Connect the connectors installed at the back of the case to the HDMI splitter and Ethernet switch.
+      2. Ensure all connections are secure to prevent any interruptions or loose connections.
+5. Final Touches:
+      1. Connect a USB mouse receiver to the input of the USB splitter for user interaction.
       2. Gather and organize the cables using ropes or rubber bands to maintain a neat and tidy appearance.
       3. This helps to minimize clutter and prevents tangling of cables, ensuring easy maintenance and accessibility.
 
@@ -175,6 +174,29 @@ Now, let's move on to installing and connecting additional components to our clu
 <figure markdown="span">
   ![Final assembly](../../assets/img/hardware_case_final.jpg){ width="500" }
   <figcaption>Final assembly</figcaption>
+</figure>
+
+By assembling the components and connecting them to the cluster in this manner, you ensure an organized and efficient setup that facilitates communication, power distribution, and user interaction with your cluster.
+
+### Step 4: Extra Improvements
+
+After the initial assembly, I decided to some additional components that will enhance the Homelab:
+
+1. Installing Computer Case Fan:
+      1. Install a Fan in the front side of the case.
+      2. Connect a red jumper wire to the 5V (red) in the GPIO of a device.
+      3. Connect a black jumper wire to the GND (black) in the GPIO of the same device.
+      4. Connect the red jumper wire to the 5V (red) of the FAN connector.
+      5. Connect the black jumper wire to the GND (black) of the FAN connector.
+
+<figure markdown="span">
+  ![OrangePi 5B GPIO diagram](../../assets/img/hardware_case_gpio.png){ width="500" }
+  <figcaption>OrangePi 5B GPIO diagram</figcaption>
+</figure>
+
+<figure markdown="span">
+  ![Fan assembly](../../assets/img/hardware_case_fan.jpg){ width="500" }
+  <figcaption>Fan assembly</figcaption>
 </figure>
 
 By assembling the components and connecting them to the cluster in this manner, you ensure an organized and efficient setup that facilitates communication, power distribution, and user interaction with your cluster.
@@ -211,7 +233,7 @@ Here's how to proceed:
 
 When modifying the ```dietpi.txt``` configuration file, pay close attention to the following properties:
 
-```
+```properties
 AUTO_SETUP_TIMEZONE=Etc/UTC
 
 AUTO_SETUP_NET_USESTATIC=1
@@ -237,11 +259,10 @@ SOFTWARE_DIETPI_DASHBOARD_BACKEND=1
 
     For more info, go to [How to do an automatic base installation at first boot](https://dietpi.com/docs/usage/#how-to-do-an-automatic-base-installation-at-first-boot-dietpi-automation)
 
-
 ### dietpiEnv.txt configuration
 
-In case of DietPi, **Orange PI 5B** is not specifically supported, so it is neccesary to execute several commands to support of the hardware. Add the following line:
+In case of DietPi, **Orange PI 5B** is not specifically supported, so it is necessary to execute several commands to support of the hardware. Add the following line:
 
-```bash
+```properties
 fdtfile=rockchip/rk3588s-orangepi-5b.dtb
 ```
