@@ -56,4 +56,4 @@ nav:
       - cluster_setup/hardware.md
       - cluster_setup/bootstrapping.md
   - Services:
-      - service/core.md
+      - services/core.md

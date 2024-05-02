@@ -1,9 +1,23 @@
 # Bootstraping
 
-Now, that we have ready our Hardware and the devices are accessible via SSH. Next thing is to bootstrap our Kubernetes cluster so it has the base services needed to run any kind of workload.
-
+Now, that we have ready our Hardware and the devices are accessible via SSH. Next thing is to bootstrap our Kubernetes cluster so it has the base services needed to run any kind of workload. For that task we will use the repository [datahub-local-bootstrap](https://github.com/datahub-local/datahub-local-bootstrap).
 
 ## 1. Creating Ansible inventory
+
+1. Clone the repository
+
+    ```bash
+    git clone datahub-local-bootstrap
+    cd datahub-local-bootstrap
+    ```
+
+2. Create your inventory file using ```inventory-sample.yml```
+
+    ```bash
+    cp inventory-sample.yml inventory.yml
+    ```
+
+3. Edit ```inventory.yml``` with your needs
 
 
 ## 2. Executing Ansible playbook
