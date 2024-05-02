@@ -53,5 +53,7 @@ plugins:
 nav:
   - Home: index.md
   - Cluster Setup:
-      - Hardware: cluster_setup/hardware.md
-      - Bootstrapping: cluster_setup/bootstrapping.md
+      - cluster_setup/hardware.md
+      - cluster_setup/bootstrapping.md
+  - Services:
+      - service/core.md

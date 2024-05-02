@@ -23,7 +23,7 @@ Now, that we have ready our Hardware and the devices are accessible via SSH. Nex
 3. Execute bootstraping playbook
 
     ```bash
-    ansible-playbook playbook/site.yml -i inventory.yml
+    ansible-playbook playbook/bootstrap.yml -i inventory.yml
     ```
 
 ## 3. Other usefull commands
