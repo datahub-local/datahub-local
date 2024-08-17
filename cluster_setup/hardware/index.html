@@ -1,0 +1,1061 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DataHub.local is a powerful data platform designed for edge devices, enabling seamless analytics and insights at home.">
+      
+      
+        <meta name="author" content="Alvaro Santos Andres">
+      
+      
+        <link rel="canonical" href="https://datahub-local.alvsanand.com/cluster_setup/hardware/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../bootstrapping/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Hardware - DataHub.local</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hardware" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DataHub.local" class="md-header__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DataHub.local
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hardware
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Cluster Setup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../services/core/" class="md-tabs__link">
+          
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DataHub.local" class="md-nav__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    DataHub.local
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cluster Setup
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Cluster Setup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Hardware
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Hardware
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Networking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#montage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Montage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Montage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-assembling-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Assembling the Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-adapting-a-pc-case-as-the-cluster-cabinet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Adapting a PC Case as the Cluster Cabinet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-assembling-components-and-connecting-to-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Assembling Components and Connecting to the Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-extra-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Extra Improvements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the OS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the OS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dietpi-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      DietPi Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dietpitxt-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      dietpi.txt configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dietpienvtxt-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      dietpiEnv.txt configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootstrapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bootstraping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="hardware">Hardware</h1>
+<p>This document outlines the hardware montage for our Homelab. It is designed to serve various purposes, including server hosting, network management, or any kind of porject not related to this.</p>
+<h2 id="architecture">Architecture</h2>
+<p><a class="glightbox" href="../../assets/diagrams.drawio#0" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Architecture" src="../../assets/diagrams.drawio-0.png" /></a></p>
+<p>Our Homelab is designed with the following server architecture:</p>
+<ol>
+<li>Main Server (OrangePi 3B)<ul>
+<li>Will host the control plane of our Kubernetes cluster because it requires less resources.</li>
+<li>Acts as the bastion host for the Homelab.</li>
+</ul>
+</li>
+<li>Secondary Servers (OrangePi 5)<ul>
+<li>Will host the worker nodes of Kubernetes.</li>
+<li>Enhances the overall processing capacity of the Homelab.</li>
+</ul>
+</li>
+<li>Ethernet Switch<ul>
+<li>Will connect all the devices with the Home network.</li>
+<li>It is important to use a Gigabit Ethernet network for better performance.</li>
+</ul>
+</li>
+<li>Power Supply<ul>
+<li>A +160W Power Supply with USB ports will supply power to all our devices.</li>
+</ul>
+</li>
+<li>HDMI Splitter<ul>
+<li>All devices are connected to a HDMI switch so we can connect to any of them using a single HDMI cable.</li>
+</ul>
+</li>
+<li>USB Splitter<ul>
+<li>If necessary, using a wireless keyboard we will able to connect to the devices.</li>
+</ul>
+</li>
+</ol>
+<h3 id="networking">Networking</h3>
+<ol>
+<li>Local Network<ul>
+<li>Gigabit Ethernet Switch is connected to the Home network.</li>
+<li>Gigabit Ethernet Switch connects all devices within the local network.</li>
+<li>Each Raspberry Pi has a static IP address and a hostname.</li>
+</ul>
+</li>
+<li>Communication Flow<ul>
+<li>Devices communicate through the local switch.</li>
+<li>Traffic is routed through Home Internet router for external communication.</li>
+<li>External Traffic will be routed by the router to the cluster using NAT.</li>
+</ul>
+</li>
+</ol>
+<h3 id="storage">Storage</h3>
+<ol>
+<li>SD Card<ul>
+<li>OS will be stored in MicroSDXC Class 10.</li>
+</ul>
+</li>
+<li>SSD<ul>
+<li>Important data is stored in the SSD disks of the Orangepi devices.</li>
+<li>Additional, several Kubernetes storage services will be installed to add additional redundancy and backups.</li>
+</ul>
+</li>
+</ol>
+<h2 id="hardware-components">Hardware Components</h2>
+<p>This is the list of Hardware Components needed in order to setup our Homelab with enough cpu and memory capacity for our needs:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1x OrangePi 3B with &gt;=4 GB Ram</td>
+<td><a href="https://www.aliexpress.com/item/1005005919873216.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>&gt;3x OrangePi 5 with &gt;=16 GB Ram.</td>
+<td>In my case I will use OrangePi 5 model B which includes internal storage.</td>
+</tr>
+<tr>
+<td></td>
+<td><a href="https://www.aliexpress.com/item/1005005057630718.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>Case + Fan for all devices</td>
+<td><a href="https://www.aliexpress.com/item/1005005057630718.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>4x 64 GB microSDXC card (Samsung EVO Plus MicroSDXC 64 GB)</td>
+<td><a href="https://www.amazon.com/SAMSUNG-microSDXC-Expanded-MB-MC64KA-AM/dp/B09THJ25JR/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-10.951-.577 17.88 17.88 0 0 1-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 0 1-.526-.496l-.31-.347a9.391 9.391 0 0 1-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 0 1 1.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>3x NVME 256GB SSD (if using OrangePi model 5 or 5+)</td>
+<td><a href="https://www.amazon.com/Kingston-250G-2280-Internal-SNV2S/dp/B0BBWH7DBT/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-10.951-.577 17.88 17.88 0 0 1-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 0 1-.526-.496l-.31-.347a9.391 9.391 0 0 1-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 0 1 1.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>Gigabit Switch 8 Ports</td>
+<td><a href="https://www.aliexpress.com/item/1005005315707615.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>HDMI Splitter 5x1</td>
+<td><a href="https://www.aliexpress.com/item/1005005905850399.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>USB Splitter 3x3</td>
+<td><a href="https://www.aliexpress.com/item/1005005905850399.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>+200W power supply Splitter 5x1</td>
+<td><a href="https://www.amazon.com/Aluminum-Charger-Charging-Station-Compatible/dp/B0BFN6JKMV/ref=sr_1_5"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-10.951-.577 17.88 17.88 0 0 1-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 0 1-.526-.496l-.31-.347a9.391 9.391 0 0 1-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 0 1 1.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>Mini PC case</td>
+<td><a href="https://www.amazon.es/dp/B0CGV9Q3VP"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-10.951-.577 17.88 17.88 0 0 1-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 0 1-.526-.496l-.31-.347a9.391 9.391 0 0 1-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 0 1 1.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>PC Chassis Cooling Dust Mesh</td>
+<td><a href="https://www.aliexpress.com/item/1005005677590985.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>Computer Case Fan</td>
+<td><a href="https://www.aliexpress.com/item/1005006312278478.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>RJ45 female-female connector</td>
+<td><a href="https://www.aliexpress.com/item/1005002947244816.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>HDMI female-female connector</td>
+<td><a href="https://www.aliexpress.com/item/1005005079286074.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>USB A to USB M connector</td>
+<td><a href="https://www.amazon.es/dp/B00DELCYP6"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726a17.617 17.617 0 0 1-10.951-.577 17.88 17.88 0 0 1-5.43-3.35c-.1-.074-.151-.15-.151-.22 0-.047.021-.09.051-.13zm6.565-6.218c0-1.005.247-1.863.743-2.577.495-.71 1.17-1.25 2.04-1.615.796-.335 1.756-.575 2.912-.72.39-.046 1.033-.103 1.92-.174v-.37c0-.93-.105-1.558-.3-1.875-.302-.43-.78-.65-1.44-.65h-.182c-.48.046-.896.196-1.246.46-.35.27-.575.63-.675 1.096-.06.3-.206.465-.435.51l-2.52-.315c-.248-.06-.372-.18-.372-.39 0-.046.007-.09.022-.15.247-1.29.855-2.25 1.82-2.88.976-.616 2.1-.975 3.39-1.05h.54c1.65 0 2.957.434 3.888 1.29.135.15.27.3.405.48.12.165.224.314.283.45.075.134.15.33.195.57.06.254.105.42.135.51.03.104.062.3.076.615.01.313.02.493.02.553v5.28c0 .376.06.72.165 1.036.105.313.21.54.315.674l.51.674c.09.136.136.256.136.36 0 .12-.06.226-.18.314-1.2 1.05-1.86 1.62-1.963 1.71-.165.135-.375.15-.63.045a6.062 6.062 0 0 1-.526-.496l-.31-.347a9.391 9.391 0 0 1-.317-.42l-.3-.435c-.81.886-1.603 1.44-2.4 1.665-.494.15-1.093.227-1.83.227-1.11 0-2.04-.343-2.76-1.034-.72-.69-1.08-1.665-1.08-2.94l-.05-.076zm3.753-.438c0 .566.14 1.02.425 1.364.285.34.675.512 1.155.512.045 0 .106-.007.195-.02.09-.016.134-.023.166-.023.614-.16 1.08-.553 1.424-1.178.165-.28.285-.58.36-.91.09-.32.12-.59.135-.8.015-.195.015-.54.015-1.005v-.54c-.84 0-1.484.06-1.92.18-1.275.36-1.92 1.17-1.92 2.43l-.035-.02zm9.162 7.027c.03-.06.075-.11.132-.17.362-.243.714-.41 1.05-.5a8.094 8.094 0 0 1 1.612-.24c.14-.012.28 0 .41.03.65.06 1.05.168 1.172.33.063.09.099.228.099.39v.15c0 .51-.149 1.11-.424 1.8-.278.69-.664 1.248-1.156 1.68-.073.06-.14.09-.197.09-.03 0-.06 0-.09-.012-.09-.044-.107-.12-.064-.24.54-1.26.806-2.143.806-2.64 0-.15-.03-.27-.087-.344-.145-.166-.55-.257-1.224-.257-.243 0-.533.016-.87.046-.363.045-.7.09-1 .135-.09 0-.148-.014-.18-.044-.03-.03-.036-.047-.02-.077 0-.017.006-.03.02-.063v-.06z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>Cables M-F Jumper Breadboard Wire Colorful GPIO</td>
+<td><a href="https://www.aliexpress.com/item/1005002231462251.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.166 9.096a.022.022 0 0 0-.022.021c0 .396-.32.717-.713.717a.021.021 0 0 0-.021.022c0 .012.01.021.021.021.394 0 .713.322.713.718 0 .012.01.021.022.021.011 0 .021-.01.021-.021A.717.717 0 0 1 5.9 9.88a.021.021 0 0 0 0-.043.716.716 0 0 1-.713-.718v-.002a.021.021 0 0 0-.006-.015.022.022 0 0 0-.015-.006zm-3.693.526L0 13.462h.48l.355-.922h1.782l.354.922h.481L1.98 9.622zm2.264.002v3.838h.491V9.624zm2.375 0v3.838h2.413v-.502H6.613v-1.19H8.19v-.477H6.613v-1.166h1.773v-.502zm-4.386.592.698 1.82H1.028zm14.689.402a1.466 1.466 0 0 0-.966.366V10.7h-.491v2.763h.49c.002-.477 0-.955.002-1.433a.969.969 0 0 1 .965-.918zm4.18.007c-.053 0-.105.003-.158.01-.315.031-.606.175-.753.377a.689.689 0 0 0-.14.465c.007.2.066.357.233.496.184.147.42.2.657.259.311.067.426.095.546.186.08.07.133.127.136.27 0 .25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.54-.01.891-.217 1.029-.534.066-.153.063-.309.063-.38a.677.677 0 0 0-.267-.545c-.228-.177-.583-.228-.636-.242-.437-.078-.658-.196-.697-.341-.043-.192.102-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.166 1.166 0 0 0-.939-.494zm2.387 0c-.052 0-.105.003-.157.01-.316.031-.607.175-.753.377a.689.689 0 0 0-.14.465c.006.2.065.357.233.496.183.147.42.2.657.259.31.067.426.095.545.186.081.07.134.127.136.27.001.25-.221.372-.42.41a.89.89 0 0 1-.894-.344l-.371.288c.33.382.777.505 1.09.5.541-.01.891-.217 1.03-.534.065-.153.062-.309.062-.38a.677.677 0 0 0-.267-.545c-.227-.177-.583-.228-.636-.242-.437-.078-.658-.196-.696-.341-.043-.192.101-.35.297-.411a.76.76 0 0 1 .857.277l.367-.247a1.167 1.167 0 0 0-.94-.494zm-9.84.002a1.461 1.461 0 0 0-1.42 1.117 1.305 1.305 0 0 0-.041.327v2.833h.491v-1.813c.17.18.487.42.96.454a1.447 1.447 0 0 0 1.208-.627 1.457 1.457 0 0 0-1.199-2.292zm4.804 0a1.448 1.448 0 0 0-1.288 2.08c.255.53.811.87 1.412.833a1.452 1.452 0 0 0 1.012-.51l-.363-.291a.968.968 0 0 1-1.106.273 1.01 1.01 0 0 1-.602-.69h2.239l.002-.427a1.295 1.295 0 0 0-1.306-1.268zm-9.2.08 1.062 1.377-1.062 1.378h.581l.779-1.01.778 1.01h.581l-1.062-1.378 1.062-1.378h-.581l-.778 1.01-.779-1.01zm-3.825.015v2.74h.49v-2.74zm8.233.37a.96.96 0 0 1 .95.993.963.963 0 0 1-.863.998.962.962 0 0 1-1.034-.739c-.074-.382 0-.746.307-1.019a.959.959 0 0 1 .64-.233zm4.79.015a.823.823 0 0 1 .819.755h-1.76a.964.964 0 0 1 .94-.755z"/></svg></span> Buy</a></td>
+</tr>
+<tr>
+<td>HDMI, USB and Ethernet cables (sort 0.5m)</td>
+<td></td>
+</tr>
+<tr>
+<td>Nuts, washers, screws, clamps, etc.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="montage">Montage</h2>
+<h3 id="step-1-assembling-the-cluster">Step 1: Assembling the Cluster</h3>
+<p>The first crucial step in assembling your cluster is unboxing the devices and testing them individually. This ensures that each Raspberry Pi is functioning correctly before integrating them into your custom cabinet. Follow these sub-steps:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li>Unbox each ARM device carefully.</li>
+<li>Test each device separately to ensure they are running without any problems.</li>
+<li>Install an operating system (OS) onto a microSD card. (Refer to the <a href="#setting-up-the-os">Setting Up the OS</a> section for detailed instructions on OS installation.)  </li>
+</ul>
+</div>
+<ol>
+<li>Placement in the Case:<ol>
+<li>Install each Raspberry Pi into the bottom part of the case, </li>
+<li>Ensure they are securely seated.</li>
+</ol>
+</li>
+<li>Connecting the Cases:<ol>
+<li>Using the longer screws provided, connect the cases together.</li>
+<li>Finally, close the device by placing the top case.</li>
+</ol>
+</li>
+<li>SD Card Installation:<ol>
+<li>Insert the prepared microSD card with the operating system installed into each Raspberry Pi.</li>
+</ol>
+</li>
+<li>Power and Networking<ol>
+<li>Plug each Raspberry Pi into a power supply.</li>
+<li>Connect them to an Ethernet router.</li>
+</ol>
+</li>
+<li>Verification:<ol>
+<li>Check that each Raspberry Pi has green lights on the board and some flickering lights in the Ethernet ports. </li>
+<li>It will indicate that they are receiving power and network connectivity.</li>
+</ol>
+</li>
+<li>Monitor Connection:<ol>
+<li>Connect the cluster to a monitor using the HDMI port.</li>
+<li>You should see a command shell interface.</li>
+</ol>
+</li>
+</ol>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_example.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Assembly example by Sheldonwl" src="../../assets/img/hardware_case_example.jpg" width="500" /></a>
+  <figcaption>Assembly example by Sheldonwl</figcaption>
+</figure>
+<h3 id="step-2-adapting-a-pc-case-as-the-cluster-cabinet">Step 2: Adapting a PC Case as the Cluster Cabinet</h3>
+<p>Now, let's proceed with adapting a PC case to serve as the cabinet for our cluster. This step involves mounting the ARM cluster in the center of the case, adding a visually striking element to your setup.</p>
+<ol>
+<li>Preparing the Case:<ol>
+<li>Using screws or rivets, attach a mounting squad inside the case where the cluster will be situated.</li>
+<li>This squad will provide a stable base for securing the cluster.</li>
+</ol>
+</li>
+<li>Installing the Cluster:<ol>
+<li>Unscrew the bottom part of the case of the cluster to prepare it for installation.</li>
+<li>Attach the bottom part of the cluster securely onto the mounting squad inside the case.</li>
+<li>Ensure that the cluster is positioned correctly and securely within the case.</li>
+</ol>
+</li>
+<li>Connecting Ports:<ol>
+<li>Attach USB, Ethernet, and HDMI connectors to the back of the case using screws or suitable fasteners.</li>
+<li>This setup allows for easy access to the ports both internally and externally, facilitating connections to other components.</li>
+</ol>
+</li>
+<li>Ensuring Security and Alignment:<ol>
+<li>Double-check that all components are securely installed within the case and properly aligned.</li>
+<li>This step ensures stability and prevents any movement or misalignment during operation.</li>
+</ol>
+</li>
+</ol>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_squad.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Squad installation" src="../../assets/img/hardware_case_squad.jpg" width="500" /></a>
+  <figcaption>Squad installation</figcaption>
+</figure>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_details.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Installation details" src="../../assets/img/hardware_case_details.jpg" width="500" /></a>
+  <figcaption>Installation details</figcaption>
+</figure>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_back.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Back of the case" src="../../assets/img/hardware_case_back.jpg" width="500" /></a>
+  <figcaption>Back of the case</figcaption>
+</figure>
+<p>By adapting a PC case to house your cluster, you not only provide a sturdy and visually appealing enclosure but also create a centerpiece that attracts attention and sparks curiosity.</p>
+<h3 id="step-3-assembling-components-and-connecting-to-the-cluster">Step 3: Assembling Components and Connecting to the Cluster</h3>
+<p>Now, let's move on to installing and connecting additional components to our cluster. This step involves integrating the power supply, Ethernet switch, HDMI splitter, and USB splitter. Please note that the placement of these components may vary depending on your personal preferences, the type of PC case used, and ventilation requirements. Here's how to proceed:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This setup reflects a personal approach to organizing the components within the PC case. Depending on factors such as case design and ventilation requirements, you may need to adjust the placement of components accordingly. </p>
+</div>
+<ol>
+<li>Installing Power Supply and Ethernet Switch:<ol>
+<li>Position the main power supply and Ethernet switch at the bottom of the case.</li>
+<li>Secure them using clamps, ensuring they are as close as possible to the back of the case for easy access to power and networking connections.</li>
+</ol>
+</li>
+<li>Mounting Splitters:<ol>
+<li>Install the HDMI splitter and USB splitter at the top of the case.</li>
+<li>Use clamps to securely hold them in place.</li>
+</ol>
+</li>
+<li>Connecting Power and Ports:<ol>
+<li>Connect the power supply to each device.</li>
+<li>Connect the HDMI ports of the devices to the input of the HDMI splitter.</li>
+<li>Connect the USB ports of the devices to the output of the USB splitter.</li>
+<li>Connect the Ethernet ports of the devices to the Ethernet switch.</li>
+</ol>
+</li>
+<li>Connecting External Ports:<ol>
+<li>Connect the connectors installed at the back of the case to the HDMI splitter and Ethernet switch.</li>
+<li>Ensure all connections are secure to prevent any interruptions or loose connections.</li>
+</ol>
+</li>
+<li>Final Touches:<ol>
+<li>Connect a USB mouse receiver to the input of the USB splitter for user interaction.</li>
+<li>Gather and organize the cables using ropes or rubber bands to maintain a neat and tidy appearance.</li>
+<li>This helps to minimize clutter and prevents tangling of cables, ensuring easy maintenance and accessibility.</li>
+</ol>
+</li>
+</ol>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_connected.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Cluster connected" src="../../assets/img/hardware_case_connected.jpg" width="500" /></a>
+  <figcaption>Cluster connected</figcaption>
+</figure>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_final.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Final assembly" src="../../assets/img/hardware_case_final.jpg" width="500" /></a>
+  <figcaption>Final assembly</figcaption>
+</figure>
+<p>By assembling the components and connecting them to the cluster in this manner, you ensure an organized and efficient setup that facilitates communication, power distribution, and user interaction with your cluster.</p>
+<h3 id="step-4-extra-improvements">Step 4: Extra Improvements</h3>
+<p>After the initial assembly, I decided to some additional components that will enhance the Homelab:</p>
+<ol>
+<li>Installing Computer Case Fan:<ol>
+<li>Install a Fan in the front side of the case.</li>
+<li>Connect a red jumper wire to the 5V (red) in the GPIO of a device.</li>
+<li>Connect a black jumper wire to the GND (black) in the GPIO of the same device.</li>
+<li>Connect the red jumper wire to the 5V (red) of the FAN connector.</li>
+<li>Connect the black jumper wire to the GND (black) of the FAN connector.</li>
+</ol>
+</li>
+</ol>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_gpio.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="OrangePi 5B GPIO diagram" src="../../assets/img/hardware_case_gpio.png" width="500" /></a>
+  <figcaption>OrangePi 5B GPIO diagram</figcaption>
+</figure>
+<figure>
+  <a class="glightbox" href="../../assets/img/hardware_case_fan.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Fan assembly" src="../../assets/img/hardware_case_fan.jpg" width="500" /></a>
+  <figcaption>Fan assembly</figcaption>
+</figure>
+<p>By assembling the components and connecting them to the cluster in this manner, you ensure an organized and efficient setup that facilitates communication, power distribution, and user interaction with your cluster.</p>
+<h2 id="setting-up-the-os">Setting Up the OS</h2>
+<p>In this final part, we'll dive into setting up the operating system for our devices. When it comes to ARM devices like the Raspberry Pi, there are various options available:</p>
+<ul>
+<li><strong>Stock OS</strong>: These are operating systems maintained by the vendor of the device, which could include Windows, Linux, or even Android.</li>
+<li><strong>Custom OS</strong>: These are maintained by the community and may cater to specific use cases, such as TV players, RetroMachines, or Steam machines.</li>
+</ul>
+<p>For our project, we've chosen to use a Linux distribution based on Debian called  <a href="https://dietpi.com/">DietPi</a>, which is well-suited for ARM devices like the Raspberry Pi and OrangePi. Furthermore, DietPi offers an option for an automatic first boot installation, which is crucial for our project's goal of automation.</p>
+<p><a class="glightbox" href="https://dietpi.com/images/dietpi-logo_180x180.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="DietPi" src="https://dietpi.com/images/dietpi-logo_180x180.png" /></a></p>
+<h3 id="dietpi-setup">DietPi Setup</h3>
+<p>Here's how to proceed:</p>
+<ol>
+<li>Download and Extract DietPi Image:<ol>
+<li>Download the DietPi disk image from the official website and extract it to your computer.</li>
+</ol>
+</li>
+<li>Flash the DietPi Image:<ol>
+<li>Use a third-party program such as <a href="https://etcher.balena.io/">balenaEtcher</a> to flash the DietPi image onto the microSD cards.</li>
+</ol>
+</li>
+<li>Prepare for First Boot:<ol>
+<li>Modify the configuration file located at <code>{SD_CARD}/dietpi.txt</code> to set up initial configurations as needed. See <a href="#dietpitxt-configuration">dietpi.txt configuration</a>.</li>
+<li>Modify the configuration file located at <code>{SD_CARD}/dietpiEnv.txt</code> to set up initial boot configurations as needed. See <a href="#dietpienvtxt-configuration">dietpiEnv.txt configuration</a>.</li>
+</ol>
+</li>
+<li>Initial Boot:<ol>
+<li>Insert the prepared microSD cards into the devices.</li>
+<li>Power on the devices and wait for the boot process to complete.</li>
+</ol>
+</li>
+<li>SSH Connection:<ol>
+<li>Once booted, attempt to connect to each device using SSH and the IP address configured beforehand.</li>
+</ol>
+</li>
+</ol>
+<h3 id="dietpitxt-configuration">dietpi.txt configuration</h3>
+<p>When modifying the <code>dietpi.txt</code> configuration file, pay close attention to the following properties:</p>
+<div class="highlight"><pre><span></span><code><span class="na">AUTO_SETUP_TIMEZONE</span><span class="o">=</span><span class="s">Etc/UTC</span>
+
+<span class="na">AUTO_SETUP_NET_USESTATIC</span><span class="o">=</span><span class="s">1</span>
+<span class="na">AUTO_SETUP_NET_STATIC_IP</span><span class="o">=</span><span class="s">192.168.31.100</span>
+<span class="na">AUTO_SETUP_NET_STATIC_MASK</span><span class="o">=</span><span class="s">255.255.255.0</span>
+<span class="na">AUTO_SETUP_NET_STATIC_GATEWAY</span><span class="o">=</span><span class="s">192.168.31.1</span>
+<span class="na">AUTO_SETUP_NET_STATIC_DNS</span><span class="o">=</span><span class="s">1.1.1.1 1.0.0.1</span>
+
+<span class="na">AUTO_SETUP_DHCP_TO_STATIC</span><span class="o">=</span><span class="s">1</span>
+<span class="na">AUTO_SETUP_NET_HOSTNAME</span><span class="o">=</span><span class="s">my-device-1</span>
+
+
+<span class="na">AUTO_SETUP_SSH_PUBKEY</span><span class="o">=</span><span class="s">YOUR_SSH_PUBLIC_KEY</span>
+<span class="na">SOFTWARE_DISABLE_SSH_PASSWORD_LOGINS</span><span class="o">=</span><span class="s">1</span>
+
+<span class="na">AUTO_SETUP_AUTOMATED</span><span class="o">=</span><span class="s">1</span>
+<span class="na">AUTO_SETUP_GLOBAL_PASSWORD</span><span class="o">=</span><span class="s">SOME_STRONG_PASSWORD</span>
+
+<span class="na">SOFTWARE_DIETPI_DASHBOARD_BACKEND</span><span class="o">=</span><span class="s">1</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For more info, go to <a href="https://dietpi.com/docs/usage/#how-to-do-an-automatic-base-installation-at-first-boot-dietpi-automation">How to do an automatic base installation at first boot</a></p>
+</div>
+<h3 id="dietpienvtxt-configuration">dietpiEnv.txt configuration</h3>
+<p>In case of DietPi, <strong>Orange PI 5B</strong> is not specifically supported, so it is necessary to execute several commands to support of the hardware. Add the following line:</p>
+<div class="highlight"><pre><span></span><code><span class="na">fdtfile</span><span class="o">=</span><span class="s">rockchip/rk3588s-orangepi-5b.dtb</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.tooltips", "navigation.tabs", "navigation.top", "navigation.expand", "navigation.integration", "search.highlight", "search.share", "search.suggest", "toc.follow", "toc.integrate"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
