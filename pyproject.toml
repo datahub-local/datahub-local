@@ -1,18 +1,16 @@
-[tool.poetry]
+[project]
 name = "datahub-local"
 version = "0.1.0"
 description = "Empower your edge with a cutting-edge data platform for seamless analytics and insights at home"
-authors = ["Alvaro Santos Andres <alvsanand@gmail.com>"]
-license = "Apache"
+authors = [{ name = "Alvaro Santos Andres", email = "alvsanand@gmail.com" }]
+license = { text = "Apache-2.0" }
 readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mkdocs-material>=9.5.3",
+    "mkdocs-macros-plugin>=1.0.5",
+    "mkdocs-glightbox>=0.3.6",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-mkdocs-material = "^9.5.3"
-mkdocs-macros-plugin = "^1.0.5"
-mkdocs-glightbox = "^0.3.6"
-mkdocs-drawio-exporter = "^0.8.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+package = false
