@@ -1,0 +1,612 @@
+/* ================================================
+   MOSS BRAND PALETTE
+   #0E1116  brand dark  (shell background)
+   #F4F2EC  brand cream (light text / light bg)
+   #5E8A3F  moss deep   (primary)
+   #7FAF5A  moss mid    (accent / icon stroke)
+   #A3CF7A  moss light  (hover / highlight)
+   ================================================ */
+
+/* ── Google Fonts ─────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Dark scheme: moss on shell ───────────────── */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:              #7FAF5A;
+  --md-primary-fg-color--light:       #A3CF7A;
+  --md-primary-fg-color--dark:        #5E8A3F;
+  --md-primary-bg-color:              #0E1116;
+  --md-primary-bg-color--light:       rgba(14, 17, 22, 0.54);
+
+  --md-accent-fg-color:               #A3CF7A;
+  --md-accent-fg-color--transparent:  rgba(163, 207, 122, 0.10);
+  --md-accent-bg-color:               #0E1116;
+
+  /* Page background: brand dark */
+  --md-default-bg-color:              #0E1116;
+  --md-default-bg-color--light:       #131a11;
+  --md-default-bg-color--lighter:     #182016;
+  --md-default-bg-color--lightest:    #1e2b1c;
+
+  /* Text: brand cream */
+  --md-default-fg-color:              #F4F2EC;
+  --md-default-fg-color--light:       rgba(244, 242, 236, 0.75);
+  --md-default-fg-color--lighter:     rgba(244, 242, 236, 0.42);
+  --md-default-fg-color--lightest:    rgba(244, 242, 236, 0.07);
+
+  /* Code blocks */
+  --md-code-bg-color:                 #141a12;
+  --md-code-fg-color:                 #c8e6a8;
+
+  /* Admonitions / callouts */
+  --md-admonition-bg-color:           rgba(127, 175, 90, 0.06);
+}
+
+/* ── Light scheme: moss on cream ─────────────── */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:              #5E8A3F;
+  --md-primary-fg-color--light:       #7FAF5A;
+  --md-primary-fg-color--dark:        #3d5c28;
+  --md-primary-bg-color:              #F4F2EC;
+  --md-primary-bg-color--light:       rgba(244, 242, 236, 0.54);
+
+  --md-accent-fg-color:               #7FAF5A;
+  --md-accent-fg-color--transparent:  rgba(127, 175, 90, 0.10);
+  --md-accent-bg-color:               #F4F2EC;
+
+  --md-default-bg-color:              #F4F2EC;
+  --md-default-fg-color:              #0E1116;
+
+  --md-code-bg-color:                 #eceae3;
+  --md-code-fg-color:                 #3d5c28;
+}
+
+/* ── Navigation header — seamless with page bg ── */
+.md-header {
+  background-color: var(--md-default-bg-color);
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* Header text follows the scheme fg colour */
+.md-header__title,
+.md-header__topic,
+.md-ellipsis {
+  color: var(--md-default-fg-color) !important;
+}
+
+/* Nav logo sizing */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 28px;
+  width: auto;
+}
+
+/* ── Navigation tabs — seamless with page bg ───── */
+.md-tabs {
+  background-color: var(--md-default-bg-color);
+  border-bottom: none;
+}
+
+.md-tabs__link {
+  color: var(--md-default-fg-color--light) !important;
+  font-weight: 500;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--md-accent-fg-color) !important;
+}
+
+/* ── Reduce gap between navigation bar and page content ── */
+.md-main__inner {
+  margin-top: 0.35rem !important;
+}
+
+/* ── Headings — moss green accent ────────────── */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--md-accent-fg-color);
+}
+
+/* ── Grid card titles — same green as headings ── */
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > strong,
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > a > strong,
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > strong > a {
+  color: var(--md-accent-fg-color);
+}
+
+/* ── Sidebar ──────────────────────────────────── */
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: #A3CF7A;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+  color: #A3CF7A;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    order: 2;
+    padding-left: 1.2rem;
+    padding-right: 0;
+  }
+  .md-sidebar--secondary {
+    order: -1;
+    padding-left: 0;
+    padding-right: 1.2rem;
+  }
+}
+
+/* ================================================
+   HERO SECTION
+   ================================================ */
+.hero-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.5rem 2rem 1.25rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  text-align: left;
+}
+
+/* Logo column — 40 % of the hero width */
+.hero-logo-col {
+  flex: 0 0 40%;
+  max-width: 40%;
+}
+
+/* Content column */
+.hero-content-col {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Stack on narrow screens */
+@media (max-width: 640px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-logo-col {
+    flex: 0 0 auto;
+    max-width: 80%;
+    width: 80%;
+  }
+  .hero-logo-full {
+    margin: 0 auto !important;
+  }
+  .hero-badges {
+    justify-content: center !important;
+  }
+}
+
+[data-md-color-scheme="slate"] .hero-section {
+  background: linear-gradient(
+    135deg,
+    rgba(94, 138, 63, 0.16) 0%,
+    rgba(127, 175, 90, 0.10) 50%,
+    rgba(94, 138, 63, 0.16) 100%
+  );
+  border: 1px solid rgba(127, 175, 90, 0.28);
+}
+
+[data-md-color-scheme="default"] .hero-section {
+  background: linear-gradient(
+    135deg,
+    rgba(94, 138, 63, 0.08) 0%,
+    rgba(127, 175, 90, 0.05) 50%,
+    rgba(94, 138, 63, 0.08) 100%
+  );
+  border: 1px solid rgba(94, 138, 63, 0.22);
+}
+
+/* Full lockup logo (horizontal) in the hero — fills its column */
+.hero-logo-full {
+  display: block;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  margin: 0;
+  filter: drop-shadow(0 4px 32px rgba(127, 175, 90, 0.35));
+}
+
+/* Dark-scheme logo: show in slate, hide in default */
+.hero-logo--dark  { display: block; }
+.hero-logo--light { display: none;  }
+
+[data-md-color-scheme="default"] .hero-logo--dark  { display: none;  }
+[data-md-color-scheme="default"] .hero-logo--light { display: block; }
+
+/* Small icon-only hero logo (legacy / small screens) */
+.hero-logo {
+  display: block;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 4px 24px rgba(127, 175, 90, 0.45));
+}
+
+/* Welcome/tagline text — ~20 % above normal body size */
+.hero-tagline {
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.85;
+  margin: 0 0 1.25rem;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+/* ================================================
+   STATS ROW
+   ================================================ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] .stats-row {
+  background: rgba(127, 175, 90, 0.04);
+  border: 1px solid rgba(127, 175, 90, 0.10);
+}
+
+[data-md-color-scheme="default"] .stats-row {
+  background: rgba(94, 138, 63, 0.04);
+  border: 1px solid rgba(94, 138, 63, 0.14);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.25rem;
+}
+
+.stat-number {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+  color: var(--md-accent-fg-color);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ================================================
+   BUTTONS
+   ================================================ */
+
+/* Primary "Explore Architecture" button:
+   uses the OPPOSITE of the green page palette so it pops.
+   Dark theme → cream fill + dark text (uses the site's fg colours).
+   Light theme → dark fill + cream text (same logic, reversed). */
+[data-md-color-scheme="slate"] .md-button--primary {
+  background-color: #F4F2EC !important;
+  border-color: #F4F2EC !important;
+  color: #0E1116 !important;
+}
+
+[data-md-color-scheme="slate"] .md-button--primary:hover {
+  background-color: #A3CF7A !important;
+  border-color: #A3CF7A !important;
+  color: #0E1116 !important;
+}
+
+[data-md-color-scheme="default"] .md-button--primary {
+  background-color: #0E1116 !important;
+  border-color: #0E1116 !important;
+  color: #F4F2EC !important;
+}
+
+[data-md-color-scheme="default"] .md-button--primary:hover {
+  background-color: #5E8A3F !important;
+  border-color: #5E8A3F !important;
+  color: #F4F2EC !important;
+}
+
+.md-button {
+  border-color: rgba(127, 175, 90, 0.45) !important;
+  color: #7FAF5A !important;
+}
+
+.md-button:hover {
+  background-color: rgba(127, 175, 90, 0.10) !important;
+  border-color: #7FAF5A !important;
+}
+
+/* ================================================
+   GOALS GRID — 2 columns, title normal · description smaller
+   ================================================ */
+
+/* Force exactly 2 columns with explicit gap to prevent overlap */
+.md-typeset .grid.cards.goals-grid > ul,
+.md-typeset .grid.cards.goals-grid > ol {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1rem !important;
+  align-items: start !important;   /* prevent stretch bleed between rows */
+}
+
+/* Title row — icon + bold text — keep at the card's natural size */
+.md-typeset .grid.cards.goals-grid > ul > li > p:first-child,
+.md-typeset .grid.cards.goals-grid > ol > li > p:first-child {
+  font-size: inherit;
+  margin-bottom: 0.3rem;
+}
+
+/* Description — smaller than title for clear hierarchy */
+.md-typeset .grid.cards.goals-grid > ul > li > p:not(:first-child),
+.md-typeset .grid.cards.goals-grid > ol > li > p:not(:first-child) {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  opacity: 0.88;
+  margin-top: 0;
+}
+
+/* ================================================
+   MERMAID DIAGRAM ENHANCEMENTS
+   ================================================ */
+.mermaid {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+[data-md-color-scheme="slate"] .mermaid {
+  background: rgba(127, 175, 90, 0.04);
+}
+
+/* ── Mermaid: edges / arrows ── */
+[data-md-color-scheme="slate"] .mermaid .edgePath .path,
+[data-md-color-scheme="slate"] .mermaid .flowchart-link {
+  stroke: #7FAF5A !important;
+}
+[data-md-color-scheme="slate"] .mermaid .arrowheadPath,
+[data-md-color-scheme="slate"] .mermaid marker path {
+  fill: #7FAF5A !important;
+  stroke: none !important;
+}
+[data-md-color-scheme="default"] .mermaid .edgePath .path,
+[data-md-color-scheme="default"] .mermaid .flowchart-link {
+  stroke: #5E8A3F !important;
+}
+[data-md-color-scheme="default"] .mermaid .arrowheadPath,
+[data-md-color-scheme="default"] .mermaid marker path {
+  fill: #5E8A3F !important;
+  stroke: none !important;
+}
+
+/* ── Mermaid: subgraph / cluster boxes ── */
+[data-md-color-scheme="slate"] .mermaid .cluster rect {
+  fill: rgba(30, 43, 28, 0.45) !important;
+  stroke: #5E8A3F !important;
+}
+[data-md-color-scheme="slate"] .mermaid .cluster span,
+[data-md-color-scheme="slate"] .mermaid .cluster .nodeLabel {
+  color: #A3CF7A !important;
+}
+[data-md-color-scheme="default"] .mermaid .cluster rect {
+  fill: rgba(94, 138, 63, 0.08) !important;
+  stroke: #5E8A3F !important;
+}
+
+/* ── Mermaid: edge label backgrounds ── */
+[data-md-color-scheme="slate"] .mermaid .edgeLabel rect,
+[data-md-color-scheme="slate"] .mermaid .edgeLabel .label rect {
+  fill: #0E1116 !important;
+  opacity: 0.85;
+}
+[data-md-color-scheme="slate"] .mermaid .edgeLabel .label {
+  color: #F4F2EC !important;
+}
+
+/* ================================================
+   CODE BLOCKS — shell feel
+   ================================================ */
+[data-md-color-scheme="slate"] .highlight pre,
+[data-md-color-scheme="slate"] code {
+  background-color: #0a1008 !important;
+  border: 1px solid rgba(127, 175, 90, 0.12);
+}
+
+/* Inline code accent */
+[data-md-color-scheme="slate"] code {
+  color: #A3CF7A;
+  padding: 0.1em 0.35em;
+  border-radius: 0.25em;
+}
+
+/* ================================================
+   FOOTER — seamless with page bg
+   ================================================ */
+.md-footer {
+  background-color: var(--md-default-bg-color);
+  border-top: none;
+}
+
+.md-footer-meta {
+  background-color: var(--md-default-bg-color);
+}
+
+/* ================================================
+   GRID CARDS — same look as stats-row
+   ================================================ */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(ul, ol) > li {
+  border-radius: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li,
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > :is(ul, ol) > li {
+  background: rgba(127, 175, 90, 0.04);
+  border: 1px solid rgba(127, 175, 90, 0.10);
+  box-shadow: none;
+}
+
+[data-md-color-scheme="default"] .md-typeset .grid.cards > ul > li,
+[data-md-color-scheme="default"] .md-typeset .grid.cards > :is(ul, ol) > li {
+  background: rgba(94, 138, 63, 0.04);
+  border: 1px solid rgba(94, 138, 63, 0.14);
+  box-shadow: none;
+}
+
+/* ================================================
+   AUTHORS GRID — 2-column portrait cards
+   ================================================ */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.author-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  border-radius: 1rem;
+  gap: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] .author-card {
+  background: rgba(127, 175, 90, 0.05);
+  border: 1px solid rgba(127, 175, 90, 0.18);
+}
+
+[data-md-color-scheme="default"] .author-card {
+  background: rgba(94, 138, 63, 0.05);
+  border: 1px solid rgba(94, 138, 63, 0.20);
+}
+
+.author-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid rgba(127, 175, 90, 0.40);
+  box-shadow: 0 4px 20px rgba(127, 175, 90, 0.18);
+}
+
+.author-info {
+  width: 100%;
+}
+
+.author-name {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--md-accent-fg-color) !important;
+  margin: 0 0 0.4rem !important;
+  padding: 0 !important;
+}
+
+.author-name::after { display: none !important; }
+
+.author-bio {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  opacity: 0.82;
+  margin: 0 0 1rem;
+}
+
+.author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.5rem;
+  text-decoration: none !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: filter 0.18s ease, transform 0.18s ease;
+}
+
+.author-link:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.author-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.author-link--linkedin {
+  background-color: #0A66C2;
+  color: #FFFFFF !important;
+}
+
+.author-link--github {
+  background-color: #24292F;
+  color: #FFFFFF !important;
+}
+
+/* Stack to single column on mobile */
+@media (max-width: 640px) {
+  .authors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================
+   SERVICE TAGS
+   ================================================ */
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.3rem 0 0.9rem;
+}
+
+.svc-tag {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border-radius: 99rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  cursor: default;
+  user-select: none;
+}
+
+[data-md-color-scheme="slate"] .svc-tag {
+  background: rgba(127, 175, 90, 0.12);
+  color: #A3CF7A;
+  border: 1px solid rgba(127, 175, 90, 0.28);
+}
+
+[data-md-color-scheme="default"] .svc-tag {
+  background: rgba(94, 138, 63, 0.09);
+  color: #5E8A3F;
+  border: 1px solid rgba(94, 138, 63, 0.28);
+}

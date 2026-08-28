@@ -1,0 +1,1592 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DataHub.local — a full-featured data platform and homelab running on Kubernetes, with Trino, Airflow, Redpanda, Ollama, and more on ARM64 + AMD64 hardware.">
+      
+      
+        <meta name="author" content="Alvaro Santos Andres">
+      
+      
+        <link rel="canonical" href="https://datahub-local.alvsanand.com/architecture/overview/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../../cluster_setup/hardware/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Architecture - DataHub.local</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Space Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#architecture-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DataHub.local" class="md-header__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  <img src="../../assets/img/logo-icon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DataHub.local
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../cluster_setup/hardware/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Cluster Setup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../services/core/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../open-source/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Open Source
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../lessons-learned/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Lessons Learned
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DataHub.local" class="md-nav__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  <img src="../../assets/img/logo-icon.svg" alt="logo">
+
+    </a>
+    DataHub.local
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Layout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physical Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cluster-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cluster Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Namespace Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#networking-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Networking &amp; Access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitOps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cluster Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cluster Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cluster_setup/hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cluster_setup/provisioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provisioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/cicd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Stack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI &amp; LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/media-and-other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Media &amp; Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../open-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Open Source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lessons-learned/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="architecture-overview">Architecture Overview</h1>
+<p>This page describes the logical and physical cluster architecture, storage design, observability, and the GitOps deployment pipeline that powers DataHub.local.</p>
+<hr>
+<h2 id="general">General</h2>
+<p>High-level view of the cluster: how nodes, networking, and storage components relate to each other.</p>
+<pre class="mermaid"><code>graph TB
+    classDef internet fill:#1A237E,color:#fff,stroke:#3F51B5,stroke-width:2px
+    classDef control fill:#1565C0,color:#fff,stroke:#42A5F5,stroke-width:2px
+    classDef armWorker fill:#2E7D32,color:#fff,stroke:#66BB6A,stroke-width:2px
+    classDef amdWorker fill:#4527A0,color:#fff,stroke:#9575CD,stroke-width:2px
+    classDef network fill:#00695C,color:#fff,stroke:#26C6DA,stroke-width:2px
+    classDef storage fill:#E65100,color:#fff,stroke:#FFA726,stroke-width:2px
+
+    subgraph Internet
+        DNS["🌍 External DNS"]:::internet
+        GHCR["📦 GitHub Container Registry"]:::internet
+    end
+
+    subgraph "Home Network"
+        Router["🏠 Home Router"]:::network
+
+        subgraph "K3s Cluster"
+            subgraph "Control Plane"
+                CP["🎛️ orpi-0\nOrangePi 4 LTS"]:::control
+            end
+
+            subgraph "ARM64 Workers"
+                W1["🟠 orpi-1\nOrangePi 5B 16G"]:::armWorker
+                W2["🟠 orpi-2\nOrangePi 5B 16G"]:::armWorker
+                W3["🟠 orpi-3\nOrangePi 5B 16G"]:::armWorker
+            end
+
+            subgraph "AMD64 Workers"
+                W4["🔵 amd-1\nCHUWI AuBox 32G"]:::amdWorker
+                W5["🔵 amd-2\nAMD64 worker"]:::amdWorker
+                W6["💾 nas\nCWWK X86-P5 N305"]:::amdWorker
+            end
+
+            subgraph "Networking"
+                Traefik["🔀 Traefik\nIngress"]:::network
+                Tailscale["🔒 Tailscale\nVPN"]:::network
+            end
+
+            subgraph "Storage"
+                Longhorn["💾 Longhorn\nDistributed Block"]:::storage
+                Garage["🪣 Garage\nS3 Object Store"]:::storage
+                NFS["📁 NFS\nNAS Shares"]:::storage
+            end
+        end
+    end
+
+    Router --&gt; Traefik
+    Traefik --&gt; CP
+    CP --&gt; W1 &amp; W2 &amp; W3 &amp; W4 &amp; W5 &amp; W6
+    Longhorn --&gt; W1 &amp; W2 &amp; W3
+    Garage --&gt; W1 &amp; W2 &amp; W3
+    NFS --&gt; W5
+    DNS --&gt; Router</code></pre>
+<hr>
+<h2 id="physical-layout">Physical Layout</h2>
+<p>The cluster is a <strong>heterogeneous mix of ARM64 and AMD64</strong> machines — an OrangePi SBC for the control plane, OrangePi 5B boards as initial workers, and x86 mini-PCs that have progressively replaced them for better performance-per-euro.</p>
+<pre class="mermaid"><code>graph TB
+    classDef control fill:#1565C0,color:#fff,stroke:#42A5F5,stroke-width:2px
+    classDef armNode fill:#2E7D32,color:#fff,stroke:#66BB6A,stroke-width:2px
+    classDef amdNode fill:#4527A0,color:#fff,stroke:#9575CD,stroke-width:2px
+    classDef netNode fill:#00695C,color:#fff,stroke:#26C6DA,stroke-width:2px
+
+    UPS["⚡ CyberPower UPS\nPower Protection"]:::netNode
+    SW["🌐 HORACO 2.5GbE\nManaged Switch"]:::netNode
+
+    CP["🎛️ datahublocal-orpi-0\nOrangePi 4 LTS · 4 GB\nARM64 RK3399 · Control Plane"]:::control
+
+    W1["🟠 datahublocal-orpi-1\nOrangePi 5B · 16 GB\nARM64 RK3588\nWorker · Longhorn · Garage"]:::armNode
+    W2["🟠 datahublocal-orpi-2\nOrangePi 5B · 16 GB\nARM64 RK3588\nWorker · Longhorn · Garage"]:::armNode
+    W3["🟠 datahublocal-orpi-3\nOrangePi 5B · 16 GB\nARM64 RK3588\nWorker · Longhorn · Garage"]:::armNode
+
+    W4["🔵 datahublocal-amd-1\nCHUWI AuBox · 48 GB\nAMD Ryzen 7 8745HS\nHeavy Compute Worker"]:::amdNode
+    W5["💻 datahublocal-amd-2\nLenovo Legion · 24 GB\nAMD Ryzen 5 5600H + RTX 3060M\nOllama · GPU Worker"]:::amdNode
+    W6["💾 datahublocal-nas\nCWWK X86-P5 N305 · 16 GB\n3×1 TB HDD RAID + 128 GB NVMe\nNAS Worker · Garage S3 · NFS"]:::amdNode
+
+    UPS --&gt; SW
+    SW --&gt; CP
+    SW --&gt; W1
+    SW --&gt; W2
+    SW --&gt; W3
+    SW --&gt; W4
+    SW --&gt; W5
+    SW --&gt; W6</code></pre>
+<h3 id="cluster-nodes">Cluster Nodes</h3>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Hardware</th>
+<th>Role</th>
+<th>CPU</th>
+<th>Cores / Threads</th>
+<th>GPU</th>
+<th>RAM</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>datahublocal-orpi-0</code></td>
+<td>OrangePi 4 LTS</td>
+<td>Control Plane</td>
+<td>ARM64 (RK3399)</td>
+<td>6 / 6</td>
+<td>-</td>
+<td>4GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-orpi-1</code></td>
+<td>OrangePi 5B (16 GB)</td>
+<td>Worker</td>
+<td>ARM64 (RK3588)</td>
+<td>8 / 8</td>
+<td>-</td>
+<td>16GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-orpi-2</code></td>
+<td>OrangePi 5B (16 GB)</td>
+<td>Worker</td>
+<td>ARM64 (RK3588)</td>
+<td>8 / 8</td>
+<td>-</td>
+<td>16GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-orpi-3</code></td>
+<td>OrangePi 5B (16 GB)</td>
+<td>Worker</td>
+<td>ARM64 (RK3588)</td>
+<td>8 / 8</td>
+<td>-</td>
+<td>16GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-amd-1</code></td>
+<td>CHUWI AuBox (, 48 GB)</td>
+<td>Heavy worker</td>
+<td>AMD64 (AMD 8745HS)</td>
+<td>8 / 16</td>
+<td>Rad 680</td>
+<td>48GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-amd-2</code></td>
+<td>Lenovo Legion (AMD Ryzen 5 5600H, 24 GB, RTX 3060M)</td>
+<td>GPU worker</td>
+<td>AMD64 (AMD 5600H)</td>
+<td>6 / 12</td>
+<td>RTX 3060M</td>
+<td>24GB</td>
+<td>Debian 13</td>
+</tr>
+<tr>
+<td><code>datahublocal-nas</code></td>
+<td>CWWK X86-P5 (N305, 16 GB, RAID 3×1TB + 128 GB NVMe)</td>
+<td>NAS + Worker</td>
+<td>AMD64 (Intel N305)</td>
+<td>8 / 8</td>
+<td>-</td>
+<td>16GB</td>
+<td>Debian 12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kubernetes distribution:</strong> K3s v1.36 (lightweight, production-ready)<br>
+<strong>Container runtime:</strong> containerd 2.2</p>
+<blockquote>
+<p><strong>Architecture evolution:</strong> The cluster started ARM-only with OrangePi 5B boards, but over time x86 mini-PCs proved significantly more cost-effective for compute-heavy workloads (Spark, Trino). The ARM nodes remain useful for lightweight services and multi-arch testing — see <a href="../../lessons-learned/">Lessons Learned</a> for more context.</p>
+</blockquote>
+<hr>
+<h2 id="namespace-layout">Namespace Layout</h2>
+<p>Services are organized into <strong>namespaces by concern</strong>, each managed as a separate ArgoCD Application:</p>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kube-system</code></td>
+<td>K3s system components, Traefik, Longhorn CSI, cert-manager, ExternalDNS, reloader, reflector, snapshot-controller, NVIDIA plugin</td>
+</tr>
+<tr>
+<td><code>automation</code></td>
+<td>ArgoCD, n8n, Velero, Kopia backup agents</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Airflow, Trino, Superset, Redpanda, Polaris, Spark, PostgreSQL, Garage, Ollama, Open WebUI, Valkey</td>
+</tr>
+<tr>
+<td><code>monitoring</code></td>
+<td>Prometheus, AlertManager, Grafana, Loki, Promtail, Robusta, Speedtest exporter</td>
+</tr>
+<tr>
+<td><code>security</code></td>
+<td>cert-manager, Dex (OIDC), OAuth2-proxy, Tailscale</td>
+</tr>
+<tr>
+<td><code>media</code></td>
+<td>CommaFeed (RSS), MusicGrabber</td>
+</tr>
+<tr>
+<td><code>other</code></td>
+<td>Homepage dashboard, ConvertX, IT Tools, Mazanoke, Omni Tools, Stirling PDF</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="networking-access">Networking &amp; Access</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Traefik IngressRoutes</strong></td>
+<td>Internal HTTP/HTTPS routing for all web UIs (Grafana, Superset, ArgoCD, etc.)</td>
+</tr>
+<tr>
+<td><strong>Tailscale VPN</strong></td>
+<td>Secure remote access from anywhere — no port forwarding needed</td>
+</tr>
+<tr>
+<td><strong>ExternalDNS</strong></td>
+<td>Automatically manages DNS records for exposed services</td>
+</tr>
+<tr>
+<td><strong>cert-manager</strong></td>
+<td>Automatic TLS certificates via Let's Encrypt</td>
+</tr>
+<tr>
+<td><strong>OAuth2-proxy + Dex</strong></td>
+<td>SSO authentication for all web services using OIDC</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="storage">Storage</h2>
+<p>Storage is split by access pattern and cost profile — fast NVMe for latency-sensitive workloads, spinning HDD RAID for bulk data that doesn't need IOPS.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Technology</th>
+<th>Backing hardware</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High-performance block</strong></td>
+<td>Longhorn</td>
+<td>NVMe SSDs on OrangePi 5B nodes</td>
+<td>Stateful apps that need low latency: PostgreSQL, Redpanda, Valkey — replicated across nodes for HA</td>
+</tr>
+<tr>
+<td><strong>High-capacity object (S3)</strong></td>
+<td>Garage</td>
+<td>NVMe SSD on CWWK NAS</td>
+<td>Data lake (Iceberg tables, Spark outputs, Loki logs, backups) — fast random reads for analytics workloads without the cost of full NVMe replicas across every node</td>
+</tr>
+<tr>
+<td><strong>Bulk shared filesystem</strong></td>
+<td>NFS (CWWK NAS RAID)</td>
+<td>3×1 TB HDD RAID</td>
+<td>Large sequential files: media library, raw data exports, archives — big and cheap, latency-tolerant</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Design principle:</strong> Put the <em>right</em> data on the <em>right</em> storage. Longhorn replicas on NVMe make PostgreSQL snappy; Garage on a single NVMe NAS node is fast enough for object storage at a fraction of the cost; HDD RAID covers everything that just needs capacity.</p>
+</blockquote>
+<hr>
+<h2 id="observability">Observability</h2>
+<p>Prometheus runs as a single replica in <code>monitoring</code> and discovers scrape targets through 20 <code>ServiceMonitor</code> resources across the cluster. Logs are shipped via Promtail to Loki. Alerts flow from Prometheus AlertManager to Robusta and notification channels.</p>
+<pre class="mermaid"><code>flowchart LR
+    classDef source fill:#1565C0,color:#fff,stroke:#42A5F5,stroke-width:2px
+    classDef collector fill:#2E7D32,color:#fff,stroke:#66BB6A,stroke-width:2px
+    classDef store fill:#4527A0,color:#fff,stroke:#9575CD,stroke-width:2px
+    classDef alerting fill:#B71C1C,color:#fff,stroke:#EF5350,stroke-width:2px
+    classDef viz fill:#00695C,color:#fff,stroke:#26C6DA,stroke-width:2px
+    classDef notify fill:#E65100,color:#fff,stroke:#FFA726,stroke-width:2px
+
+    Pods["📦 All Pods\n(metrics + logs)"]:::source
+    NodeExporter["📊 Node Exporter\n(per node)"]:::collector
+    Promtail["📋 Promtail\n(log shipper)"]:::collector
+    Prometheus["🔥 Prometheus\n(metrics)"]:::store
+    Loki["🗃️ Loki\n(logs)"]:::store
+    AlertManager["🚨 AlertManager"]:::alerting
+    Grafana["📈 Grafana\n(dashboards)"]:::viz
+    Robusta["🤖 Robusta\n(K8s monitoring)"]:::alerting
+    Notifications["📲 Slack / Email"]:::notify
+
+    Pods --&gt; Promtail
+    Pods --&gt; NodeExporter
+    NodeExporter --&gt; Prometheus
+    Promtail --&gt; Loki
+    Prometheus --&gt; AlertManager
+    Prometheus --&gt; Grafana
+    Loki --&gt; Grafana
+    AlertManager --&gt; Robusta
+    Robusta --&gt;|"enriched alerts"| Notifications</code></pre>
+<hr>
+<h2 id="gitops">GitOps</h2>
+<p>Everything in the cluster is managed as code. No manual <code>kubectl apply</code> for services — all changes flow through Git.</p>
+<pre class="mermaid"><code>flowchart LR
+    classDef dev fill:#1565C0,color:#fff,stroke:#42A5F5,stroke-width:2px
+    classDef bootstrap fill:#2E7D32,color:#fff,stroke:#66BB6A,stroke-width:2px
+    classDef secrets fill:#B71C1C,color:#fff,stroke:#EF5350,stroke-width:2px
+    classDef core fill:#4527A0,color:#fff,stroke:#9575CD,stroke-width:2px
+    classDef workflow fill:#00695C,color:#fff,stroke:#26C6DA,stroke-width:2px
+    classDef cluster fill:#E65100,color:#fff,stroke:#FFA726,stroke-width:2px
+
+    Dev["👨‍💻 Developer / Me\n(git push)"]:::dev
+
+    subgraph "Bootstrap Layer"
+        Ansible["datahub-local-bootstrap\n(Ansible)\n• Install K3s\n• Configure OS\n• Deploy ArgoCD"]:::bootstrap
+    end
+
+    subgraph "Secrets Layer"
+        Secrets["datahub-local-secrets\n(Private)\n• Encrypted secrets\n• API keys\n• Credentials"]:::secrets
+    end
+
+    subgraph "Core Layer"
+        Core["datahub-local-core\n(Helmfile)\n• ApplicationSets\n• All services\n• 7 namespaces"]:::core
+    end
+
+    subgraph "AI Layer"
+        AI["datahub-local-ai\n• n8n AI\n• Airflow DAGs\n• dbt · dlt"]:::workflow
+    end
+
+    subgraph "K3s Cluster"
+        ArgoCD["🔄 ArgoCD\n(GitOps controller)"]:::cluster
+        Services["🚀 Running Services\n(Pods, Deployments,\nStatefulSets)"]:::cluster
+    end
+
+    Dev --&gt;|"1. provision"| Ansible
+    Ansible --&gt;|"2. installs"| ArgoCD
+    Secrets --&gt;|"3. sync"| ArgoCD
+    Core --&gt;|"4. sync"| ArgoCD
+    AI --&gt;|"5. sync"| ArgoCD
+    ArgoCD --&gt;|"reconciles"| Services</code></pre>
+<h3 id="deployment-flow">Deployment Flow</h3>
+<ol>
+<li><strong>Bootstrap</strong> — Ansible provisions OS on bare metal, installs K3s, and deploys ArgoCD as the first application.</li>
+<li><strong>Secrets</strong> — ArgoCD syncs <code>datahub-local-secrets</code> (private repo) to deploy encrypted secrets into the <code>security</code> namespace.</li>
+<li><strong>Core</strong> — ArgoCD syncs <code>datahub-local-core</code>, which contains Helmfile-based ApplicationSets that expand into one Application per namespace × service.</li>
+<li><strong>AI</strong> — n8n AI definitions, Airflow DAG Python files, dbt/dlt projects, MCP tools, and Sympozium ensembles are synced from <code>datahub-local-ai</code>.</li>
+<li><strong>Reconciliation</strong> — ArgoCD continuously watches all repos and auto-syncs on any commit to <code>HEAD</code>.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.expand", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

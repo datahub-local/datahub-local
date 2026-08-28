@@ -1,0 +1,1416 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DataHub.local — a full-featured data platform and homelab running on Kubernetes, with Trino, Airflow, Redpanda, Ollama, and more on ARM64 + AMD64 hardware.">
+      
+      
+        <meta name="author" content="Alvaro Santos Andres">
+      
+      
+        <link rel="canonical" href="https://datahub-local.alvsanand.com/lessons-learned/">
+      
+      
+        <link rel="prev" href="../roadmap/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Lessons Learned - DataHub.local</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Space Grotesk";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lessons-learned" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DataHub.local" class="md-header__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  <img src="../assets/img/logo-icon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DataHub.local
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lessons Learned
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../architecture/overview/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../cluster_setup/hardware/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Cluster Setup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../services/core/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../open-source/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Open Source
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Lessons Learned
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DataHub.local" class="md-nav__button md-logo" aria-label="DataHub.local" data-md-component="logo">
+      
+  <img src="../assets/img/logo-icon.svg" alt="logo">
+
+    </a>
+    DataHub.local
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datahub-local/datahub-local" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    datahub-local/datahub-local
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cluster Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cluster Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cluster_setup/hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cluster_setup/provisioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provisioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/cicd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Stack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI &amp; LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/media-and-other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Media &amp; Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../open-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Open Source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#homelab-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Homelab Reliability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servarr-self-hosted-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servarr / Self-Hosted Media
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arm-servers-for-production-workloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARM Servers for Production Workloads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#under-used-self-hosted-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Under-Used Self-Hosted Services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-source-vendor-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Source Vendor Risk
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Open Source Vendor Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bitnami-chart-removal-postgresql-redis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bitnami chart removal (PostgreSQL &amp; Redis)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis-valkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redis → Valkey
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minio-removal-the-worst-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MinIO removal — the worst one
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-these-failures-produced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What These Failures Produced
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-ai-agents-and-proactive-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local AI Agents and Proactive Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lessons-learned">Lessons Learned</h1>
+<p>Building a homelab is as much about learning from failures as it is about getting things working. This page documents the honest account of what didn't work, why it was abandoned, and what was learned from each experience — both for future reference and as a portfolio signal that real engineering involves iteration and pragmatism.</p>
+<hr>
+<h2 id="homelab-reliability"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H8.82l-2-2H7V3H5v.18L3.21 1.39C3.39 1.15 3.68 1 4 1m18 21.72L20.73 24l-1-1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h9.73l-2-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1.73L3.68 6.95c-.3-.1-.53-.33-.63-.63L1 4.27 2.28 3zM20 9a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3.18l-6-6zm0 8a1 1 0 0 1 1 1v1.18L18.82 17zM9 5h1V3H9zm0 8h.73L9 12.27zm0 8h1v-2H9zM5 11v2h2v-2zm0 8v2h2v-2z"></path></svg></span> Homelab Reliability</h2>
+<p><strong>What was tried:</strong> Running critical workloads on a cluster of consumer ARM SBCs (OrangePi boards) with the expectation of close-to-cloud reliability.</p>
+<p><strong>What went wrong:</strong></p>
+<ul>
+<li><strong>Device unreliability</strong> — SBCs are consumer electronics, not server-grade hardware. SD card corruption, power irregularities, and thermal issues caused unexpected node failures.</li>
+<li><strong>Provider quality</strong> — firmware support, kernel updates, and community documentation for ARM SBCs vary enormously. Some issues had no reliable fix; workarounds led to fragile configs.</li>
+<li><strong>No clear scope</strong> — without a deliberate plan for what the homelab was for, it grew into an unmanageable web of services. Each new thing added was another point of failure and maintenance burden.</li>
+<li><strong>Home automation</strong> — running Home Assistant and other home automation tools in the cluster seemed logical but caused more friction than it solved: the cluster going down for maintenance meant lights stopped working. Tight coupling between infrastructure and daily life is a bad design.</li>
+</ul>
+<p><strong>Lesson:</strong> Define the homelab's purpose before adding things. Keep life-critical automations (lights, heating) on dedicated, separate hardware. Server-grade mini-PCs are far more reliable than SBCs for always-on workloads.</p>
+<hr>
+<h2 id="servarr-self-hosted-media"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.5 2.77 1.78 1.5 21 20.72 19.73 22l-3-3H16v2H8v-2H3a2 2 0 0 1-2-2V5c0-.5.17-.93.46-1.27zM21 17V5H7.82l-2-2H21a2 2 0 0 1 2 2v12c0 .85-.55 1.59-1.3 1.87L19.82 17zM3 17h11.73L3 5.27z"></path></svg></span> Servarr / Self-Hosted Media</h2>
+<p><strong>What was tried:</strong> A full Servarr stack (Jellyfin, Sonarr, Radarr, Prowlarr, qBittorrent, Bazarr) for self-hosted media management and streaming.</p>
+<p><strong>What went wrong:</strong></p>
+<ul>
+<li><strong>Network blocking</strong> — the home ISP blocked common torrent ports and flagged traffic, making the download pipeline unreliable without constant workarounds.</li>
+<li><strong>Content gaps</strong> — non-English content, audiobooks, and niche media were hard or impossible to find. The mainstream media libraries that Servarr handles well were already well-served by existing streaming subscriptions.</li>
+<li><strong>Maintenance overhead</strong> — keeping indexers, download clients, and the *arr apps in sync required frequent manual intervention. Prowlarr configs broke, indexers went offline, update cycles conflicted.</li>
+<li><strong>Resource cost</strong> — Jellyfin transcoding is expensive on ARM. The OrangePi nodes struggled with 1080p transcoding, and the complexity of making it work wasn't worth the payoff.</li>
+</ul>
+<p><strong>Lesson:</strong> Self-hosted media works well when your ISP is cooperative and your content needs are mainstream. For niche or non-English content, streaming services remain the pragmatic choice. The <a href="../open-source/"><code>servarr</code></a> Helm chart was published as a usable artifact from this experiment.</p>
+<hr>
+<h2 id="arm-servers-for-production-workloads"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v2H7a2 2 0 0 0-2 2v2H3v2h2v2H3v2h2v2a2 2 0 0 0 2 2h2v2h2v-2h2v2h2v-2h2a2 2 0 0 0 2-2v-2h2v-2h-2v-2h2V9h-2V7a2 2 0 0 0-2-2h-2V3h-2v2h-2V3M8 9h3.5v1.5h-3v.75h2a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1m4.5 0H14v2h1.5V9H17v6h-1.5v-2.5h-3m-4 .25v.75H10v-.75"></path></svg></span> ARM Servers for Production Workloads</h2>
+<p><strong>What was tried:</strong> Building the entire cluster on OrangePi 5B boards (ARM64, RK3588, 16 GB RAM) as cost-effective worker nodes.</p>
+<p><strong>What went wrong:</strong></p>
+<ul>
+<li><strong>Performance gap</strong> — for data-heavy workloads (Spark transformations, Trino queries, LLM inference), the ARM boards were significantly slower than equivalent x86 hardware. The RK3588 is impressive for a SBC but does not compete with a dedicated mini-PC on raw throughput.</li>
+<li><strong>Cost efficiency</strong> — when total cost of ownership is considered (SD cards, NVMe drives, cases, power supplies, reliability overhead), a single x86 mini-PC at a similar or lower price delivered 3–5× the usable compute.</li>
+<li><strong>Software compatibility</strong> — not all container images have ARM64 variants. Building custom images or waiting for upstream ARM64 support added friction and slowed iteration.</li>
+<li><strong>Kernel / firmware issues</strong> — custom kernels, device tree blobs, and OrangePi-specific patches meant OS updates were riskier than on standard x86 hardware.</li>
+</ul>
+<p><strong>Lesson:</strong> ARM SBCs are excellent for learning, tinkering, and lightweight services. For a production-like data platform with real workloads, x86 systems (e.g. CHUWI AuBox, Lenovo Legion, and CWWK X86-P5) offer far better performance-per-euro and far less operational pain. The cluster now uses ARM nodes for low-demand services, the CHUWI AuBox for compute-heavy workloads, and the Lenovo Legion GPU worker for local AI inference.</p>
+<hr>
+<h2 id="under-used-self-hosted-services"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.84 22.73 18.11 20H14v-4.11L12.11 14H10v6H5v-8H2l4.27-3.84L1.11 3l1.28-1.27 19.72 19.73zM19 12h3L12 3 8.95 5.75 19 15.8z"></path></svg></span> Under-Used Self-Hosted Services</h2>
+<p><strong>What was tried:</strong> Self-hosting a broad set of personal productivity and home apps — Home Assistant, Mealie (recipe manager), and various others — under the assumption that self-hosted = better.</p>
+<p><strong>What went wrong:</strong></p>
+<ul>
+<li><strong>Usage never materialised</strong> — apps like Mealie sat mostly unused after an initial setup burst. The friction of a self-hosted tool vs. a polished commercial app was too high for daily personal use.</li>
+<li><strong>Maintenance doesn't scale</strong> — every self-hosted app is another thing that can break, needs updates, and requires attention. For apps that don't provide real value, the maintenance cost isn't justified.</li>
+<li><strong>Home Assistant coupling</strong> — see the homelab reliability note above. Running HA inside the Kubernetes cluster meant any cluster maintenance broke home automations. The wrong layer for something that needs to be always-on.</li>
+</ul>
+<p><strong>Lesson:</strong> Self-host services where the value is clear — data platform tools, developer tools, privacy-sensitive services, tools used daily. Don't self-host for ideological reasons alone. A good heuristic: if you haven't used it in two weeks, remove it. Quality over quantity.</p>
+<hr>
+<h2 id="open-source-vendor-risk"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 15.6c.3.2.7.2 1 0l5-2.9v.3c.7 0 1.4.1 2 .4v-1.8l1-.6c.5-.3.6-.9.4-1.4l-1.5-2.5c-.1-.2-.2-.4-.4-.5l-7.9-4.4c-.2-.1-.4-.2-.6-.2s-.4.1-.6.2L3.6 6.6c-.2.1-.4.2-.5.4L1.6 9.6c-.3.5-.1 1.1.4 1.4.3.2.7.2 1 0v5.5c0 .4.2.7.5.9l7.9 4.4c.2.1.4.2.6.2s.4-.1.6-.2l.9-.5c-.3-.6-.4-1.3-.5-2m-2 0-6-3.4V9.2l6 3.4zm9.1-9.6-6.3 3.6-.6-1 6.3-3.6zM12 10.8V4.2l6 3.3zm10.5 6.1L20.4 19l2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1-2.1-2.1 1.4-1.4 2.1 2.1 2.1-2.1z"></path></svg></span> Open Source Vendor Risk</h2>
+<p><strong>What was tried:</strong> Relying on Helm charts and software maintained by companies that also have a commercial product — under the assumption that popular open-source projects are stable long-term dependencies.</p>
+<p><strong>What went wrong, one incident at a time:</strong></p>
+<h3 id="bitnami-chart-removal-postgresql-redis">Bitnami chart removal (PostgreSQL &amp; Redis)</h3>
+<p>Bitnami provided the de-facto standard Helm charts for stateful services. Almost every Kubernetes tutorial linked to them. One day, without much warning, Bitnami restructured their chart repository and removed a large number of charts from the old location.</p>
+<p>The impact was significant: automated ArgoCD syncs started failing, and the migration path required:
+1. Provisioning replacement charts (CloudNative PG for PostgreSQL, switching Redis to Valkey)
+2. Dumping data from the running instances
+3. Restoring into the new chart's schema and storage layout</p>
+<p>Migrating stateful services in Kubernetes is painful. Postgres data dumps are manageable but stressful under time pressure; recovering from a failed migration mid-way is worse.</p>
+<p><strong>Lesson:</strong> Never depend on a single company's Helm chart for a critical stateful service. Prefer operator-based deployments (CloudNative PG, Strimzi) which are governed by community foundations and less likely to disappear overnight.</p>
+<h3 id="redis-valkey">Redis → Valkey</h3>
+<p>Redis Labs changed the Redis license to SSPL (not OSI-approved open source), effectively ending community distribution. The OpenValkey fork (<code>Valkey</code>) was created by the community almost immediately and is now the drop-in replacement under an OSI license.</p>
+<p>In practice this was a smooth migration — the API is identical — but it required monitoring the license situation, making a decision, and updating all chart references before the Docker Hub images were removed.</p>
+<p><strong>Lesson:</strong> Watch license changes on core infrastructure dependencies. Community forks of widely-used tools happen quickly and are usually production-ready.</p>
+<h3 id="minio-removal-the-worst-one">MinIO removal — the worst one</h3>
+<p>MinIO was the clear leader in self-hosted S3-compatible object storage. It had the best documentation, the most integrations, and near-universal support in the data ecosystem (Spark, Trino, Airflow all listed it first in their docs).</p>
+<p>Then MinIO changed its license and removed the open-source container images from Docker Hub with very short notice — less than 6 months from announcement to removal.</p>
+<p>The timing was bad: the migration was delayed because MinIO seemed stable and the urgency wasn't obvious. By the time the removal date was close, it became a forced, rushed migration.</p>
+<p><strong>Alternatives evaluated:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Why rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ceph</strong></td>
+<td>Powerful but operationally complex — Ceph is practically a full-time job to run on a small cluster</td>
+</tr>
+<tr>
+<td><strong>RustFS</strong></td>
+<td>Promising but very new and not production-proven at the time</td>
+</tr>
+<tr>
+<td><strong>SeaweedFS</strong></td>
+<td>Good performance but the operational model and documentation were harder to follow</td>
+</tr>
+<tr>
+<td><strong>Garage</strong></td>
+<td>✅ Chosen — single static binary, simple cluster model, low resource use, great fit for heterogeneous hardware</td>
+</tr>
+</tbody>
+</table>
+<p>Garage was the right choice but the official Helm chart was bare: no automatic cluster initialisation, no bucket or API key provisioning, and limited observability. A fork was created adding:</p>
+<ul>
+<li>Automatic cluster layout and node assignment on first deploy</li>
+<li>Bucket and key provisioning from <code>values.yaml</code></li>
+<li><code>ServiceMonitor</code> and Grafana dashboard out of the box</li>
+<li>Flexible ingress support</li>
+</ul>
+<p>This became the <a href="../open-source/"><code>garage-helm</code></a> project, now published open source.</p>
+<p><strong>Lesson:</strong> For object storage (and any storage layer), choose software governed by a neutral foundation or a true community project — not a single commercial entity's "open core" product. Evaluate migration cost before you're forced to migrate.</p>
+<hr>
+<h2 id="what-these-failures-produced"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.41 13.41 6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17 7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42-6.35 6.35 1.42 1.41z"></path></svg></span> What These Failures Produced</h2>
+<p>Every failure above contributed something concrete:</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>What came out of it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARM reliability issues</td>
+<td>Clearer architecture: ARM for light workloads, x86 for data/AI compute</td>
+</tr>
+<tr>
+<td>Servarr struggles</td>
+<td>Published <a href="../open-source/"><code>servarr</code></a> Helm chart — useful for others even if not for this cluster</td>
+</tr>
+<tr>
+<td>ARM cost/performance</td>
+<td>Hardware evolution to CWWK NAS + CHUWI mini-PC; much better cluster performance</td>
+</tr>
+<tr>
+<td>Under-used services</td>
+<td>Leaner cluster; focus on services that are actually used — data platform, AI, monitoring</td>
+</tr>
+<tr>
+<td>Over-scoping</td>
+<td>Clear purpose statement: this is a <strong>data platform and AI experimentation lab</strong>, not a general home server</td>
+</tr>
+<tr>
+<td>Bitnami removal</td>
+<td>Migrated to operator-based deployments (CloudNative PG); more resilient chart strategy</td>
+</tr>
+<tr>
+<td>MinIO removal</td>
+<td>Built and published <a href="../open-source/"><code>garage-helm</code></a>; Garage now running in production</td>
+</tr>
+<tr>
+<td>Redis relicensing</td>
+<td>Early adoption of Valkey; no disruption to services</td>
+</tr>
+</tbody>
+</table>
+<p>The current cluster is more focused, more reliable, and more interesting as a portfolio project precisely because of what was cut — and because of the fires that had to be fought along the way.</p>
+<hr>
+<h2 id="local-ai-agents-and-proactive-monitoring"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73A2 2 0 1 0 10 4c0 .74.4 1.39 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1M8.68 17.04 7.5 15.86l-1.18 1.18-1.18-1.18L7.5 13.5l2.36 2.36zm9 0-1.18-1.18-1.18 1.18-1.18-1.18 2.36-2.36 2.36 2.36z"></path></svg></span> Local AI Agents and Proactive Monitoring</h2>
+<p><strong>What was tried:</strong> Adding a proactive monitoring layer using a local Ollama
+model, MCP fact-gathering tools, and Sympozium ensembles that run focused agents
+against Prometheus, Loki, Kubernetes, and repository state.</p>
+<p><strong>What went wrong:</strong></p>
+<ul>
+<li><strong>A small model cannot compensate for an oversized tool surface.</strong> Exposing
+    dozens of similarly named tools consumed context and made tool selection
+    unreliable. Narrow personas and explicit <code>toolsAllow</code> lists work better than
+    one general-purpose administrator.</li>
+<li><strong>Context is shared by schemas, evidence, and the answer.</strong> The model's
+    65,536-token window is not 65,536 tokens of useful investigation. Tool schemas
+    and accumulated results consume the same budget, so prompts must keep one
+    question, bounded queries, and a fixed report format.</li>
+<li><strong>Tool contracts must be verified against the live server.</strong> A plausible tool
+    name or argument is not enough. Incorrect names, required arguments, and
+    datasource assumptions can make an agent report success while it has gathered
+    no evidence.</li>
+<li><strong>Memory seeds are not continuously reconciled.</strong> Changing agent memory in
+    Git does not update the memory ConfigMap used by a running ensemble. Memory
+    changes require reseeding and verification against a new <code>AgentRun</code>.</li>
+<li><strong>One GPU creates a scheduling bottleneck.</strong> The single resident
+    <code>qwen3.5:4b</code> model on the Lenovo Legion serves one request at a time. Agent
+    schedules must be staggered, and an ArgoCD or Helm apply can unexpectedly
+    trigger immediate runs for several personas.</li>
+<li><strong>Sandboxing is a boundary, not a capability.</strong> gVisor protects agent
+    execution, but the hardened policy intentionally blocks shell execution,
+    local file writes, delegation, subagents, and arbitrary code execution.
+    Agents must use explicitly allowlisted MCP tools.</li>
+<li><strong>AI must enrich detection, not replace it.</strong> Prometheus and AlertManager are
+    still responsible for deterministic detection. Sympozium adds correlation,
+    chronic-alert filtering, trend analysis, and operational context. Missing
+    data must be reported as uncertainty rather than converted into a healthy
+    result.</li>
+</ul>
+<p><strong>Lesson:</strong> Proactive AI monitoring is most reliable as a collection of narrow,
+read-only investigations with verified tools, seeded operational memory,
+staggered schedules, and explicit safety boundaries. The AI should explain and
+prioritise evidence produced by the observability stack—not pretend to be the
+observability stack or an unrestricted cluster administrator.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.expand", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
