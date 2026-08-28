@@ -37,9 +37,9 @@ graph TB
             end
 
             subgraph "AMD64 Workers"
-                W4["🔵 amd-1\nCHUWI UBox 32G"]:::amdWorker
-                W5["💾 nas\nCWWK X86-P5 N305"]:::amdWorker
-                W6["💻 laptop\nLenovo Legion WSL2"]:::amdWorker
+                W4["🔵 amd-1\nCHUWI AuBox 32G"]:::amdWorker
+                W5["🔵 amd-2\nAMD64 worker"]:::amdWorker
+                W6["💾 nas\nCWWK X86-P5 N305"]:::amdWorker
             end
 
             subgraph "Networking"
@@ -86,9 +86,9 @@ graph TB
     W2["🟠 datahublocal-orpi-2\nOrangePi 5B · 16 GB\nARM64 RK3588\nWorker · Longhorn · Garage"]:::armNode
     W3["🟠 datahublocal-orpi-3\nOrangePi 5B · 16 GB\nARM64 RK3588\nWorker · Longhorn · Garage"]:::armNode
 
-    W4["🔵 datahublocal-amd-1\nCHUWI UBox · 32 GB\nAMD Ryzen 5 6600H\nHeavy Compute Worker"]:::amdNode
-    W5["💾 datahublocal-nas\nCWWK X86-P5 N305 · 16 GB\n3×1 TB HDD RAID + 128 GB NVMe\nNAS Worker · Garage S3 · NFS"]:::amdNode
-    W6["💻 datahublocal-legion-laptop\nLenovo Legion · AMD64\nWSL2 · Dev Worker"]:::amdNode
+    W4["🔵 datahublocal-amd-1\nCHUWI AuBox · 48 GB\nAMD Ryzen 7 8745HS\nHeavy Compute Worker"]:::amdNode
+    W5["💻 datahublocal-amd-2\nLenovo Legion · 24 GB\nAMD Ryzen 5 5600H + RTX 3060M\nOllama · GPU Worker"]:::amdNode
+    W6["💾 datahublocal-nas\nCWWK X86-P5 N305 · 16 GB\n3×1 TB HDD RAID + 128 GB NVMe\nNAS Worker · Garage S3 · NFS"]:::amdNode
 
     UPS --> SW
     SW --> CP
@@ -102,15 +102,15 @@ graph TB
 
 ### Cluster Nodes
 
-| Node | Hardware | Role | CPU Arch | OS |
-|------|----------|------|----------|----|
-| `datahublocal-orpi-0` | OrangePi 4 LTS (4 GB) | Control Plane | ARM64 (RK3399) | Debian 13 |
-| `datahublocal-orpi-1` | OrangePi 5B (16 GB) | Worker | ARM64 (RK3588) | Debian 13 |
-| `datahublocal-orpi-2` | OrangePi 5B (16 GB) | Worker | ARM64 (RK3588) | Debian 13 |
-| `datahublocal-orpi-3` | OrangePi 5B (16 GB) | Worker | ARM64 (RK3588) | Debian 13 |
-| `datahublocal-amd-1` | CHUWI UBox (AMD 6600H, 32 GB) | Worker | AMD64 | Debian 13 |
-| `datahublocal-nas` | CWWK X86-P5 (N305, 16 GB, RAID 3×1TB + 128 GB NVMe) | NAS + Worker | AMD64 | Debian 12 |
-| `datahublocal-legion-laptop` | Lenovo Legion laptop | Dev + Worker | AMD64 (WSL2) | Ubuntu 24.04 |
+| Node                  | Hardware                                            | Role          | CPU                | Cores / Threads | GPU       | RAM  | OS        |
+| --------------------- | --------------------------------------------------- | ------------- | ------------------ | --------------- | --------- | ---- | --------- |
+| `datahublocal-orpi-0` | OrangePi 4 LTS                                      | Control Plane | ARM64 (RK3399)     | 6 / 6           | -         | 4GB  | Debian 13 |
+| `datahublocal-orpi-1` | OrangePi 5B (16 GB)                                 | Worker        | ARM64 (RK3588)     | 8 / 8           | -         | 16GB | Debian 13 |
+| `datahublocal-orpi-2` | OrangePi 5B (16 GB)                                 | Worker        | ARM64 (RK3588)     | 8 / 8           | -         | 16GB | Debian 13 |
+| `datahublocal-orpi-3` | OrangePi 5B (16 GB)                                 | Worker        | ARM64 (RK3588)     | 8 / 8           | -         | 16GB | Debian 13 |
+| `datahublocal-amd-1`  | CHUWI AuBox (, 48 GB)                               | Heavy worker  | AMD64 (AMD 8745HS) | 8 / 16          | Rad 680   | 48GB | Debian 13 |
+| `datahublocal-amd-2`  | Lenovo Legion (AMD Ryzen 5 5600H, 24 GB, RTX 3060M) | GPU worker    | AMD64 (AMD 5600H)  | 6 / 12          | RTX 3060M | 24GB | Debian 13 |
+| `datahublocal-nas`    | CWWK X86-P5 (N305, 16 GB, RAID 3×1TB + 128 GB NVMe) | NAS + Worker  | AMD64 (Intel N305) | 8 / 8           | -         | 16GB | Debian 12 |
 
 **Kubernetes distribution:** K3s v1.36 (lightweight, production-ready)  
 **Container runtime:** containerd 2.2
@@ -123,27 +123,27 @@ graph TB
 
 Services are organized into **namespaces by concern**, each managed as a separate ArgoCD Application:
 
-| Namespace | Contents |
-|-----------|----------|
+| Namespace     | Contents                                                                                                                         |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `kube-system` | K3s system components, Traefik, Longhorn CSI, cert-manager, ExternalDNS, reloader, reflector, snapshot-controller, NVIDIA plugin |
-| `automation` | ArgoCD, n8n, Velero, Kopia backup agents |
-| `data` | Airflow, Trino, Superset, Redpanda, Nessie, Spark, PostgreSQL, Garage, Ollama, Open WebUI, Valkey |
-| `monitoring` | Prometheus, AlertManager, Grafana, Loki, Promtail, Robusta, Speedtest exporter |
-| `security` | cert-manager, Dex (OIDC), OAuth2-proxy, Tailscale |
-| `media` | CommaFeed (RSS), MusicGrabber |
-| `other` | Homepage dashboard, ConvertX, IT Tools, Mazanoke, Omni Tools, Stirling PDF |
+| `automation`  | ArgoCD, n8n, Velero, Kopia backup agents                                                                                         |
+| `data`        | Airflow, Trino, Superset, Redpanda, Polaris, Spark, PostgreSQL, Garage, Ollama, Open WebUI, Valkey                               |
+| `monitoring`  | Prometheus, AlertManager, Grafana, Loki, Promtail, Robusta, Speedtest exporter                                                   |
+| `security`    | cert-manager, Dex (OIDC), OAuth2-proxy, Tailscale                                                                                |
+| `media`       | CommaFeed (RSS), MusicGrabber                                                                                                    |
+| `other`       | Homepage dashboard, ConvertX, IT Tools, Mazanoke, Omni Tools, Stirling PDF                                                       |
 
 ---
 
 ## Networking & Access
 
-| Method | Use Case |
-|--------|----------|
+| Method                    | Use Case                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------- |
 | **Traefik IngressRoutes** | Internal HTTP/HTTPS routing for all web UIs (Grafana, Superset, ArgoCD, etc.) |
-| **Tailscale VPN** | Secure remote access from anywhere — no port forwarding needed |
-| **ExternalDNS** | Automatically manages DNS records for exposed services |
-| **cert-manager** | Automatic TLS certificates via Let's Encrypt |
-| **OAuth2-proxy + Dex** | SSO authentication for all web services using OIDC |
+| **Tailscale VPN**         | Secure remote access from anywhere — no port forwarding needed                |
+| **ExternalDNS**           | Automatically manages DNS records for exposed services                        |
+| **cert-manager**          | Automatic TLS certificates via Let's Encrypt                                  |
+| **OAuth2-proxy + Dex**    | SSO authentication for all web services using OIDC                            |
 
 ---
 
@@ -151,11 +151,11 @@ Services are organized into **namespaces by concern**, each managed as a separat
 
 Storage is split by access pattern and cost profile — fast NVMe for latency-sensitive workloads, spinning HDD RAID for bulk data that doesn't need IOPS.
 
-| Tier | Technology | Backing hardware | Use case |
-|------|-----------|-----------------|----------|
-| **High-performance block** | Longhorn | NVMe SSDs on OrangePi 5B nodes | Stateful apps that need low latency: PostgreSQL, Redpanda, Valkey — replicated across nodes for HA |
-| **High-capacity object (S3)** | Garage | NVMe SSD on CWWK NAS | Data lake (Iceberg tables, Spark outputs, Loki logs, backups) — fast random reads for analytics workloads without the cost of full NVMe replicas across every node |
-| **Bulk shared filesystem** | NFS (CWWK NAS RAID) | 3×1 TB HDD RAID | Large sequential files: media library, raw data exports, archives — big and cheap, latency-tolerant |
+| Tier                          | Technology          | Backing hardware               | Use case                                                                                                                                                           |
+| ----------------------------- | ------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **High-performance block**    | Longhorn            | NVMe SSDs on OrangePi 5B nodes | Stateful apps that need low latency: PostgreSQL, Redpanda, Valkey — replicated across nodes for HA                                                                 |
+| **High-capacity object (S3)** | Garage              | NVMe SSD on CWWK NAS           | Data lake (Iceberg tables, Spark outputs, Loki logs, backups) — fast random reads for analytics workloads without the cost of full NVMe replicas across every node |
+| **Bulk shared filesystem**    | NFS (CWWK NAS RAID) | 3×1 TB HDD RAID                | Large sequential files: media library, raw data exports, archives — big and cheap, latency-tolerant                                                                |
 
 > **Design principle:** Put the _right_ data on the _right_ storage. Longhorn replicas on NVMe make PostgreSQL snappy; Garage on a single NVMe NAS node is fast enough for object storage at a fraction of the cost; HDD RAID covers everything that just needs capacity.
 
@@ -163,7 +163,7 @@ Storage is split by access pattern and cost profile — fast NVMe for latency-se
 
 ## Observability
 
-All services expose Prometheus metrics via `ServiceMonitor` resources. Logs are shipped via Promtail to Loki. Alerts flow from Prometheus AlertManager to notification channels.
+Prometheus runs as a single replica in `monitoring` and discovers scrape targets through 20 `ServiceMonitor` resources across the cluster. Logs are shipped via Promtail to Loki. Alerts flow from Prometheus AlertManager to Robusta and notification channels.
 
 ```mermaid
 flowchart LR
@@ -224,8 +224,8 @@ flowchart LR
         Core["datahub-local-core\n(Helmfile)\n• ApplicationSets\n• All services\n• 7 namespaces"]:::core
     end
 
-    subgraph "Workflow Layer"
-        Workflows["datahub-local-workflows\n• n8n flows\n• Airflow DAGs\n• SQLMesh models"]:::workflow
+    subgraph "AI Layer"
+        AI["datahub-local-ai\n• n8n AI\n• Airflow DAGs\n• dbt · dlt"]:::workflow
     end
 
     subgraph "K3s Cluster"
@@ -237,7 +237,7 @@ flowchart LR
     Ansible -->|"2. installs"| ArgoCD
     Secrets -->|"3. sync"| ArgoCD
     Core -->|"4. sync"| ArgoCD
-    Workflows -->|"5. sync"| ArgoCD
+    AI -->|"5. sync"| ArgoCD
     ArgoCD -->|"reconciles"| Services
 ```
 
@@ -246,5 +246,5 @@ flowchart LR
 1. **Bootstrap** — Ansible provisions OS on bare metal, installs K3s, and deploys ArgoCD as the first application.
 2. **Secrets** — ArgoCD syncs `datahub-local-secrets` (private repo) to deploy encrypted secrets into the `security` namespace.
 3. **Core** — ArgoCD syncs `datahub-local-core`, which contains Helmfile-based ApplicationSets that expand into one Application per namespace × service.
-4. **Workflows** — n8n flow JSONs, Airflow DAG Python files, and SQLMesh models are synced from `datahub-local-workflows`.
+4. **AI** — n8n AI definitions, Airflow DAG Python files, dbt/dlt projects, MCP tools, and Sympozium ensembles are synced from `datahub-local-ai`.
 5. **Reconciliation** — ArgoCD continuously watches all repos and auto-syncs on any commit to `HEAD`.

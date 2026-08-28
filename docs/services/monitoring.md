@@ -1,6 +1,6 @@
 # Monitoring & Observability
 
-The monitoring stack provides full-stack observability: metrics, logs, alerts, and Kubernetes-level automation. Every service in the cluster exposes Prometheus metrics, ships logs to Loki, and is covered by AlertManager rules.
+The monitoring stack provides full-stack observability: metrics, logs, alerts, and Kubernetes-level automation. Coverage is service-dependent: scrape targets are explicitly discovered through `ServiceMonitor` resources, logs are shipped to Loki, and alert rules are routed through AlertManager.
 
 ---
 
@@ -51,17 +51,61 @@ flowchart TB
 
 ---
 
+## Proactive AI Monitoring
+
+The cluster now has a proactive monitoring layer above traditional metrics,
+logs, and alert rules. Its purpose is not to replace Prometheus or AlertManager,
+but to continuously inspect signals that are difficult to express as a single
+rule and provide an operational summary with context.
+
+The execution chain is:
+
+```mermaid
+flowchart LR
+        Prometheus["Prometheus\nmetrics + alerts"] --> MCP["MCP fact tools"]
+        Loki["Loki\nlogs"] --> MCP
+        Kubernetes["Kubernetes API"] --> MCP
+        MCP --> Agents["AI agents\nfocused personas"]
+        Agents --> Sympozium["Sympozium\ncontroller"]
+        Sympozium --> Ensembles["Ensembles\ncoordinated agent groups"]
+        Ensembles --> Reports["Slack reports\nfindings + context"]
+```
+
+### AI → agents → Sympozium → ensembles
+
+- **AI** — Ollama serves the local `qwen3.5:4b` model on
+    `datahublocal-amd-2`. The model provides reasoning, correlation, and concise
+    operational summaries.
+- **Agents** — each agent is a narrow persona with a specific question,
+    schedule, prompt, memory, and allowlisted MCP tools. Examples include the SRE
+    sentinel, endpoint warden, database steward, service janitor, and GitOps
+    auditor.
+- **Sympozium** — the Kubernetes-native control plane that creates and runs the
+    agent schedules, injects prompts and memory, applies policy, and delivers
+    results.
+- **Ensembles** — groups of related agents deployed as Sympozium custom
+    resources. The active groups are `homelab-ops`, `homelab-responder`, and
+    `homelab-reviewer`, each with a different responsibility and trust boundary.
+
+The result is a second monitoring loop: Prometheus detects measurable conditions;
+the AI layer investigates trends, chronic alerts, missing signals, and changes
+across nodes and services; Sympozium delivers the resulting report to the
+appropriate channel.
+
+---
+
 ## Services
 
 ### :material-chart-timeline-variant: [Prometheus + AlertManager](https://github.com/prometheus-operator/kube-prometheus-stack)
 
 <div class="svc-tags"><span class="svc-tag">monitoring</span> <span class="svc-tag">metrics</span> <span class="svc-tag">alerting</span> <span class="svc-tag">time-series</span></div>
 
-Prometheus scrapes metrics from every service that exposes a `/metrics` endpoint, as well as from node-exporter (7 nodes) and kube-state-metrics. AlertManager routes firing alerts through configurable receivers. All scrape targets are auto-discovered via `ServiceMonitor` resources.
+Prometheus runs as one replica in `monitoring` and scrapes node-exporter on all 7 nodes, kube-state-metrics, Kubernetes control-plane targets, and application exporters. The live cluster currently has 20 `ServiceMonitor` resources. AlertManager routes firing alerts through configurable receivers, and targets are discovered via `ServiceMonitor` resources.
 
 **Custom exporters running:**
 
 - `node-exporter-textfiles` — custom metrics collected via shell scripts, exposed as Prometheus textfile format (custom open-source [project](https://github.com/datahub-local/node-exporter-textfiles))
+- `ollama-metrics` — transparent Ollama proxy and sidecar exposing token usage, request latency, time-to-first-token, inference speed, model status, and model memory metrics ([open-source project](../open-source/index.md))
 - `speedtest-exporter` — periodic internet speed test results as metrics
 
 ---
@@ -83,7 +127,7 @@ Grafana provides dashboards for every layer of the stack, with SSO via OAuth2 / 
 
 <div class="svc-tags"><span class="svc-tag">logging</span> <span class="svc-tag">log-aggregation</span> <span class="svc-tag">observability</span></div>
 
-Promtail runs on every node as a DaemonSet, tailing all pod log files and shipping them to Loki with labels (`namespace`, `pod`, `container`). Loki stores logs in Garage S3 for long-term retention. All logs are queryable from Grafana using LogQL. Components: Loki (2 pods + gateway), Promtail (DaemonSet — 1 per node).
+Promtail runs as a DaemonSet with one pod per node, tailing pod log files and shipping them to Loki with labels (`namespace`, `pod`, `container`). Loki stores logs in Garage S3 for long-term retention. All logs are queryable from Grafana using LogQL. The current Loki deployment is a single stateful Loki pod plus a gateway.
 
 ---
 

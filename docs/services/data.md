@@ -17,7 +17,7 @@ flowchart LR
     subgraph Storage
         Garage["Garage S3\n(Object Store / Data Lake)"]
         PG["PostgreSQL\n(Relational DB)"]
-        Nessie["Project Nessie\n(Iceberg Catalog)"]
+        Polaris["Apache Polaris\n(Iceberg Catalog)"]
         Valkey["Valkey\n(In-Memory Cache)"]
     end
 
@@ -74,7 +74,7 @@ Redpanda replaces Kafka with a leaner, faster, single-binary implementation. Use
 
 ---
 
-### :material-table: [Project Nessie](https://projectnessie.org/)
+### :material-table: [Apache Polaris](https://polaris.apache.org/)
 
 <div class="svc-tags"><span class="svc-tag">data-catalog</span> <span class="svc-tag">iceberg</span> <span class="svc-tag">versioning</span> <span class="svc-tag">lakehouse</span></div>
 

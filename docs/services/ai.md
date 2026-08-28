@@ -1,11 +1,12 @@
 # AI Services
 
-DataHub.local uses a **hybrid cloud AI strategy** — two complementary providers cover different use cases, keeping costs under control without compromising capability.
+DataHub.local uses a **hybrid AI strategy**: local inference remains available for private or offline workloads, while cloud providers supply higher-capability models for interactive work and automation.
 
-| Use case | Provider |
-|---|---|
-| **Interactive chat & coding assistant** | Claude (Anthropic) |
-| **Agents & automated workflows** | Gemini (free plan) + OpenRouter |
+| Use case                                | Provider                                    |
+| --------------------------------------- | ------------------------------------------- |
+| **Interactive chat & coding assistant** | Claude (Anthropic)                          |
+| **Private/local inference**             | Ollama + Open WebUI                         |
+| **Agents & automated workflows**        | Gemini (free plan) + OpenRouter + Sympozium |
 
 ---
 
@@ -13,10 +14,12 @@ DataHub.local uses a **hybrid cloud AI strategy** — two complementary provider
 
 ```mermaid
 flowchart LR
-    subgraph "Cloud Inference"
+    subgraph "Inference"
         Claude["Claude\n(Anthropic)"]
         Gemini["Google Gemini\n(free plan)"]
         OpenRouter["OpenRouter\n(multi-model gateway)"]
+        Ollama["Ollama\n(local inference)"]
+        WebUI["Open WebUI\n(private chat)"]
     end
 
     subgraph "Automation"
@@ -27,6 +30,8 @@ flowchart LR
     User["👤 User"]
 
     User -->|"chat / coding"| Claude
+    User -->|"private chat"| WebUI
+    WebUI --> Ollama
     Gemini -->|"OpenAI-compatible API"| n8n
     OpenRouter -->|"OpenAI-compatible API"| n8n
     OpenRouter -->|"OpenAI-compatible API"| Airflow
@@ -40,7 +45,7 @@ flowchart LR
 
 <div class="svc-tags"><span class="svc-tag">llm</span> <span class="svc-tag">chat</span> <span class="svc-tag">coding-assistant</span> <span class="svc-tag">cloud</span></div>
 
-Primary AI assistant for interactive use: chat, pair programming, document analysis, and ad-hoc reasoning. Claude covers all interactive use cases via Claude.ai and Claude Code (CLI). It replaces what Open WebUI + Ollama would have done locally, with significantly better quality and no infrastructure overhead. Models: Claude Sonnet (default), Opus for complex tasks.
+Primary cloud assistant for interactive use: chat, pair programming, document analysis, and ad-hoc reasoning. Claude is used through Claude.ai and Claude Code (CLI). Models: Claude Sonnet (default), Opus for complex tasks.
 
 ---
 
@@ -79,3 +84,15 @@ n8n hosts all AI agent workflows, combining AI nodes (AI Agent, OpenAI → Gemin
 - 📄 **Document processing** — extract structured data from PDFs using LLM + regex
 - 🔔 **Alert enrichment** — take Prometheus alerts, query Loki for logs, generate root cause hypotheses
 - 🏠 **Home automation** — integrate with Home Assistant events and produce natural-language status reports
+
+---
+
+### :material-server-security: Ollama + Open WebUI
+
+Ollama runs on `datahublocal-amd-2`, the Lenovo Legion GPU worker, and serves `qwen3.5:4b` for local inference consumed by Sympozium agents. Open WebUI provides a private browser interface. GPU scheduling is provided by the NVIDIA device plugin; workloads must not assume every node has a GPU.
+
+---
+
+### :material-robot-excited: Sympozium
+
+The `datahub-local-ai` repository deploys Sympozium ensembles into `automation`. The active ensembles are `homelab-ops`, `homelab-responder`, and `homelab-reviewer`. The repository also contains a Prometheus/Kubernetes MCP server under `agents/mcp` for bounded fact gathering.

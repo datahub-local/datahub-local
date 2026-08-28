@@ -1,43 +1,40 @@
 # Roadmap
 
-What's coming next for DataHub.local — priorities are ordered by status: done, in progress, near-term, and medium-term.
+What's coming next for DataHub.local — completed work is listed first, followed by active work and ideas for what comes next.
+
+---
+
+| Item                              | Details                                                                                                                    |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Homelab hardware & physical setup | Mixed ARM64/AMD64 cluster in a MicroATX case; CyberPower UPS; HORACO 2.5GbE managed switch                                 |
+| K3s Kubernetes cluster            | 7-node heterogeneous cluster with GitOps, Longhorn, Traefik, cert-manager, Tailscale, gVisor, and multiple runtime classes |
+| Core services (GitOps)            | ArgoCD ApplicationSet pipeline; encrypted secrets; Velero + Kopia backups; SSO via Dex                                     |
+| Data Lakehouse Infra              | Trino + Apache Polaris + Garage S3 + CloudNative PostgreSQL + Apache Spark                                                 |
+| Streaming infrastructure          | Redpanda 3-broker cluster (Kafka-compatible)                                                                               |
+| Local and agentic AI              | Ollama + Open WebUI, Sympozium autonomous ensembles, and Prometheus/Kubernetes MCP tooling                                 |
+| AI automation                     | n8n with AI nodes, LinkedIn Professional Visibility, and AI Diagram Generation                                             |
+| Observability stack               | Prometheus + Grafana + Loki + Promtail + Robusta + AlertManager; 20 ServiceMonitors                                        |
+| Open source publishing            | [spark-apps-helm, garage-helm, servarr, node-exporter-textfiles, ollama-metrics](open-source/index.md)                     |
 
 ---
 
 ## ✅ Completed
 
-| Item | Details |
-|------|---------|
-| Homelab hardware & physical setup | Mixed ARM64/AMD64 cluster in a MicroATX case; CyberPower UPS; HORACO 2.5GbE managed switch |
-| K3s Kubernetes cluster | 7-node cluster with GitOps, Longhorn, Traefik, cert-manager, Tailscale |
-| Core services (GitOps) | ArgoCD ApplicationSet pipeline; encrypted secrets; Velero + Kopia backups; SSO via Dex |
-| Data Lakehouse Infra | Trino + Project Nessie + Garage S3 + CloudNative PostgreSQL + Apache Spark |
-| Streaming infrastructure | Redpanda 3-broker cluster (Kafka-compatible) |
-| Local AI inference | Ollama + Open WebUI + VUI voice interface |
-| Workflow automation | n8n with AI nodes |
-| Active n8n Workflows | LinkedIn Professional Visibility workflow; AI Diagram Generation workflow |
-| Observability stack | Prometheus + Grafana + Loki + Robusta + AlertManager |
-| Open source publishing | [spark-apps-helm, garage-helm, servarr](open-source/index.md) |
+### :material-robot-happy: AI-Powered Personal AI (n8n + LLMs)
+
+**Completed:** Automated repetitive personal tasks using n8n AI nodes and LLM integrations.
+
+| AI capability          | Description                                                                                             | Status |
+| ---------------------- | ------------------------------------------------------------------------------------------------------- | ------ |
+| 📰 Content post updater | Pull trending topics from Commafeed + Google Trends MCP → generate an updated version of posts to share | ✅ Done |
 
 ---
 
-## 🔄 In Progress
+### :material-table-arrow-right: Data Lakehouse — DBT + dlt + Iceberg
 
-### :material-robot-happy: AI-Powered Personal Workflows (n8n + LLMs)
+**Completed:** Replaced ad-hoc Airflow transformations with [DBT](https://www.getdbt.com/) models and [dlt](https://dlthub.com/) ingestion/export pipelines.
 
-**Goal:** Automate repetitive personal tasks using local LLMs connected via n8n workflows.
-
-| Workflow | Description | Status |
-|---------|-------------|--------|
-| 📰 Content post updater | Pull trending topics from Commafeed + Google Trends MCP → generate an updated version of posts to share | 🔄 Building |
-
----
-
-### :material-table-arrow-right: Data Lakehouse — SQLMesh + Iceberg
-
-**Goal:** Replace ad-hoc Airflow ETL scripts with a proper transformation layer using [SQLMesh](https://sqlmesh.com/).
-
-SQLMesh brings software engineering practices to SQL transformations: version control, automated testing, CI/CD for data models, and incremental processing.
+DBT provides version-controlled, tested SQL transformations, while dlt handles ingestion and reverse-ETL integration around the Iceberg lakehouse.
 
 ```mermaid
 flowchart LR
@@ -51,39 +48,36 @@ flowchart LR
     Staging["🔄 Staging Layer\n(Iceberg)"]:::layer
     Marts["✨ Mart Layer\n(Iceberg)"]:::layer
     Superset["📊 Superset\nDashboards"]:::viz
-    Nessie["🗃️ Project Nessie\n(catalog)"]:::catalog
+    Polaris["🗃️ Apache Polaris\n(REST catalog)"]:::catalog
 
     Sources -->|"Airflow ingest"| Raw
-    Raw -->|"SQLMesh staging"| Staging
-    Staging -->|"SQLMesh transform"| Marts
+    Raw -->|"DBT staging"| Staging
+    Staging -->|"DBT transform"| Marts
     Marts -->|"Trino SQL"| Superset
-    Nessie -.->|"versions"| Raw & Staging & Marts
+    Polaris -.->|"catalog"| Raw & Staging & Marts
 ```
 
 ---
 
-## 📋 Near-Term
-
 ### :material-robot: Move to Claude — AI-Assisted Development
 
-**Goal:** Adopt Claude as the primary AI assistant across the entire project — documentation, coding, repo management, and operations.
+**Completed:** Adopted Claude as the primary AI assistant across the project for documentation, coding, repository management, and operations.
 
-- Use Claude Code for all coding tasks and doc updates in every repository
-- Initialise every datahub-local repo with a `CLAUDE.md` and project-specific skills
-- Create reusable Claude skills for common tasks (deploy, lint, review, update docs)
-- Use Claude for ongoing documentation maintenance so the docs stay in sync with the cluster
+- Claude Code is used for coding tasks and documentation updates
+- DataHub.local repositories are being standardised with `CLAUDE.md` guidance
+- Reusable workflows cover deployment, linting, review, and documentation maintenance
 
 ---
 
 ### :material-receipt-text: Invoice Service — Personal Spending Intelligence
 
-**Goal:** Build a real-time pipeline that automatically ingests supermarket invoices and turns them into actionable spending insights.
+**Completed:** Built a real-time pipeline that ingests supermarket invoices, stores structured data in Iceberg, transforms it with DBT, and integrates ingestion/export with dlt.
 
 **How it works:**
 
 1. **Ingestion** — fetch invoice emails from Spanish supermarkets (Mercadona, Lidl, etc.) or extract receipts from Google Photos via OCR
 2. **Storage** — parse and store structured line-item data in the Iceberg data lake
-3. **Transformation** — SQLMesh models aggregate spend by category, product, and store over time
+3. **Transformation** — DBT models aggregate spend by category, product, and store over time
 4. **Notifications** — send a weekly digest via n8n with highlights like:
     - 💸 Current month spend by category
     - 📈 Products whose price has risen the most
@@ -105,18 +99,16 @@ flowchart LR
 
     Email -->|"fetch + OCR"| Airflow
     Airflow -->|"structured rows"| Iceberg
-    Iceberg -->|"SQLMesh models"| Marts
+    Iceberg -->|"DBT models"| Marts
     Marts -->|"Trino query"| n8n
     n8n -->|"weekly digest"| Notify
 ```
 
 ---
 
-## 📅 Medium-Term
-
 ### :material-robot-excited: AI Agents — Sympozium
 
-**Goal:** Autonomous LLM-powered SRE agents that monitor, diagnose, and remediate cluster issues without human intervention.
+**Completed:** Three active ensembles (`homelab-ops`, `homelab-responder`, and `homelab-reviewer`) run in `automation`, with permissions, sandboxing, evaluation, and human approval boundaries implemented.
 
 ```mermaid
 flowchart LR
@@ -138,22 +130,30 @@ flowchart LR
     Robusta -->|"enriched alert"| Agent
     Agent -->|"query logs"| Loki
     Agent -->|"query metrics"| Prometheus
-    Agent -->|"kubectl exec"| K8s
+    Agent -->|"bounded Kubernetes tools"| K8s
     Agent -->|"run playbook"| n8n
     Agent -->|"report"| Notify
 ```
 
 ---
 
+## 🔄 In Progress
+
 ### :material-server-network: MCP Servers for AI Tooling
 
-**Goal:** Expose cluster capabilities as [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers so AI assistants can interact with the homelab directly.
+**Status:** In progress. The first implementation is available in `datahub-local-ai/agents/mcp`, with Prometheus and Kubernetes-backed homelab facts tools. The next step is to expand coverage and keep all mutating operations behind explicit policy and approval checks.
 
-| Server | Exposes |
-|--------|---------|
-| `mcp-prometheus` | Query metrics, inspect alerts, get service health |
-| `mcp-loki` | Search logs, tail pod output, find errors |
-| `mcp-kubernetes` | List / describe / restart workloads safely |
-| `mcp-trino` | Run SQL queries against the data lakehouse |
-| `mcp-nessie` | Browse Iceberg catalog, list tables, inspect schemas |
-| `mcp-garage` | List buckets / objects, check storage usage |
+| Server           | Exposes                                              |
+| ---------------- | ---------------------------------------------------- |
+| `mcp-prometheus` | Query metrics, inspect alerts, get service health    |
+| `mcp-loki`       | Search logs, tail pod output, find errors            |
+| `mcp-kubernetes` | List / describe / restart workloads safely           |
+| `mcp-trino`      | Run SQL queries against the data lakehouse           |
+| `mcp-polaris`    | Browse Iceberg catalog, list tables, inspect schemas |
+| `mcp-garage`     | List buckets / objects, check storage usage          |
+
+## 📋 Next
+
+Additional platform and AI capabilities will be added as they are designed, implemented, tested, and validated against the live cluster.
+
+More soon…

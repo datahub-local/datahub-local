@@ -21,8 +21,8 @@ flowchart TD
         direction LR
         Secrets["datahub-local-secrets\nSealed Secrets"]
         Core["datahub-local-core\nPlatform services"]
-        Workflows["datahub-local-workflows\nn8n · Airflow · SQLMesh"]
-        Secrets --> Core --> Workflows
+        AI["datahub-local-ai\nn8n · Airflow · dbt · dlt"]
+        Secrets --> Core --> AI
     end
 
     DietPi -->|"SSH ready"| K3s
@@ -134,7 +134,7 @@ After this phase completes, `kubectl get nodes` shows all nodes `Ready` and Argo
 
 ## Phase 3 — ArgoCD GitOps
 
-From this point ArgoCD takes over entirely. It reconciles three repositories in dependency order — no manual `helm install` or `kubectl apply` needed.
+From this point ArgoCD takes over entirely. It reconciles the secrets, core, AI, and workflow repositories in dependency order — no manual `helm install` or `kubectl apply` is needed for normal service changes.
 
 ```mermaid
 flowchart LR
@@ -142,18 +142,20 @@ flowchart LR
 
     ArgoCD -->|"sync 1"| Secrets
     ArgoCD -->|"sync 2 — after secrets healthy"| Core
-    ArgoCD -->|"sync 3 — after core healthy"| Workflows
+    ArgoCD -->|"sync 3 — after core healthy"| AI
+    ArgoCD -->|"sync 4 — after AI/core healthy"| AI
 
     Secrets["datahub-local-secrets\n───────────────\nDB passwords\nAPI keys\nTLS certs\nOAuth credentials"]
     Core["datahub-local-core\n───────────────\nTraefik · cert-manager\nLonghorn · Prometheus\nLoki · Trino · Airflow\nRedpanda · Superset …"]
-    Workflows["datahub-local-workflows\n───────────────\nn8n flows\nAirflow DAGs\nSQLMesh models"]
+    AI["datahub-local-ai\n───────────────\nMCP · Sympozium\nAirflow · dbt · dlt"]
+    AI["datahub-local-ai\n───────────────\nn8n · Airflow\ndbt · dlt · Sympozium · MCP"]
 ```
 
-| Stage | Repository | What it deploys |
-|---|---|---|
+| Stage           | Repository                                                                      | What it deploys                                              |
+| --------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | **1 — Secrets** | [datahub-local-secrets](https://github.com/datahub-local/datahub-local-secrets) | Sealed Secrets — credentials needed by all platform services |
-| **2 — Core** | [datahub-local-core](https://github.com/datahub-local/datahub-local-core) | All platform services via Helmfile ApplicationSets |
-| **3 — Workflows** | [datahub-local-workflows](https://github.com/datahub-local/datahub-local-workflows) | n8n flows, Airflow DAGs, SQLMesh models |
+| **2 — Core**    | [datahub-local-core](https://github.com/datahub-local/datahub-local-core)       | All platform services via Helmfile ApplicationSets           |
+| **3 — AI**      | [datahub-local-ai](https://github.com/datahub-local/datahub-local-ai)           | n8n, Airflow, dbt, dlt, Sympozium, MCP                       |
 
 ### Monitoring the rollout
 

@@ -16,7 +16,7 @@ flowchart TB
         BOOTSTRAP["datahub-local-bootstrap\nAnsible playbooks"]:::repo
         CORE["datahub-local-core\nHelm · ArgoCD ApplicationSets"]:::repo
         SECRETS["datahub-local-secrets\nEncrypted config"]:::repo
-        WORKFLOWS["datahub-local-workflows\nn8n · Airflow · SQLMesh"]:::repo
+        AI["datahub-local-ai\nn8n · Airflow · dbt · dlt\nMCP · Sympozium"]:::repo
         DOCS["datahub-local\nDocumentation"]:::repo
     end
 
@@ -33,12 +33,12 @@ flowchart TB
     RENOVATE -->|"auto PRs on schedule"| BOOTSTRAP
     RENOVATE -->|"auto PRs on schedule"| CORE
     RENOVATE -->|"auto PRs on schedule"| SECRETS
-    RENOVATE -->|"auto PRs on schedule"| WORKFLOWS
+    RENOVATE -->|"auto PRs on schedule"| AI
     RENOVATE -->|"auto PRs on schedule"| DOCS
 
     BOOTSTRAP --> GHA
     CORE --> GHA
-    WORKFLOWS --> GHA
+    AI --> GHA
     DOCS --> GHA
 
     GHA -->|"ansible-lint · syntax check"| BOOTSTRAP
@@ -47,7 +47,7 @@ flowchart TB
 
     CORE -->|"watches HEAD"| ARGOCD
     SECRETS -->|"watches HEAD"| ARGOCD
-    WORKFLOWS -->|"watches HEAD"| ARGOCD
+    AI -->|"watches HEAD"| ARGOCD
     BOOTSTRAP -.->|"after merge (manual)"| ANSIBLE
 ```
 
@@ -62,16 +62,16 @@ flowchart TB
 Central source of truth for every part of the platform. The organisation is split into focused repositories following a layered deployment model — each layer only depends on the one below it.
 
 ```
-bootstrap  →  secrets  →  core  →  workflows
+bootstrap  →  secrets  →  core  →  AI
 ```
 
-| Repository | Role | Deployed by |
-|---|---|---|
-| [datahub-local](https://github.com/datahub-local/datahub-local) | Documentation site (this site) | GitHub Actions → GitHub Pages |
-| [datahub-local-bootstrap](https://github.com/datahub-local/datahub-local-bootstrap) | Ansible playbooks — OS provisioning, K3s install, ArgoCD bootstrap | Manual `ansible-playbook` run |
-| [datahub-local-secrets](https://github.com/datahub-local/datahub-local-secrets) | Encrypted secrets and private config | ArgoCD (manual sync) |
-| [datahub-local-core](https://github.com/datahub-local/datahub-local-core) | Helmfile ApplicationSets — all platform services | ArgoCD (manual sync) |
-| [datahub-local-workflows](https://github.com/datahub-local/datahub-local-workflows) | n8n flows, Airflow DAGs, SQLMesh models | ArgoCD (manual sync) |
+| Repository                                                                          | Role                                                                           | Deployed by                   |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ----------------------------- |
+| [datahub-local](https://github.com/datahub-local/datahub-local)                     | Documentation site (this site)                                                 | GitHub Actions → GitHub Pages |
+| [datahub-local-bootstrap](https://github.com/datahub-local/datahub-local-bootstrap) | Ansible playbooks — OS provisioning, K3s install, ArgoCD bootstrap             | Manual `ansible-playbook` run |
+| [datahub-local-secrets](https://github.com/datahub-local/datahub-local-secrets)     | Encrypted secrets and private config                                           | ArgoCD (manual sync)          |
+| [datahub-local-core](https://github.com/datahub-local/datahub-local-core)           | Helmfile ApplicationSets — all platform services                               | ArgoCD (manual sync)          |
+| [datahub-local-ai](https://github.com/datahub-local/datahub-local-ai)               | MCP server, Sympozium ensembles, n8n flows, Airflow DAGs, dbt and dlt projects | GitHub Actions + ArgoCD       |
 
 All changes flow through pull requests, providing a full audit trail before anything reaches the cluster or production environment.
 
@@ -83,13 +83,13 @@ All changes flow through pull requests, providing a full audit trail before anyt
 
 Runs quality gates on every pull request and on every merge to `main`. Pipelines are tailored per repository type — nothing lands in `main` without passing its full gate.
 
-| Workload type | Checks applied |
-|---|---|
+| Workload type          | Checks applied                                                       |
+| ---------------------- | -------------------------------------------------------------------- |
 | Python services & DAGs | Linting (`ruff`, `flake8`), unit tests (`pytest`), integration tests |
-| Helm charts | `helm lint`, `helm template` dry-run, schema validation |
-| Ansible playbooks | `ansible-lint`, syntax check |
-| Docker images | Build, push to registry |
-| SQLMesh models | Model parse, DAG validation |
+| Helm charts            | `helm lint`, `helm template` dry-run, schema validation              |
+| Ansible playbooks      | `ansible-lint`, syntax check                                         |
+| Docker images          | Build, push to registry                                              |
+| DBT and dlt projects   | Model parsing, pipeline tests, and integration validation            |
 
 ---
 
@@ -99,13 +99,13 @@ Runs quality gates on every pull request and on every merge to `main`. Pipelines
 
 Keeps every dependency current without manual tracking. Renovate scans all repositories on a schedule and opens a pull request for each detected version bump — packages, container images, Helm chart versions, GitHub Actions, and Python dependencies are all covered.
 
-| Repository | Renovate behaviour |
-|---|---|
-| `datahub-local` (docs) | PRs created **automatically**; GitHub Actions validates before merge |
-| `datahub-local-core` | PRs created **automatically**; Helm lint must pass; ArgoCD **auto-syncs** after merge |
-| `datahub-local-secrets` | PRs created **automatically** |
-| `datahub-local-workflows` | PRs created **automatically**; pipeline validation must pass; ArgoCD **auto-syncs** after merge |
-| `datahub-local-bootstrap` | Renovate PRs created **automatically**, but the Ansible playbook must be **run manually** after merge |
+| Repository                | Renovate behaviour                                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `datahub-local` (docs)    | PRs created **automatically**; GitHub Actions validates before merge                                                  |
+| `datahub-local-core`      | PRs created **automatically**; Helm lint must pass; ArgoCD **auto-syncs** after merge                                 |
+| `datahub-local-secrets`   | PRs created **automatically**                                                                                         |
+| `datahub-local-ai`        | PRs created **automatically**; Python tests, linting, and Helm rendering must pass; ArgoCD **auto-syncs** after merge |
+| `datahub-local-bootstrap` | Renovate PRs created **automatically**, but the Ansible playbook must be **run manually** after merge                 |
 
 !!! info "ArgoCD auto-sync: applies resources, skips deletions"
     ArgoCD **auto-sync is enabled** — commits to watched repositories are reconciled to the cluster automatically. However, auto-sync deliberately **excludes prune**: resources that no longer exist in Git are not automatically deleted. Removing a service, renaming a Helm release, or any other deletion requires a **manual sync with prune** enabled in the ArgoCD UI.

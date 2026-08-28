@@ -56,7 +56,7 @@ hide:
 ## What is DataHub.local?
 
 **DataHub.local** is a personal homelab project that runs a complete, enterprise-grade data platform on hardware.
-Think of it as a personal Snowflake/Databricks — running at home, on a Kubernetes cluster made of OrangePi boards, a NAS, and a laptop.
+Think of it as a personal Snowflake/Databricks — running at home, on a Kubernetes cluster made of OrangePi boards, AMD64 workers, and a NAS.
 
 It is simultaneously a **portfolio project**, a **learning environment**, and a **real working platform** used daily for data workflows, media, AI inference, and home automation.
 

@@ -45,7 +45,7 @@ Building a homelab is as much about learning from failures as it is about gettin
 - **Software compatibility** — not all container images have ARM64 variants. Building custom images or waiting for upstream ARM64 support added friction and slowed iteration.
 - **Kernel / firmware issues** — custom kernels, device tree blobs, and OrangePi-specific patches meant OS updates were riskier than on standard x86 hardware.
 
-**Lesson:** ARM SBCs are excellent for learning, tinkering, and lightweight services. For a production-like data platform with real workloads, x86 mini-PCs (e.g. CHUWI UBox, CWWK X86-P5) offer far better performance-per-euro and far less operational pain. The cluster now uses ARM nodes for low-demand services and control plane, and x86 for compute-heavy workloads.
+**Lesson:** ARM SBCs are excellent for learning, tinkering, and lightweight services. For a production-like data platform with real workloads, x86 systems (e.g. CHUWI AuBox, Lenovo Legion, and CWWK X86-P5) offer far better performance-per-euro and far less operational pain. The cluster now uses ARM nodes for low-demand services, the CHUWI AuBox for compute-heavy workloads, and the Lenovo Legion GPU worker for local AI inference.
 
 ---
 
@@ -100,12 +100,12 @@ The timing was bad: the migration was delayed because MinIO seemed stable and th
 
 **Alternatives evaluated:**
 
-| Option | Why rejected |
-|--------|-------------|
-| **Ceph** | Powerful but operationally complex — Ceph is practically a full-time job to run on a small cluster |
-| **RustFS** | Promising but very new and not production-proven at the time |
-| **SeaweedFS** | Good performance but the operational model and documentation were harder to follow |
-| **Garage** | ✅ Chosen — single static binary, simple cluster model, low resource use, great fit for heterogeneous hardware |
+| Option        | Why rejected                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Ceph**      | Powerful but operationally complex — Ceph is practically a full-time job to run on a small cluster            |
+| **RustFS**    | Promising but very new and not production-proven at the time                                                  |
+| **SeaweedFS** | Good performance but the operational model and documentation were harder to follow                            |
+| **Garage**    | ✅ Chosen — single static binary, simple cluster model, low resource use, great fit for heterogeneous hardware |
 
 Garage was the right choice but the official Helm chart was bare: no automatic cluster initialisation, no bucket or API key provisioning, and limited observability. A fork was created adding:
 
@@ -124,15 +124,60 @@ This became the [`garage-helm`](open-source/index.md) project, now published ope
 
 Every failure above contributed something concrete:
 
-| Failure | What came out of it |
-|---------|-------------------|
-| ARM reliability issues | Clearer architecture: ARM for light workloads, x86 for data/AI compute |
-| Servarr struggles | Published [`servarr`](open-source/index.md) Helm chart — useful for others even if not for this cluster |
-| ARM cost/performance | Hardware evolution to CWWK NAS + CHUWI mini-PC; much better cluster performance |
-| Under-used services | Leaner cluster; focus on services that are actually used — data platform, AI, monitoring |
-| Over-scoping | Clear purpose statement: this is a **data platform and AI experimentation lab**, not a general home server |
-| Bitnami removal | Migrated to operator-based deployments (CloudNative PG); more resilient chart strategy |
-| MinIO removal | Built and published [`garage-helm`](open-source/index.md); Garage now running in production |
-| Redis relicensing | Early adoption of Valkey; no disruption to services |
+| Failure                | What came out of it                                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ARM reliability issues | Clearer architecture: ARM for light workloads, x86 for data/AI compute                                     |
+| Servarr struggles      | Published [`servarr`](open-source/index.md) Helm chart — useful for others even if not for this cluster    |
+| ARM cost/performance   | Hardware evolution to CWWK NAS + CHUWI mini-PC; much better cluster performance                            |
+| Under-used services    | Leaner cluster; focus on services that are actually used — data platform, AI, monitoring                   |
+| Over-scoping           | Clear purpose statement: this is a **data platform and AI experimentation lab**, not a general home server |
+| Bitnami removal        | Migrated to operator-based deployments (CloudNative PG); more resilient chart strategy                     |
+| MinIO removal          | Built and published [`garage-helm`](open-source/index.md); Garage now running in production                |
+| Redis relicensing      | Early adoption of Valkey; no disruption to services                                                        |
 
 The current cluster is more focused, more reliable, and more interesting as a portfolio project precisely because of what was cut — and because of the fires that had to be fought along the way.
+
+---
+
+## :material-robot-excited: Local AI Agents and Proactive Monitoring
+
+**What was tried:** Adding a proactive monitoring layer using a local Ollama
+model, MCP fact-gathering tools, and Sympozium ensembles that run focused agents
+against Prometheus, Loki, Kubernetes, and repository state.
+
+**What went wrong:**
+
+- **A small model cannot compensate for an oversized tool surface.** Exposing
+	dozens of similarly named tools consumed context and made tool selection
+	unreliable. Narrow personas and explicit `toolsAllow` lists work better than
+	one general-purpose administrator.
+- **Context is shared by schemas, evidence, and the answer.** The model's
+	65,536-token window is not 65,536 tokens of useful investigation. Tool schemas
+	and accumulated results consume the same budget, so prompts must keep one
+	question, bounded queries, and a fixed report format.
+- **Tool contracts must be verified against the live server.** A plausible tool
+	name or argument is not enough. Incorrect names, required arguments, and
+	datasource assumptions can make an agent report success while it has gathered
+	no evidence.
+- **Memory seeds are not continuously reconciled.** Changing agent memory in
+	Git does not update the memory ConfigMap used by a running ensemble. Memory
+	changes require reseeding and verification against a new `AgentRun`.
+- **One GPU creates a scheduling bottleneck.** The single resident
+	`qwen3.5:4b` model on the Lenovo Legion serves one request at a time. Agent
+	schedules must be staggered, and an ArgoCD or Helm apply can unexpectedly
+	trigger immediate runs for several personas.
+- **Sandboxing is a boundary, not a capability.** gVisor protects agent
+	execution, but the hardened policy intentionally blocks shell execution,
+	local file writes, delegation, subagents, and arbitrary code execution.
+	Agents must use explicitly allowlisted MCP tools.
+- **AI must enrich detection, not replace it.** Prometheus and AlertManager are
+	still responsible for deterministic detection. Sympozium adds correlation,
+	chronic-alert filtering, trend analysis, and operational context. Missing
+	data must be reported as uncertainty rather than converted into a healthy
+	result.
+
+**Lesson:** Proactive AI monitoring is most reliable as a collection of narrow,
+read-only investigations with verified tools, seeded operational memory,
+staggered schedules, and explicit safety boundaries. The AI should explain and
+prioritise evidence produced by the observability stack—not pretend to be the
+observability stack or an unrestricted cluster administrator.

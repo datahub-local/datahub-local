@@ -46,6 +46,25 @@ A collection of shell scripts that generate Prometheus textfile metrics for node
 
 ---
 
+## ollama-metrics
+
+[![GitHub](https://img.shields.io/badge/GitHub-ollama--metrics-181717?logo=github)](https://github.com/datahub-local/ollama-metrics)
+
+A lightweight Ollama metrics sidecar and transparent proxy that exposes
+Prometheus metrics for local LLM deployments.
+
+**What it provides:** token usage, request duration, time to first token,
+inference speed, loaded-model status, and model memory usage. It supports both
+Ollama's native `/api` endpoints and its OpenAI-compatible `/v1` endpoints,
+including streamed responses.
+
+**Why we created it:** Local inference needs the same operational visibility as
+the rest of the platform. The sidecar adds detailed Ollama metrics without
+modifying Ollama or requiring changes to clients, and includes a Grafana
+dashboard for tracking model performance and resource usage.
+
+---
+
 All charts are published as OCI artifacts via **GitHub Container Registry (GHCR)**:
 
 ```bash
