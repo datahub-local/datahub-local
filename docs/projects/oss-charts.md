@@ -1,13 +1,20 @@
-# Published OSS Helm charts
+# Giving Back to the Community
 
-Five pieces of missing infrastructure, built for this cluster and published so
-other homelab builders and data engineers can use them.
+The platform stands on open source that other people wrote and gave away freely.
+That is why most of this site can be read, run, and rebuilt at no licence cost.
+When we hit a gap, the choice was to keep the workaround private or hand it back.
+These five projects are the work we returned: the charts and exporters the
+ecosystem did not have.
 
-| | |
-| --- | --- |
-| **Area** | Open Source & Lessons |
-| **Status** | Published |
-| **Index** | [Open Source artifacts](../open-source/index.md) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Community</span>
+  <span class="meta-pill meta-pill--status">Published</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local">:fontawesome-brands-github: datahub-local</a>
+</p>
+
+<figure markdown="span">
+  ![A dark loading bay with a stack of crates, one open and glowing green](../assets/img/showcase/open-source/oss-charts-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 
@@ -24,20 +31,27 @@ forces the quality bar up, because someone else may depend on it.
 Each project addresses a gap the cluster actually hit and is used in production
 here before publication.
 
-- **`garage-helm`**: Garage's official chart was minimal, so the fork adds
-  automatic cluster initialisation, bucket and key provisioning, a
-  `ServiceMonitor`, and flexible ingress.
-- **`spark-apps-helm`**: wraps `SparkApplication` boilerplate behind shared
-  runtime defaults, so jobs override only what they need.
-- **`servarr`**: deploys the whole Servarr media stack with shared storage and
-  ingress in a single `helm install`.
-- **`node-exporter-textfiles`**: exports hardware metrics such as SBC
-  temperatures, GPIO, and UPS state that the standard exporter does not provide.
-- **`ollama-metrics`**: an Ollama sidecar and proxy exposing token, latency,
-  speed, and model-memory metrics.
+- **[`garage-helm`](https://github.com/datahub-local/garage-helm)**: Garage's
+  official chart was minimal, so the fork adds automatic cluster initialisation,
+  bucket and key provisioning, a `ServiceMonitor`, and flexible ingress.
+- **[`spark-apps-helm`](https://github.com/datahub-local/spark-apps-helm)**: wraps
+  `SparkApplication` boilerplate behind shared runtime defaults, so jobs override
+  only what they need.
+- **[`servarr`](https://github.com/datahub-local/servarr)**: deploys the whole
+  Servarr media stack with shared storage and ingress in a single `helm install`.
+- **[`node-exporter-textfiles`](https://github.com/datahub-local/node-exporter-textfiles)**:
+  exports hardware metrics such as SBC temperatures, GPIO, and UPS state that the
+  standard exporter does not provide.
+- **[`ollama-metrics`](https://github.com/datahub-local/ollama-metrics)**: an
+  Ollama sidecar and proxy exposing token, latency, speed, and model-memory
+  metrics.
 
 All charts are published as OCI artifacts via GitHub Container Registry, so they
-install with a single `helm install` command.
+install with a single command:
+
+```bash
+helm install <release-name> oci://ghcr.io/datahub-local/<chart-name>
+```
 
 ## Technologies
 
@@ -54,6 +68,4 @@ lessons.
 
 ## Further reading
 
-- [Open Source](../open-source/index.md): the artifact list and install command
-- [Vendor-risk lessons](vendor-risk.md): the incidents that produced these charts
-- [Lessons Learned](../lessons-learned.md): the full write-up
+- [Hard Lessons](../lessons-learned.md): the incidents that forced several of these projects

@@ -4,11 +4,15 @@ Narrow, scheduled agents that investigate alerts and trends through bounded MCP
 tools and report in a fixed format. They enrich the observability stack rather
 than replacing it.
 
-| | |
-| --- | --- |
-| **Area** | AI & Agents |
-| **Status** | Running, with three ensembles |
-| **Source** | [`datahub-local-ai`](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
+  <span class="meta-pill meta-pill--status">Running, with three ensembles</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A wide dark terrain surveyed by drones casting thin green light cones](../assets/img/showcase/ai-agents/sre-agents-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 
@@ -64,4 +68,4 @@ model and a single GPU constrain agent reliability.
 
 - [Automation services](../services/automation.md): ensembles, schedules, and boundaries
 - [Monitoring](../services/monitoring.md): the observability stack and the proactive loop
-- [Lessons Learned](../lessons-learned.md): what the AI monitoring experiment taught
+- [Hard Lessons](../lessons-learned.md): what the AI monitoring experiment taught

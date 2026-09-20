@@ -46,7 +46,8 @@ removes that chore.
 
 ### Modified Capabilities
 
-<!-- No main specs exist yet; the showcase changes are still unarchived. -->
+<!-- No requirement changes here. `showcase-microsite` was archived; its
+     capability now lives at `openspec/specs/project-showcase/spec.md`. -->
 
 ## Impact
 
@@ -54,8 +55,9 @@ removes that chore.
   and matching commands under `.opencode/commands/`.
 - A shared gatherer and its dependencies: `gh` for GitHub facts, `kubectl` and
   `helm` for cluster facts.
-- Depends on `showcase-microsite` for the catalogue and page structure and on
-  `showcase-images` for the asset layout and generation path.
+- Builds on the archived `showcase-microsite` change for the catalogue and page
+  structure (now `openspec/specs/project-showcase/spec.md`) and on the
+  `showcase-image-generator` skill for the asset layout and generation path.
 - Requires an authenticated `gh` identity, and a kubeconfig with read access
   wherever the platform and service domains run.
 - Reads `datahub-local-bootstrap/inventory.yml` and

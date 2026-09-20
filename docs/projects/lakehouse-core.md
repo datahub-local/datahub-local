@@ -3,11 +3,16 @@
 An end-to-end data lakehouse for ingestion, object storage, catalog, query,
 transformation, and visualization, assembled and operated at home.
 
-| | |
-| --- | --- |
-| **Area** | Data & Analytics |
-| **Status** | Running |
-| **Source** | [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core), [`datahub-local-ai`](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Data &amp; Analytics</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-core">:fontawesome-brands-github: datahub-local-core</a>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A wide dark lake surface with a wall of translucent layered strata rising from it](../assets/img/showcase/data-analytics/lakehouse-core-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

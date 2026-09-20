@@ -3,11 +3,15 @@
 Tests, snapshots, and a versioned catalog that make the lakehouse's tables
 trustworthy rather than merely present.
 
-| | |
-| --- | --- |
-| **Area** | Data & Analytics |
-| **Status** | Running |
-| **Source** | [dbt and Iceberg projects](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Data &amp; Analytics</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A wide root network under dark soil with pulsing nodes and one glowing branch](../assets/img/showcase/data-analytics/data-quality-lineage-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

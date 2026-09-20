@@ -170,11 +170,13 @@ when they no longer reflect reality.
 - **THEN** the proposed pull request updates the affected status or
   forward-looking entry
 
-### Requirement: Image refresh
+### Requirement: Image refresh and onboarding
 
 The content maintainer SHALL detect when a project's subject has changed enough
 that its showcase image no longer represents it, and SHALL propose regenerating
-that image using the showcase image-generation path.
+that named image using the showcase image-generation path. When the catalogue
+gains a project that has no cover or hero, it SHALL propose adding that project's
+imagery through the same path.
 
 #### Scenario: A project changed meaningfully
 
@@ -182,6 +184,13 @@ that image using the showcase image-generation path.
   misleading
 - **THEN** the proposed pull request regenerates the image through the documented
   generation path and updates the asset
+
+#### Scenario: A new project has no image
+
+- **WHEN** a catalogued project has no cover or hero
+- **THEN** the proposed pull request adds the project's catalog entry and its
+  generated imagery through the same path
+- **AND** no existing project's image is regenerated
 
 ### Requirement: Consistency checks
 

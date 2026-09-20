@@ -1,0 +1,298 @@
+# Prompts and parameters for the showcase imagery.
+#
+# This file is data. The generation script reads it and never edits it; prompts
+# are reviewed in a diff like any other source. See design.md decisions D3, D4,
+# and D8 for the shape and the art direction.
+#
+# cloud-at-home is not generated: it reuses the real cluster photograph. Its two
+# surfaces are declared under `static` so the coverage check still finds them.
+
+version: 1
+
+model:
+  # The LiteLLM call goes to the gateway's OpenRouter passthrough, which forwards
+  # to OpenRouter's image API and keeps aspect_ratio and resolution (the plain
+  # /v1/images/generations route drops them under drop_params). The model name is
+  # therefore the OpenRouter id, not the LiteLLM model group.
+  name: google/gemini-3.1-flash-image
+  provider: openrouter
+  fallback: google/gemini-3.1-flash-lite-image
+
+gateway:
+  # Base URL comes from LITELLM_BASE_URL and the key from LITELLM_API_KEY. No
+  # default is allowed here so the script can never guess the host.
+  images_path: /openrouter/images
+
+defaults:
+  # One candidate per image. Review the set and regenerate only the rejects,
+  # which costs less than blind best-of-N. Override with --candidates.
+  candidates: 1
+  # Fallback tier for a surface that does not set its own.
+  resolution: 1K
+  temperature: 0.4
+
+surfaces:
+  # Covers render small in the card grid, so 512 keeps the paid cost and the
+  # committed file size down.
+  cover:
+    aspect_ratio: "16:9"
+    resolution: "512"
+    width: 512
+    height: 288
+  # Heroes span a deep-dive banner, so they keep 1K.
+  hero:
+    aspect_ratio: "21:9"
+    resolution: "1K"
+    width: 1024
+    height: 439
+
+groups:
+  data-analytics: Data & Analytics
+  ai-agents: AI & Agents
+  platform-operations: Platform & Operations
+  open-source: Open Source & Lessons
+
+assets_dir: docs/assets/img/showcase
+
+# The shared brand preamble. Every prompt below is appended to this, so only the
+# subject changes between images.
+preamble: |
+  Abstract dark-studio still-life photograph of one invented physical object.
+  Seamless charcoal backdrop (#0E1116), deep shadow, generous negative space,
+  subject centered, horizon near the lower third, nothing at the frame edges.
+  A single soft moss-green key light from the upper left and a cream (#F4F2EC)
+  rim light. Materials limited to matte ceramic, brushed aluminium, frosted
+  glass, cream paper, and dark stone. Palette ratio about 70% dark ground, 20%
+  cream, 10% moss (#5E8A3F, #7FAF5A, #A3CF7A), with moss the only saturated
+  colour. 50mm lens, f/2.8, three-quarter top-down, shallow depth of field.
+  No text, no lettering, no numbers, no logos, no signatures, no people.
+
+negatives: >-
+  text, letters, numerals, words, captions, labels, signatures, logos, brand
+  marks, watermarks, borders, frames, people, hands, faces, animals, user
+  interfaces, screenshots, charts with labels, clutter, oversaturation, lens
+  flare, reflection of a studio, collage, split screen
+
+# Per-surface composition notes, appended after the subject prompt. Covers are
+# shown small in a card grid, so the subject has to carry at thumbnail size.
+surface_notes:
+  cover: >-
+    This frame is displayed as a small card. Compose the subject to fill roughly
+    half the frame height and stay clearly readable at thumbnail size; keep the
+    dark ground but tighten the empty space around the object.
+  hero: ""
+
+# Real assets that must not be generated. The coverage check reads these as
+# present so a project with a genuine photograph is not reported as missing.
+static:
+  - slug: cloud-at-home
+    group: platform-operations
+    source: docs/assets/img/homelab_20260920_ai.jpg
+    surfaces:
+      cover:
+        alt: The DataHub.local cluster, a seven-node mini-PC rack in a dark studio setting
+      hero:
+        alt: The DataHub.local cluster, a seven-node mini-PC rack in a dark studio setting
+
+# One entry per generated image. `surface` selects the aspect ratio and the
+# output suffix; the script derives the path as
+# <assets_dir>/<group>/<slug>-<surface>.webp.
+images:
+  # --- Data & Analytics ---
+  - slug: lakehouse-core
+    group: data-analytics
+    surface: cover
+    alt: A stratified core sample of translucent sediment layers under a still surface
+    prompt: >-
+      A vertical core sample of stratified translucent sediment rising from a
+      mirror-still dark surface, each stratum a different opacity of frosted
+      glass, cream ceramic, and pale stone.
+  - slug: lakehouse-core
+    group: data-analytics
+    surface: hero
+    alt: A wide dark lake surface with a wall of translucent layered strata rising from it
+    prompt: >-
+      A wide still lake of dark glass with a tall cross-section wall of layered
+      translucent strata rising from it, faint moss-green light glowing between
+      the layers.
+  - slug: bodega
+    group: data-analytics
+    surface: cover
+    alt: A blank paper receipt curling into a tidy grid of blank tiles
+    prompt: >-
+      A long blank cream paper receipt curling from a roll into a neat grid of
+      identical blank ceramic tiles, the paper completely without printed lines
+      or marks.
+  - slug: bodega
+    group: data-analytics
+    surface: hero
+    alt: A blank receipt arcing across a dark studio into a receding grid of tiles
+    prompt: >-
+      A wide dark studio with a single blank paper receipt arcing across the
+      frame and unspooling into a receding plane of blank cream tiles, moss
+      light grazing the paper edge.
+  - slug: personal-finance
+    group: data-analytics
+    surface: cover
+    alt: A sealed frosted-glass ledger box, closed and unmarked
+    prompt: >-
+      A sealed rectangular ledger box of frosted glass and dark stone, closed
+      and unmarked, resting on a dark plinth with a soft cream reflection.
+  - slug: personal-finance
+    group: data-analytics
+    surface: hero
+    alt: A wall of closed frosted drawers in a dark room, one lit from within
+    prompt: >-
+      A wide dark room with a cabinet of closed frosted-glass drawers, one
+      drawer lit from inside by a contained moss-green glow, all drawers blank
+      and without labels.
+  - slug: semantic-layer
+    group: data-analytics
+    surface: cover
+    alt: A precision lens aligning several thin light beams onto one plane
+    prompt: >-
+      A single precision brass and glass lens standing on a dark surface,
+      gathering several thin pale beams of light and focusing them onto one
+      small illuminated plane.
+  - slug: semantic-layer
+    group: data-analytics
+    surface: hero
+    alt: Many light beams converging through a brass lens onto one illuminated plane
+    prompt: >-
+      A wide dark optical bench where many thin light beams converge from the
+      edges through a large brass lens onto a single bright cream plane at the
+      center.
+  - slug: data-quality-lineage
+    group: data-analytics
+    surface: cover
+    alt: A branching root system with lit inspection nodes, one branch marked
+    prompt: >-
+      A branching pale root system laid on dark soil, small cream glass nodes
+      glowing at the forks, one branch marked by a single moss-green node.
+  - slug: data-quality-lineage
+    group: data-analytics
+    surface: hero
+    alt: A wide root network under dark soil with pulsing nodes and one glowing branch
+    prompt: >-
+      A wide cross-section of dark soil threaded by a branching pale root
+      network, faint cream nodes pulsing along it, one whole branch glowing
+      moss green.
+  # --- AI & Agents ---
+  - slug: sre-agents
+    group: ai-agents
+    surface: cover
+    alt: Small matte survey drones hovering over a dark contoured surface
+    prompt: >-
+      Several small matte ceramic survey drones hovering in formation over a
+      dark contoured surface, their undersides casting thin pale light.
+  - slug: sre-agents
+    group: ai-agents
+    surface: hero
+    alt: A wide dark terrain surveyed by drones casting thin green light cones
+    prompt: >-
+      A wide dark terrain of soft contours with delicate survey drones casting
+      thin moss-green light cones onto it, one small anomaly ringed by light.
+  - slug: mcp-platform
+    group: ai-agents
+    surface: cover
+    alt: A docking hub of six identical read-only ports
+    prompt: >-
+      A compact matte aluminium docking hub with six identical frosted-glass
+      apertures arranged around it, all blank and without labels.
+  - slug: mcp-platform
+    group: ai-agents
+    surface: hero
+    alt: A dark docking rack of six frosted apertures with light entering only
+    prompt: >-
+      A wide dark docking rack with six frosted-glass apertures in a row, thin
+      pale threads of light entering them while nothing leaves, small cream
+      indicators glowing.
+  - slug: oracle-responder
+    group: ai-agents
+    surface: cover
+    alt: A paper lantern hanging in a dark studio as motes gather into a shape
+    prompt: >-
+      A single large cream paper lantern filling the center of a dark studio,
+      hanging from a thin line that rises out of frame, pale motes gathering
+      around it into a soft geometric ring, deep charcoal background with no fog
+      filling the frame.
+  - slug: oracle-responder
+    group: ai-agents
+    surface: hero
+    alt: A foggy dark hall where a lantern beam draws particles into a ring
+    prompt: >-
+      A wide fog-filled dark hall with one lantern beam from above drawing
+      drifting particles into a coherent ring of light in the middle distance.
+  - slug: ai-content-engine
+    group: ai-agents
+    surface: cover
+    alt: A loom weaving threads of light into a blank page
+    prompt: >-
+      A small dark-framed loom strung with thin moss-green threads of light
+      weaving a blank cream sheet that hangs from it.
+  - slug: ai-content-engine
+    group: ai-agents
+    surface: hero
+    alt: A dark workshop with a loom of light producing a pale sheet
+    prompt: >-
+      A wide dark workshop with a single mechanical loom strung with threads of
+      moss light, a large blank cream page emerging from it onto the floor.
+  - slug: local-inference
+    group: ai-agents
+    surface: cover
+    alt: A ceramic compute block glowing like a hearth
+    prompt: >-
+      A single blocky ceramic and aluminium compute module on a dark plinth,
+      glowing from a warm moss-green seam like a small hearth.
+  - slug: local-inference
+    group: ai-agents
+    surface: hero
+    alt: A dark room with a warm ceramic block pooling green light on the floor
+    prompt: >-
+      A wide dark room with one hot ceramic block standing on a low plinth,
+      warm moss-green light pooling across the floor and up the wall behind it.
+  # --- Platform & Operations ---
+  - slug: gitops-platform
+    group: platform-operations
+    surface: cover
+    alt: Concentric brass rings converging on one aligned notch
+    prompt: >-
+      Several concentric brass and dark stone rings lying on a dark surface,
+      turned until their single notches align into one straight seam.
+  - slug: gitops-platform
+    group: platform-operations
+    surface: hero
+    alt: A dark hall of nested rings with one aligned seam glowing green
+    prompt: >-
+      A wide dark hall of nested brass rings suspended in space, one notch
+      aligned across all of them, a thin moss-green light along the seam.
+  - slug: observability
+    group: platform-operations
+    surface: cover
+    alt: A macro lens over a field of faint pulses, one ringed
+    prompt: >-
+      A single large glass macro lens held above a dark field of faint
+      concentric pulses, one pulse ringed in moss green beneath it.
+  - slug: observability
+    group: platform-operations
+    surface: hero
+    alt: A dark field of ripples with a suspended lens and one ringed pulse
+    prompt: >-
+      A wide dark field of faint concentric ripples receding to the horizon,
+      one lens suspended above, one distant ripple ringed in moss green.
+  # --- Open Source & Lessons ---
+  - slug: oss-charts
+    group: open-source
+    surface: cover
+    alt: A short stack of plain shipping crates, one open with green light
+    prompt: >-
+      A short stack of plain matte shipping crates on a dark floor, the top one
+      open a little with moss-green light escaping from inside.
+  - slug: oss-charts
+    group: open-source
+    surface: hero
+    alt: A dark loading bay with a stack of crates, one open and glowing green
+    prompt: >-
+      A wide dark loading bay with a stack of plain cream crates filling the
+      center of the frame, one lid ajar leaking a bright moss-green glow onto
+      the floor around them, the crates clearly lit and readable.

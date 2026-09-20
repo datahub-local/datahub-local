@@ -3,11 +3,15 @@
 Versioned, LLM-powered workflows that draft content, generate diagrams, and turn
 platform events into notifications, without a SaaS automation bill.
 
-| | |
-| --- | --- |
-| **Area** | AI & Agents |
-| **Status** | Running |
-| **Source** | [`datahub-local-workflows`](https://github.com/datahub-local/datahub-local-workflows) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-workflows">:fontawesome-brands-github: datahub-local-workflows</a>
+</p>
+
+<figure markdown="span">
+  ![A dark workshop with a loom of light producing a pale sheet](../assets/img/showcase/ai-agents/ai-content-engine-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

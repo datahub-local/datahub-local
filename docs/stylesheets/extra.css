@@ -293,13 +293,16 @@
    AUTHORS GRID — 2-column portrait cards
    ================================================ */
 .authors-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
   margin: 0.5rem 0 2rem;
 }
 
 .author-card {
+  flex: 0 1 30rem;
+  max-width: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -357,44 +360,13 @@
   justify-content: center;
 }
 
-.author-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.9rem;
-  border-radius: 0.5rem;
-  text-decoration: none !important;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: filter 0.18s ease, transform 0.18s ease;
-}
+/* Author and hero links use the shared .link-pill component, defined with the
+   project badges below, so every outbound link looks the same. */
 
-.author-link:hover {
-  filter: brightness(1.15);
-  transform: translateY(-1px);
-}
-
-.author-link svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.author-link--linkedin {
-  background-color: #0A66C2;
-  color: #FFFFFF !important;
-}
-
-.author-link--github {
-  background-color: #24292F;
-  color: #FFFFFF !important;
-}
-
-/* Stack to single column on mobile */
+/* Author cards wrap and stay centred; on mobile they take the full width. */
 @media (max-width: 640px) {
-  .authors-grid {
-    grid-template-columns: 1fr;
+  .author-card {
+    flex-basis: 100%;
   }
 }
 
@@ -477,14 +449,6 @@
   width: 14px;
   height: 14px;
   fill: currentColor;
-}
-
-/* ================================================
-   SHOWCASE — personal author link
-   ================================================ */
-.author-link--personal {
-  background-color: #5E8A3F;
-  color: #F4F2EC !important;
 }
 
 /* ================================================
@@ -592,45 +556,40 @@ body {
   color: #A3CF7A !important;
 }
 
-.hero-band .author-link--github {
+.hero-band .link-pill {
   margin-left: 0.15rem;
 }
 
 /* ================================================
-   SHOWCASE — stack strip
+   SHOWCASE — open-source badges
    ================================================ */
-.stack-strip {
-  max-width: 76rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.stack-strip__label {
-  margin: 0 0 1rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.stack-pills {
+.stack-badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
-  max-width: 62rem;
+  max-width: 72rem;
   margin: 0 auto;
 }
 
-.stack-pill {
-  padding: 0.28rem 0.7rem;
+.stack-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.32rem 0.8rem;
   border-radius: 99rem;
+  border: 1px solid rgba(94, 138, 63, 0.26);
+  background: rgba(94, 138, 63, 0.07);
+  color: #3d5c28;
   font-size: 0.78rem;
   font-weight: 600;
-  background: rgba(94, 138, 63, 0.09);
-  color: #3d5c28;
-  border: 1px solid rgba(94, 138, 63, 0.26);
+  line-height: 1.4;
+}
+
+.stack-badge img {
+  width: 1.15em;
+  height: 1.15em;
+  display: block;
 }
 
 /* ================================================
@@ -764,6 +723,15 @@ body {
   border: 1px solid rgba(94, 138, 63, 0.18);
 }
 
+.band--dark .cap-card {
+  background: rgba(127, 175, 90, 0.08);
+  border: 1px solid rgba(127, 175, 90, 0.22);
+}
+
+.band--dark .cap-card h3 {
+  color: #A3CF7A !important;
+}
+
 .cap-card h3 {
   margin: 0 0 0.5rem;
   font-size: 1rem;
@@ -828,52 +796,79 @@ body {
   opacity: 0.75;
 }
 
+.band--light .stat-card__num {
+  color: #3d5c28;
+}
+
+.band--light .stat-card small a {
+  color: #5E8A3F;
+}
+
+.band--light .proof-cta a {
+  color: #5E8A3F !important;
+}
+
 /* ================================================
    SHOWCASE — quote
    ================================================ */
-.quote-card {
-  max-width: 62rem;
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: 2rem 2.2rem;
-  border-left: 5px solid #5E8A3F;
-  border-radius: 0 0.75rem 0.75rem 0;
-  background: rgba(94, 138, 63, 0.06);
 }
 
-.quote-card p {
-  margin: 0 0 0.8rem;
-  font-size: 1.15rem;
+.lesson-card {
+  margin: 0;
+  padding: 1.5rem;
+  border-left: 4px solid #5E8A3F;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: rgba(94, 138, 63, 0.07);
+}
+
+.lesson-card__tag {
+  margin: 0 0 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5E8A3F;
+}
+
+.lesson-card blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 1.05rem;
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.55;
   color: #0E1116;
 }
 
-.quote-card cite {
-  font-style: normal;
+.lesson-card figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+.lesson-card figcaption a {
+  color: #5E8A3F !important;
   font-weight: 600;
-  color: #5E8A3F;
 }
 
 /* ================================================
    SHOWCASE — what's next
    ================================================ */
-.next-block {
+.next-list {
   max-width: 62rem;
-  margin: 2.5rem auto 0;
-}
-
-.next-block h2 {
-  margin: 0 0 0.75rem;
-  font-size: 2rem;
-  color: #5E8A3F !important;
-}
-
-.next-block ul {
-  margin: 0;
+  margin: 0 auto;
   padding-left: 1.2rem;
 }
 
-.next-block li {
+.next-list li {
   margin-bottom: 0.5rem;
   line-height: 1.7;
   opacity: 0.92;
@@ -889,7 +884,8 @@ body {
   }
 
   .work-grid,
-  .cap-grid {
+  .cap-grid,
+  .lesson-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -904,12 +900,9 @@ body {
   }
 
   .work-grid,
-  .cap-grid {
+  .cap-grid,
+  .lesson-grid {
     grid-template-columns: 1fr;
-  }
-
-  .quote-card {
-    padding: 1.4rem 1.4rem;
   }
 }
 
@@ -1005,36 +998,113 @@ html.home-dark .md-content__inner {
 /* ================================================
    SHOWCASE — hardware band
    ================================================ */
-.hardware-band {
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  padding: 4rem calc(50vw - 50%);
-  background:
-    radial-gradient(700px 320px at 50% 50%, rgba(94, 138, 63, 0.2), transparent 70%),
-    #0E1116;
-  color: #F4F2EC;
+/* Call to action under the "Power on the desk" stat cards. */
+.proof-cta {
   text-align: center;
+  margin-top: 1.6rem;
 }
 
-.hardware-band__inner {
-  max-width: 46rem;
-  margin: 0 auto;
-}
-
-.hardware-band h2 {
-  margin: 0 0 0.8rem;
-  color: #A3CF7A !important;
-}
-
-.hardware-band p {
-  max-width: 52ch;
-  margin: 0 auto 1.1rem;
-  line-height: 1.7;
-  opacity: 0.92;
-}
-
-.hardware-band a {
+.proof-cta a {
   color: #A3CF7A !important;
   font-weight: 600;
   text-decoration: none !important;
+}
+
+/* Project metadata badges on the deep-dive pages, in place of the old table. */
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3rem 0.72rem;
+  border-radius: 99rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid rgba(127, 175, 90, 0.35);
+  background: rgba(127, 175, 90, 0.1);
+  color: var(--md-default-fg-color);
+  text-decoration: none !important;
+}
+
+.meta-pill--area {
+  border-color: rgba(127, 175, 90, 0.6);
+}
+
+.meta-pill--status {
+  background: rgba(127, 175, 90, 0.18);
+}
+
+.meta-pill--privacy {
+  border-color: rgba(244, 242, 236, 0.3);
+  background: rgba(244, 242, 236, 0.06);
+}
+
+/* Shared pill for GitHub and every other outbound link, identical to the
+   project badge pills. Used in the hero, the author card, and on the project
+   pages, so a link looks the same wherever it appears. */
+.link-pill,
+.meta-pill--github,
+.meta-pill--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3rem 0.72rem;
+  border-radius: 99rem;
+  border: 1px solid rgba(127, 175, 90, 0.35);
+  background: rgba(127, 175, 90, 0.1);
+  color: var(--md-default-fg-color) !important;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none !important;
+}
+
+/* The bands use fixed brand colours, independent of the theme toggle, so a pill
+   inside a band cannot rely on the theme text colour. */
+.band--dark .link-pill,
+.band--dark .meta-pill--github,
+.band--dark .meta-pill--link,
+.hero-band .link-pill {
+  color: #F4F2EC !important;
+}
+
+.band--light .link-pill,
+.band--light .meta-pill--github,
+.band--light .meta-pill--link {
+  color: #0E1116 !important;
+}
+
+.link-pill:hover,
+.meta-pill--github:hover,
+.meta-pill--link:hover {
+  background: rgba(127, 175, 90, 0.24);
+}
+
+.link-pill svg,
+.meta-pill--github svg,
+.meta-pill--link svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.meta-pill svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.project-meta__note {
+  margin: -0.6rem 0 1.2rem;
+  font-size: 0.72rem;
+  opacity: 0.75;
 }

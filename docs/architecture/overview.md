@@ -115,7 +115,7 @@ graph TB
 **Kubernetes distribution:** K3s v1.36 (lightweight, production-ready)  
 **Container runtime:** containerd 2.2
 
-> **Architecture evolution:** The cluster started ARM-only with OrangePi 5B boards, but over time x86 mini-PCs proved significantly more cost-effective for compute-heavy workloads (Spark, Trino). The ARM nodes remain useful for lightweight services and multi-arch testing — see [Lessons Learned](../lessons-learned.md) for more context.
+> **Architecture evolution:** The cluster started ARM-only with OrangePi 5B boards, but over time x86 mini-PCs proved significantly more cost-effective for compute-heavy workloads (Spark, Trino). The ARM nodes remain useful for lightweight services and multi-arch testing — see [Hard Lessons](../lessons-learned.md) for more context.
 
 ---
 

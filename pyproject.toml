@@ -10,7 +10,14 @@ dependencies = [
     "mkdocs-material>=9.5.3",
     "mkdocs-macros-plugin>=1.0.5",
     "mkdocs-glightbox>=0.3.6",
+    "httpx>=0.27",
+    "pillow>=10.0",
+    "pyyaml>=6.0",
+    "c2pa-python>=0.37",
 ]
+
+[dependency-groups]
+dev = ["ruff>=0.6"]
 
 [tool.uv]
 package = false

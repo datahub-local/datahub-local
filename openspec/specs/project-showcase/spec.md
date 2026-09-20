@@ -71,7 +71,7 @@ streaming, orchestration, AI platform, governance, and cost management.
 
 The site SHALL provide a Projects section that catalogues the platform's use
 cases across four groups — Data & Analytics, AI & Agents, Platform & Operations,
-and Open Source & Lessons. The index SHALL present every catalogued use case as a
+and Community. The index SHALL present every catalogued use case as a
 summary card, and **every catalogued use case SHALL have a full case study**,
 each stating the problem addressed, the approach taken, the technologies
 involved, the outcome, and a link to its source or artifact.
@@ -106,14 +106,14 @@ involved, the outcome, and a link to its source or artifact.
 ### Requirement: Showcase navigation
 
 The primary navigation SHALL expose the showcase destinations — home, projects,
-and open source & lessons — as first-class entries, and SHALL group the remaining
+and hard lessons — as first-class entries, and SHALL group the remaining
 technical documentation (architecture, cluster setup, and services) under a
 single section so the showcase is not buried.
 
 #### Scenario: Visitor scans the navigation
 
 - **WHEN** a visitor opens any page
-- **THEN** the home, projects, and open source & lessons destinations are visible
+- **THEN** the home, projects, and hard lessons destinations are visible
   in the primary navigation
 - **AND** the architecture, cluster setup, and services documentation is
   reachable under one grouped section
@@ -133,7 +133,7 @@ site SHALL NOT maintain a separate roadmap page that restates shipped work.
 ### Requirement: Technical documentation preserved
 
 The existing technical documentation (architecture, cluster setup, services,
-open source, lessons learned) SHALL remain reachable from the site navigation
+and hard lessons) SHALL remain reachable from the site navigation
 after the refactor. Previously published page paths that move SHALL resolve to
 their new location rather than returning a not-found page.
 

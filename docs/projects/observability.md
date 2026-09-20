@@ -3,11 +3,15 @@
 Metrics, logs, dashboards, and enriched alerting across every layer, plus a
 proactive AI loop above the rule-based one.
 
-| | |
-| --- | --- |
-| **Area** | Platform & Operations |
-| **Status** | Running |
-| **Source** | [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Platform &amp; Operations</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-core">:fontawesome-brands-github: datahub-local-core</a>
+</p>
+
+<figure markdown="span">
+  ![A dark field of ripples with a suspended lens and one ringed pulse](../assets/img/showcase/platform-operations/observability-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

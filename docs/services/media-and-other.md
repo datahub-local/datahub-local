@@ -24,7 +24,7 @@ The Servarr stack bundles all the *arr applications into a single, cohesive depl
 | **Flaresolverr** | Cloudflare bypass proxy for indexers |
 
 !!! tip "Custom Helm Chart"
-    The entire stack is deployed via a single Helm chart [`servarr`](../open-source/index.md), published open source. One `helm install` brings up the complete media server.
+    The entire stack is deployed via a single Helm chart [`servarr`](../projects/oss-charts.md), published open source. One `helm install` brings up the complete media server.
 
 ---
 

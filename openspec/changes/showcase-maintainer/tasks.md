@@ -14,6 +14,8 @@
 - [ ] 2.4 Implement content freshness plus roadmap and project-status review; verify a stale count or status is proposed with its verified source, and an unsupported claim is proposed for removal rather than guessed
 - [ ] 2.5 Implement consistency checks for duplicated content, navigation integrity, and brand usage; verify a duplicated narrative is proposed as a link to the single source
 - [x] 2.6 Implement the conservative image-refresh rule using the showcase image-generation path; verify it triggers only on a meaningful project change and never on a routine pass
+- [ ] 2.7 Onboard imagery for a newly catalogued project: emit a `missing-image` finding and add the project's catalog entry and generated assets through the `showcase-image-generator` skill; verify no existing project's image is regenerated
+- [ ] 2.8 Point the image checks at the generator's manifest (`.opencode/skills/showcase-image-generator/config/manifest.yaml`) and its per-image schema, since the current path and shape do not match it; verify `image-maybe-stale` fires from the real manifest and a missing manifest is reported rather than passing silently
 
 ## 3. Platform domain
 

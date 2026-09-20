@@ -105,3 +105,30 @@ Removing em dashes is necessary but not sufficient. Also:
 - Cut hedges and filler: *just*, *simply*, *very*, *really*, *in order to*.
 - Vary how sentences start. A page where every paragraph opens the same way reads as generated.
 - Say what is true and, where it helps, what is uncertain. Honesty reads as competence.
+
+## Visual consistency
+
+The site is one design. Reuse it instead of restating it.
+
+- **Reuse before you add.** Before introducing a shape, colour, or layout, search
+  `docs/stylesheets/extra.css` for a class that already does it. Use it, or
+  extend it, rather than writing a near-duplicate.
+- **One component per pattern.** If a link, badge, or card appears on more than
+  one page, it gets one class and every page uses that class. The project badge
+  pills and the outbound link pills are the same `.link-pill` component, so do
+  not add a second button style for a link.
+- **Brand tokens only.** Take colours from the palette (`#0E1116`, `#F4F2EC`,
+  `#5E8A3F`, `#7FAF5A`, `#A3CF7A`) or the CSS variables that carry them. Do not
+  introduce a vendor brand colour for a button or a link. Third-party project
+  logos under `docs/assets/img/logos/` (from selfh.st/icons) are the one
+  exception; use them as delivered.
+- **Same thing, same look.** An outbound service link (GitHub, LinkedIn, the
+  personal site) looks the same in the hero, the author card, and a project page.
+  When you add a new one, copy an existing instance's markup, not its intent.
+- **Check both schemes.** Any new component has to read in the light and the dark
+  colour scheme.
+- **Alternate the landing bands.** After the dark hero, the landing sections
+  alternate dark and cream, so two sections of the same colour never touch. When
+  you add or move a section, re-check the order and the per-band colour variants
+  (a component styled for a light band needs a dark-band variant, and the
+  reverse).

@@ -3,11 +3,12 @@
 A seven-node heterogeneous Kubernetes cluster assembled, provisioned, and
 operated from Git. It is the foundation every other project runs on.
 
-| | |
-| --- | --- |
-| **Area** | Platform & Operations |
-| **Status** | Running |
-| **Source** | [`datahub-local-bootstrap`](https://github.com/datahub-local/datahub-local-bootstrap), [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Platform &amp; Operations</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-bootstrap">:fontawesome-brands-github: datahub-local-bootstrap</a>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-core">:fontawesome-brands-github: datahub-local-core</a>
+</p>
 
 <figure markdown="span">
   ![The DataHub.local cluster, a seven-node mini-PC rack in a dark studio setting](../assets/img/homelab_20260920_ai.jpg){ width="1024" }
@@ -65,4 +66,4 @@ on it.
 - [Architecture](../architecture/overview.md): the logical and physical layout
 - [Hardware](../cluster_setup/hardware.md): the rack and its components
 - [Provisioning](../cluster_setup/provisioning.md): from bare metal to running platform
-- [Lessons Learned](../lessons-learned.md): the failures that shaped the design
+- [Hard Lessons](../lessons-learned.md): the failures that shaped the design

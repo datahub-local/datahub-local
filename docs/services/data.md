@@ -97,7 +97,7 @@ CNPG provides a Kubernetes-native PostgreSQL operator with automatic failover, s
 Garage is a lightweight, distributed object storage system. It stores all Iceberg table data, Spark outputs, ML model artifacts, and Velero backups. Compatible with any S3 client — boto3, Spark S3A connector, ArgoCD artifacts, etc. Deployed as a 3-node cluster with a web UI.
 
 !!! tip "Custom Helm Chart"
-    The [`garage-helm`](../open-source/index.md) chart was developed as part of this project and is published open source.
+    The [`garage-helm`](../projects/oss-charts.md) chart was developed as part of this project and is published open source.
 
 ---
 
@@ -108,7 +108,7 @@ Garage is a lightweight, distributed object storage system. It stores all Iceber
 Spark runs as on-demand jobs via the SparkOperator. Airflow DAGs submit `SparkApplication` resources for heavy batch processing. The Spark S3A connector writes Iceberg-formatted output directly to Garage, with Nessie managing the catalog metadata.
 
 !!! tip "Custom Helm Chart"
-    The [`spark-apps-helm`](../open-source/index.md) chart simplifies deploying SparkApplication resources with shared defaults.
+    The [`spark-apps-helm`](../projects/oss-charts.md) chart simplifies deploying SparkApplication resources with shared defaults.
 
 ---
 

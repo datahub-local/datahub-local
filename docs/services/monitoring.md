@@ -105,7 +105,7 @@ Prometheus runs as one replica in `monitoring` and scrapes node-exporter on all 
 **Custom exporters running:**
 
 - `node-exporter-textfiles` — custom metrics collected via shell scripts, exposed as Prometheus textfile format (custom open-source [project](https://github.com/datahub-local/node-exporter-textfiles))
-- `ollama-metrics` — transparent Ollama proxy and sidecar exposing token usage, request latency, time-to-first-token, inference speed, model status, and model memory metrics ([open-source project](../open-source/index.md))
+- `ollama-metrics` — transparent Ollama proxy and sidecar exposing token usage, request latency, time-to-first-token, inference speed, model status, and model memory metrics ([open-source project](../projects/oss-charts.md))
 - `speedtest-exporter` — periodic internet speed test results as metrics
 
 ---

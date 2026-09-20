@@ -3,11 +3,15 @@
 Bounded, read-only fact-gathering tools that let local AI agents inspect the
 cluster without handing them an unrestricted `kubectl` or Grafana session.
 
-| | |
-| --- | --- |
-| **Area** | AI & Agents |
-| **Status** | In progress, with the first implementation running |
-| **Source** | [`datahub-local-ai/agents/mcp`](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
+  <span class="meta-pill meta-pill--status">In progress, first implementation running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A dark docking rack of six frosted apertures with light entering only](../assets/img/showcase/ai-agents/mcp-platform-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

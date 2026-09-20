@@ -19,7 +19,10 @@ See `proposal.md` — Why. Current state that shapes the approach:
   namespace table), `cluster_setup/hardware.md` (hardware components), and the
   `services/*` pages.
 - `showcase-microsite` and `showcase-images` define the content structure and
-  assets; both are still in planning, so this change consumes their outputs.
+  assets. `showcase-microsite` is archived and its capability now lives at
+  `openspec/specs/project-showcase/spec.md`; `showcase-images` is still in
+  planning and introduces the `showcase-image-generator` skill, whose script this
+  change consumes.
 - Precedent: the Sympozium `homelab-reviewer` ensemble runs a scheduled GitHub
   persona that may only comment. This design stays read-mostly and delivers a
   branch + PR instead.
@@ -127,10 +130,15 @@ split; per-domain idempotency means a weekly run cannot accumulate open PRs.
 
 ### D6 — Image refresh stays conservative and delegated
 
-Image refresh is part of the content domain and reuses the `showcase-images`
-generation path, running only when a project's subject changed enough to make its
-image misleading. Generation is paid and non-deterministic, so churn here defeats
-the "one family" goal; the decision is recorded in the PR summary.
+Image refresh is part of the content domain and reuses the
+`showcase-image-generator` skill and its script. It has two triggers, both
+narrow: onboarding a project whose card was just added and has no cover or hero,
+and regenerating one named slug whose subject changed enough to make its image
+misleading. The skill's default intent is onboarding, so a maintainer pass never
+refreshes the set wholesale. Generation is paid and non-deterministic, so churn
+here defeats the "one family" goal; the decision is recorded in the PR summary.
+The manifest the generator writes under its own `config/` is the record of
+generation dates the freshness check reads.
 
 ### D7 — Facts, not guesses; privacy is a hard boundary
 

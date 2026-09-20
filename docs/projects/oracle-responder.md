@@ -3,11 +3,15 @@
 A natural-language front door over cluster and repository state, for operational
 questions that would otherwise mean several dashboards and a `kubectl` session.
 
-| | |
-| --- | --- |
-| **Area** | AI & Agents |
-| **Status** | Running |
-| **Source** | [`datahub-local-ai`](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A foggy dark hall where a lantern beam draws particles into a ring](../assets/img/showcase/ai-agents/oracle-responder-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

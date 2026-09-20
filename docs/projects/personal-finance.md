@@ -4,11 +4,17 @@ A private analytics pipeline over personal documents such as bank exports,
 statements, and spreadsheets, with a governed SQL surface and no source rows
 published.
 
-| | |
-| --- | --- |
-| **Area** | Data & Analytics |
-| **Privacy** | Method, schema, and aggregates only; no transactions or balances are published |
-| **Source** | [ingestion and modeling projects](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Data &amp; Analytics</span>
+  <span class="meta-pill meta-pill--privacy">No personal data</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![A wall of closed frosted drawers in a dark room, one lit from within](../assets/img/showcase/data-analytics/personal-finance-hero.webp){ width="1024" }
+</figure>
+
+<p class="project-meta__note">Method, schema, and aggregates only; no transactions or balances are published.</p>
 
 ## Problem
 

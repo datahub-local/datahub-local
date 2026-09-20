@@ -1,0 +1,341 @@
+images:
+  ai-content-engine/cover:
+    alt: A loom weaving threads of light into a blank page
+    date: '2026-09-20T12:52:05+00:00'
+    file: docs/assets/img/showcase/ai-agents/ai-content-engine-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.259
+    prompt_hash: sha256:b429d9a3efc5b21e47ffd4d60ff7079a9edc0c384506a8fb64b193bd50f79ccb
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  ai-content-engine/hero:
+    alt: A dark workshop with a loom of light producing a pale sheet
+    date: '2026-09-20T12:52:18+00:00'
+    file: docs/assets/img/showcase/ai-agents/ai-content-engine-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.21
+    prompt_hash: sha256:f6edff981aed6e58ee7e3d8eda889f9a6b59f4c16eff3436961043feeeeb901b
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  bodega/cover:
+    alt: A blank paper receipt curling into a tidy grid of blank tiles
+    date: '2026-09-20T12:34:21+00:00'
+    file: docs/assets/img/showcase/data-analytics/bodega-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.286
+    prompt_hash: sha256:4df9cb2136862d329616d6cba0d35e0d1cc1c15f54ff9bfd08165922dca6df48
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  bodega/hero:
+    alt: A blank receipt arcing across a dark studio into a receding grid of tiles
+    date: '2026-09-20T12:35:24+00:00'
+    file: docs/assets/img/showcase/data-analytics/bodega-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.186
+    prompt_hash: sha256:6e44623138ff99747a4215107e57c933aebd6be3c63a90619521370cca488358
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  data-quality-lineage/cover:
+    alt: A branching root system with lit inspection nodes, one branch marked
+    date: '2026-09-20T12:40:38+00:00'
+    file: docs/assets/img/showcase/data-analytics/data-quality-lineage-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.199
+    prompt_hash: sha256:201a721f389c6c115ba253418f719ab41fcaeb623c5dea3a272189175be2bb3d
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  data-quality-lineage/hero:
+    alt: A wide root network under dark soil with pulsing nodes and one glowing branch
+    date: '2026-09-20T12:41:38+00:00'
+    file: docs/assets/img/showcase/data-analytics/data-quality-lineage-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.22
+    prompt_hash: sha256:e30d84dd37fd2f54adf860f9fe5e2968b0e8457a15a1b5c2f03a93eddb53f09d
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  gitops-platform/cover:
+    alt: Concentric brass rings converging on one aligned notch
+    date: '2026-09-20T12:52:40+00:00'
+    file: docs/assets/img/showcase/platform-operations/gitops-platform-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.2
+    prompt_hash: sha256:80ffb18134fa09fbb5ac995990d5d72330ca226daef7c8cae4977b56867fbef5
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  gitops-platform/hero:
+    alt: A dark hall of nested rings with one aligned seam glowing green
+    date: '2026-09-20T12:52:50+00:00'
+    file: docs/assets/img/showcase/platform-operations/gitops-platform-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.31
+    prompt_hash: sha256:debd407511752f8bec0bac1a545c9d5b2be491d23ca5506b4839b9ffb9bf5d82
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  lakehouse-core/cover:
+    alt: A stratified core sample of translucent sediment layers under a still surface
+    date: '2026-09-20T12:23:15+00:00'
+    file: docs/assets/img/showcase/data-analytics/lakehouse-core-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.202
+    prompt_hash: sha256:1739b2dc1f0a34a577251b94da3770b1b2cf346d7bf50a211fe4771f5f207f3f
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  lakehouse-core/hero:
+    alt: A wide dark lake surface with a wall of translucent layered strata rising
+      from it
+    date: '2026-09-20T12:24:10+00:00'
+    file: docs/assets/img/showcase/data-analytics/lakehouse-core-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.419
+    prompt_hash: sha256:4e617c742591ae094ad43ecf23ee7de2d3a11f7dd4c20ca5656c89d9c13e4e8a
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  local-inference/cover:
+    alt: A ceramic compute block glowing like a hearth
+    date: '2026-09-20T12:52:24+00:00'
+    file: docs/assets/img/showcase/ai-agents/local-inference-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.234
+    prompt_hash: sha256:b758d4e2bdf8f440d77e0b2b1083a8620f605941c92bff0ee53c37a8f0b9c4c8
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  local-inference/hero:
+    alt: A dark room with a warm ceramic block pooling green light on the floor
+    date: '2026-09-20T12:52:34+00:00'
+    file: docs/assets/img/showcase/ai-agents/local-inference-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.384
+    prompt_hash: sha256:4b919237d90c9788f34ffcf242833c5b30899548f5516ad3b5e6ad934f5fa03b
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  mcp-platform/cover:
+    alt: A docking hub of six identical read-only ports
+    date: '2026-09-20T12:51:29+00:00'
+    file: docs/assets/img/showcase/ai-agents/mcp-platform-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.065
+    prompt_hash: sha256:ed09de3319ae6719bce7f3a2c9d0ed257f144009431ae3145221d99fe989de82
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  mcp-platform/hero:
+    alt: A dark docking rack of six frosted apertures with light entering only
+    date: '2026-09-20T12:51:40+00:00'
+    file: docs/assets/img/showcase/ai-agents/mcp-platform-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.292
+    prompt_hash: sha256:4adfff528b90347ce0fa08ac13ebbdf97433ef89129600e6aca84002a99789e1
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  observability/cover:
+    alt: A macro lens over a field of faint pulses, one ringed
+    date: '2026-09-20T12:52:56+00:00'
+    file: docs/assets/img/showcase/platform-operations/observability-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.058
+    prompt_hash: sha256:02034cedb85e98296eac13e1de644b4ab9bd9cdbcd9da5cbf52c15959d6ca707
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  observability/hero:
+    alt: A dark field of ripples with a suspended lens and one ringed pulse
+    date: '2026-09-20T12:53:07+00:00'
+    file: docs/assets/img/showcase/platform-operations/observability-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.25
+    prompt_hash: sha256:bd7b0beebe685d009270170125a661a912e413a76e22784c2adf7a4bfbcba048
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  oracle-responder/cover:
+    alt: A paper lantern hanging in a dark studio as motes gather into a shape
+    date: '2026-09-20T12:58:44+00:00'
+    file: docs/assets/img/showcase/ai-agents/oracle-responder-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.085
+    prompt_hash: sha256:8a9377eda28ecded4f578c69b06624bbf9956ba97f99133bd5c4b26e0cecdd38
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  oracle-responder/hero:
+    alt: A foggy dark hall where a lantern beam draws particles into a ring
+    date: '2026-09-20T12:51:58+00:00'
+    file: docs/assets/img/showcase/ai-agents/oracle-responder-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.243
+    prompt_hash: sha256:ff48f6b7027eebf95c8510a48de0325fa454b6b15a5a3fd10b3508ade49f48ed
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  oss-charts/cover:
+    alt: A short stack of plain shipping crates, one open with green light
+    date: '2026-09-20T12:53:15+00:00'
+    file: docs/assets/img/showcase/open-source/oss-charts-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.144
+    prompt_hash: sha256:6cd900a668f9026db39c0b3c96e86b8761b4e3db2290882df2785e9330ba184d
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  oss-charts/hero:
+    alt: A dark loading bay with a stack of crates, one open and glowing green
+    date: '2026-09-20T12:58:53+00:00'
+    file: docs/assets/img/showcase/open-source/oss-charts-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.188
+    prompt_hash: sha256:9d6916f85167fefe3bd63cfc8f3bb7005dffb677672766d941df49b6b49776d5
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  personal-finance/cover:
+    alt: A sealed frosted-glass ledger box, closed and unmarked
+    date: '2026-09-20T12:36:35+00:00'
+    file: docs/assets/img/showcase/data-analytics/personal-finance-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.678
+    prompt_hash: sha256:4f5d1a107f40b8281aedff71fcd98ca0748bd47ea63087e43167cb703c9e44da
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  personal-finance/hero:
+    alt: A wall of closed frosted drawers in a dark room, one lit from within
+    date: '2026-09-20T12:37:35+00:00'
+    file: docs/assets/img/showcase/data-analytics/personal-finance-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.281
+    prompt_hash: sha256:e75371a3b794c70f8f0499878c0ff3e6177e6106b58f677409b26b4e770a8365
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  semantic-layer/cover:
+    alt: A precision lens aligning several thin light beams onto one plane
+    date: '2026-09-20T12:38:34+00:00'
+    file: docs/assets/img/showcase/data-analytics/semantic-layer-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.275
+    prompt_hash: sha256:edcffde561a9941b48a784a9c56ff55483ae95e850737f768f3ccd435a810d54
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  semantic-layer/hero:
+    alt: Many light beams converging through a brass lens onto one illuminated plane
+    date: '2026-09-20T12:39:36+00:00'
+    file: docs/assets/img/showcase/data-analytics/semantic-layer-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.289
+    prompt_hash: sha256:3f2f581586c24fdfda954d72bc3cf11e18a986fcd74d1ac315b2222cfb066384
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+  sre-agents/cover:
+    alt: Small matte survey drones hovering over a dark contoured surface
+    date: '2026-09-20T12:51:06+00:00'
+    file: docs/assets/img/showcase/ai-agents/sre-agents-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.268
+    prompt_hash: sha256:d7eb40471632aa2c3cbc0b58532d6a15a0088d1f36ab1ce66bd606c43938896b
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  sre-agents/hero:
+    alt: A wide dark terrain surveyed by drones casting thin green light cones
+    date: '2026-09-20T12:51:16+00:00'
+    file: docs/assets/img/showcase/ai-agents/sre-agents-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.251
+    prompt_hash: sha256:6f5a331ecd26b242dfed28d6b6714df7a26341a8b273e2db7f18c1275cffc57e
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
+version: 1

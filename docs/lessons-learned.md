@@ -1,4 +1,4 @@
-# Lessons Learned
+# Hard Lessons
 
 Building a homelab is as much about learning from failures as it is about getting things working. This page documents the honest account of what didn't work, why it was abandoned, and what was learned from each experience — both for future reference and as a portfolio signal that real engineering involves iteration and pragmatism.
 
@@ -30,7 +30,7 @@ Building a homelab is as much about learning from failures as it is about gettin
 - **Maintenance overhead** — keeping indexers, download clients, and the *arr apps in sync required frequent manual intervention. Prowlarr configs broke, indexers went offline, update cycles conflicted.
 - **Resource cost** — Jellyfin transcoding is expensive on ARM. The OrangePi nodes struggled with 1080p transcoding, and the complexity of making it work wasn't worth the payoff.
 
-**Lesson:** Self-hosted media works well when your ISP is cooperative and your content needs are mainstream. For niche or non-English content, streaming services remain the pragmatic choice. The [`servarr`](open-source/index.md) Helm chart was published as a usable artifact from this experiment.
+**Lesson:** Self-hosted media works well when your ISP is cooperative and your content needs are mainstream. For niche or non-English content, streaming services remain the pragmatic choice. The [`servarr`](projects/oss-charts.md) Helm chart was published as a usable artifact from this experiment.
 
 ---
 
@@ -114,7 +114,7 @@ Garage was the right choice but the official Helm chart was bare: no automatic c
 - `ServiceMonitor` and Grafana dashboard out of the box
 - Flexible ingress support
 
-This became the [`garage-helm`](open-source/index.md) project, now published open source.
+This became the [`garage-helm`](projects/oss-charts.md) project, now published open source.
 
 **Lesson:** For object storage (and any storage layer), choose software governed by a neutral foundation or a true community project — not a single commercial entity's "open core" product. Evaluate migration cost before you're forced to migrate.
 
@@ -127,12 +127,12 @@ Every failure above contributed something concrete:
 | Failure                | What came out of it                                                                                        |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------- |
 | ARM reliability issues | Clearer architecture: ARM for light workloads, x86 for data/AI compute                                     |
-| Servarr struggles      | Published [`servarr`](open-source/index.md) Helm chart — useful for others even if not for this cluster    |
+| Servarr struggles      | Published [`servarr`](projects/oss-charts.md) Helm chart — useful for others even if not for this cluster    |
 | ARM cost/performance   | Hardware evolution to CWWK NAS + CHUWI mini-PC; much better cluster performance                            |
 | Under-used services    | Leaner cluster; focus on services that are actually used — data platform, AI, monitoring                   |
 | Over-scoping           | Clear purpose statement: this is a **data platform and AI experimentation lab**, not a general home server |
 | Bitnami removal        | Migrated to operator-based deployments (CloudNative PG); more resilient chart strategy                     |
-| MinIO removal          | Built and published [`garage-helm`](open-source/index.md); Garage now running in production                |
+| MinIO removal          | Built and published [`garage-helm`](projects/oss-charts.md); Garage now running in production                |
 | Redis relicensing      | Early adoption of Valkey; no disruption to services                                                        |
 
 The current cluster is more focused, more reliable, and more interesting as a portfolio project precisely because of what was cut — and because of the fires that had to be fought along the way.

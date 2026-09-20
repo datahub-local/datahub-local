@@ -3,11 +3,15 @@
 A catalogued, versioned SQL surface over the lakehouse, so dashboards and AI
 agents query the same governed definitions instead of raw object storage.
 
-| | |
-| --- | --- |
-| **Area** | Data & Analytics |
-| **Status** | Running |
-| **Source** | [dbt and dlt projects in `datahub-local-ai`](https://github.com/datahub-local/datahub-local-ai) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Data &amp; Analytics</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-ai">:fontawesome-brands-github: datahub-local-ai</a>
+</p>
+
+<figure markdown="span">
+  ![Many light beams converging through a brass lens onto one illuminated plane](../assets/img/showcase/data-analytics/semantic-layer-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 

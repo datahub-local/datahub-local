@@ -30,11 +30,15 @@ the shared contract; this skill is the content domain only.
 
 3. Make the smallest edit that fixes it:
    - `broken-link`: fix or remove the reference.
-   - `repo-not-catalogued`: add a card, or record why it is excluded.
+   - `repo-not-catalogued`: add a card, and give it a cover and hero through the
+     `showcase-image-generator` skill, or record why it is excluded.
    - `repo-archived`: mark the card archived.
+   - `missing-image`: a catalogued project with no cover or hero; onboard it
+     through the `showcase-image-generator` skill.
    - `duplicated-narrative`: keep one source and link to it.
    - `image-maybe-stale`: only if the image no longer represents the project;
-     regenerate through the `showcase-images` path. Never regenerate routinely.
+     regenerate that named slug through the `showcase-image-generator` skill.
+     Never regenerate routinely.
    - Freshness: replace an unsupported figure with the verified value, or remove
      it. Never guess.
 
@@ -52,3 +56,6 @@ the shared contract; this skill is the content domain only.
   aggregate outcomes only.
 - A no-op run publishes nothing and reports the domain as current.
 - Never edit `datahub-local-*` repositories from here.
+- Image generation is paid and opt-in. Onboard imagery only for a card that was
+  just added, or regenerate a named slug that no longer represents its project.
+  Never regenerate as part of a routine sweep.

@@ -3,11 +3,17 @@
 Turning supermarket invoices into a structured, queryable dataset and a weekly
 spend digest, described by method, schema, and aggregate outcomes only.
 
-| | |
-| --- | --- |
-| **Area** | Data & Analytics |
-| **Privacy** | Method, schema, and aggregates only; no shopping rows are published |
-| **Source** | [workflow and DAG definitions](https://github.com/datahub-local/datahub-local-workflows) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Data &amp; Analytics</span>
+  <span class="meta-pill meta-pill--privacy">No personal data</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-workflows">:fontawesome-brands-github: datahub-local-workflows</a>
+</p>
+
+<figure markdown="span">
+  ![A blank receipt arcing across a dark studio into a receding grid of tiles](../assets/img/showcase/data-analytics/bodega-hero.webp){ width="1024" }
+</figure>
+
+<p class="project-meta__note">Method, schema, and aggregates only; no shopping rows are published.</p>
 
 ## Problem
 

@@ -99,9 +99,8 @@ nav:
           - Cloud at home: projects/cloud-at-home.md
           - GitOps platform: projects/gitops-platform.md
           - Observability: projects/observability.md
-      - Open Source & Lessons:
-          - OSS charts: projects/oss-charts.md
-          - Vendor risk: projects/vendor-risk.md
+      - Community:
+          - Giving Back to the Community: projects/oss-charts.md
   - Platform:
       - Architecture: architecture/overview.md
       - Cluster Setup:
@@ -116,6 +115,4 @@ nav:
           - Monitoring: services/monitoring.md
           - AI & LLMs: services/ai.md
           - Media & Utilities: services/media-and-other.md
-  - Open Source & Lessons:
-      - Open Source: open-source/index.md
-      - Lessons Learned: lessons-learned.md
+  - Hard Lessons: lessons-learned.md

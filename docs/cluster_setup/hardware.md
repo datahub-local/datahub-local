@@ -109,7 +109,7 @@ The cluster has evolved over time as hardware was added and replaced. The curren
 
 ## Hardware Components
 
-The current hardware used in the cluster. The list has evolved since the initial setup — see [Lessons Learned](../lessons-learned.md) for context on hardware choices.
+The current hardware used in the cluster. The list has evolved since the initial setup — see [Hard Lessons](../lessons-learned.md) for context on hardware choices.
 
 **Servers**
 

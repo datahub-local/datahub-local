@@ -3,11 +3,15 @@
 Private, offline inference on a dedicated GPU worker, used by the platform's
 agents and available through a self-hosted chat UI.
 
-| | |
-| --- | --- |
-| **Area** | AI & Agents |
-| **Status** | Running |
-| **Source** | [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-core">:fontawesome-brands-github: datahub-local-core</a>
+</p>
+
+<figure markdown="span">
+  ![A dark room with a warm ceramic block pooling green light on the floor](../assets/img/showcase/ai-agents/local-inference-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 
@@ -52,4 +56,4 @@ a demo.
 
 - [AI & LLMs](../services/ai.md): the hybrid strategy in full
 - [Monitoring](../services/monitoring.md): inference metrics and the observability stack
-- [Open Source](../open-source/index.md): the `ollama-metrics` exporter
+- [OSS charts](oss-charts.md): the `ollama-metrics` exporter

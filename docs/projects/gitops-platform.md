@@ -3,11 +3,15 @@
 Every service delivered from Git through ArgoCD, with quality gates before merge
 and automated dependency updates.
 
-| | |
-| --- | --- |
-| **Area** | Platform & Operations |
-| **Status** | Running |
-| **Source** | [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core) |
+<p class="project-meta" markdown="span">
+  <span class="meta-pill meta-pill--area">Platform &amp; Operations</span>
+  <span class="meta-pill meta-pill--status">Running</span>
+  <a class="meta-pill meta-pill--github" href="https://github.com/datahub-local/datahub-local-core">:fontawesome-brands-github: datahub-local-core</a>
+</p>
+
+<figure markdown="span">
+  ![A dark hall of nested rings with one aligned seam glowing green](../assets/img/showcase/platform-operations/gitops-platform-hero.webp){ width="1024" }
+</figure>
 
 ## Problem
 
