@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="A radar investigating alerts">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a0f"/>
+      <stop offset="1" stop-color="#0E1116"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <g fill="none" stroke="#A3CF7A" stroke-width="8" stroke-linecap="round">
+    <circle cx="400" cy="230" r="120"/>
+    <circle cx="400" cy="230" r="70"/>
+    <path d="M400 230L560 130"/>
+    <circle cx="465" cy="175" r="12" fill="#5E8A3F" stroke="none"/>
+    <circle cx="350" cy="285" r="9" fill="#7FAF5A" stroke="none"/>
+  </g>
+  <g fill="none" stroke="#7FAF5A" stroke-width="7" stroke-linecap="round">
+    <rect x="330" y="60" width="140" height="46" rx="12"/>
+    <path d="M370 83h60"/>
+  </g>
+</svg>

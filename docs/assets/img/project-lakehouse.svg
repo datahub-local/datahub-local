@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Layered lakehouse tables">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a0f"/>
+      <stop offset="1" stop-color="#0E1116"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <g fill="none" stroke="#A3CF7A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="400" cy="150" rx="150" ry="42"/>
+    <path d="M250 150v50a150 42 0 0 0 300 0v-50"/>
+    <path d="M250 220v50a150 42 0 0 0 300 0v-50"/>
+    <path d="M250 290v40a150 42 0 0 0 300 0v-40"/>
+  </g>
+  <g stroke="#5E8A3F" stroke-width="6" stroke-linecap="round">
+    <path d="M300 150h200"/>
+    <path d="M300 220h200"/>
+    <path d="M300 290h200"/>
+  </g>
+</svg>

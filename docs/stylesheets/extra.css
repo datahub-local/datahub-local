@@ -142,156 +142,6 @@
 }
 
 /* ================================================
-   HERO SECTION
-   ================================================ */
-.hero-section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 2.5rem;
-  padding: 1.5rem 2rem 1.25rem;
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  text-align: left;
-}
-
-/* Logo column — 40 % of the hero width */
-.hero-logo-col {
-  flex: 0 0 40%;
-  max-width: 40%;
-}
-
-/* Content column */
-.hero-content-col {
-  flex: 1;
-  min-width: 0;
-}
-
-/* Stack on narrow screens */
-@media (max-width: 640px) {
-  .hero-section {
-    flex-direction: column;
-    text-align: center;
-  }
-  .hero-logo-col {
-    flex: 0 0 auto;
-    max-width: 80%;
-    width: 80%;
-  }
-  .hero-logo-full {
-    margin: 0 auto !important;
-  }
-  .hero-badges {
-    justify-content: center !important;
-  }
-}
-
-[data-md-color-scheme="slate"] .hero-section {
-  background: linear-gradient(
-    135deg,
-    rgba(94, 138, 63, 0.16) 0%,
-    rgba(127, 175, 90, 0.10) 50%,
-    rgba(94, 138, 63, 0.16) 100%
-  );
-  border: 1px solid rgba(127, 175, 90, 0.28);
-}
-
-[data-md-color-scheme="default"] .hero-section {
-  background: linear-gradient(
-    135deg,
-    rgba(94, 138, 63, 0.08) 0%,
-    rgba(127, 175, 90, 0.05) 50%,
-    rgba(94, 138, 63, 0.08) 100%
-  );
-  border: 1px solid rgba(94, 138, 63, 0.22);
-}
-
-/* Full lockup logo (horizontal) in the hero — fills its column */
-.hero-logo-full {
-  display: block;
-  width: 100% !important;
-  max-width: none !important;
-  height: auto !important;
-  margin: 0;
-  filter: drop-shadow(0 4px 32px rgba(127, 175, 90, 0.35));
-}
-
-/* Dark-scheme logo: show in slate, hide in default */
-.hero-logo--dark  { display: block; }
-.hero-logo--light { display: none;  }
-
-[data-md-color-scheme="default"] .hero-logo--dark  { display: none;  }
-[data-md-color-scheme="default"] .hero-logo--light { display: block; }
-
-/* Small icon-only hero logo (legacy / small screens) */
-.hero-logo {
-  display: block;
-  margin: 0 auto 1.5rem;
-  filter: drop-shadow(0 4px 24px rgba(127, 175, 90, 0.45));
-}
-
-/* Welcome/tagline text — ~20 % above normal body size */
-.hero-tagline {
-  font-size: 1.1rem;
-  font-weight: 500;
-  opacity: 0.85;
-  margin: 0 0 1.25rem;
-  max-width: 100%;
-  line-height: 1.5;
-}
-
-.hero-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  justify-content: flex-start;
-  margin-bottom: 1rem;
-}
-
-/* ================================================
-   STATS ROW
-   ================================================ */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0 2rem;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-}
-
-[data-md-color-scheme="slate"] .stats-row {
-  background: rgba(127, 175, 90, 0.04);
-  border: 1px solid rgba(127, 175, 90, 0.10);
-}
-
-[data-md-color-scheme="default"] .stats-row {
-  background: rgba(94, 138, 63, 0.04);
-  border: 1px solid rgba(94, 138, 63, 0.14);
-}
-
-.stat-item {
-  text-align: center;
-  padding: 0.25rem;
-}
-
-.stat-number {
-  font-size: 1.9rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0.2rem;
-  color: var(--md-accent-fg-color);
-}
-
-.stat-label {
-  font-size: 0.72rem;
-  opacity: 0.6;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-/* ================================================
    BUTTONS
    ================================================ */
 
@@ -331,35 +181,6 @@
 .md-button:hover {
   background-color: rgba(127, 175, 90, 0.10) !important;
   border-color: #7FAF5A !important;
-}
-
-/* ================================================
-   GOALS GRID — 2 columns, title normal · description smaller
-   ================================================ */
-
-/* Force exactly 2 columns with explicit gap to prevent overlap */
-.md-typeset .grid.cards.goals-grid > ul,
-.md-typeset .grid.cards.goals-grid > ol {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 1rem !important;
-  align-items: start !important;   /* prevent stretch bleed between rows */
-}
-
-/* Title row — icon + bold text — keep at the card's natural size */
-.md-typeset .grid.cards.goals-grid > ul > li > p:first-child,
-.md-typeset .grid.cards.goals-grid > ol > li > p:first-child {
-  font-size: inherit;
-  margin-bottom: 0.3rem;
-}
-
-/* Description — smaller than title for clear hierarchy */
-.md-typeset .grid.cards.goals-grid > ul > li > p:not(:first-child),
-.md-typeset .grid.cards.goals-grid > ol > li > p:not(:first-child) {
-  font-size: 0.78rem;
-  line-height: 1.55;
-  opacity: 0.88;
-  margin-top: 0;
 }
 
 /* ================================================
@@ -447,7 +268,7 @@
 }
 
 /* ================================================
-   GRID CARDS — same look as stats-row
+   GRID CARDS — shared brand surface
    ================================================ */
 .md-typeset .grid.cards > ul > li,
 .md-typeset .grid.cards > :is(ul, ol) > li {
@@ -609,4 +430,571 @@
   background: rgba(94, 138, 63, 0.09);
   color: #5E8A3F;
   border: 1px solid rgba(94, 138, 63, 0.28);
+}
+
+/* ================================================
+   SHOWCASE — hero claim
+   ================================================ */
+.hero-claim {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.85rem;
+  color: var(--md-accent-fg-color) !important;
+}
+
+@media (max-width: 640px) {
+  .hero-claim {
+    font-size: 1.6rem;
+  }
+}
+
+/* ================================================
+   SHOWCASE — personal-site cross-link (footer)
+   ================================================ */
+.personal-crosslink {
+  text-align: center;
+  padding: 0.5rem 1rem 1.25rem;
+}
+
+.personal-crosslink__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: var(--md-accent-fg-color) !important;
+  transition: filter 0.18s ease;
+}
+
+.personal-crosslink__link:hover {
+  filter: brightness(1.15);
+}
+
+.personal-crosslink__icon svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* ================================================
+   SHOWCASE — personal author link
+   ================================================ */
+.author-link--personal {
+  background-color: #5E8A3F;
+  color: #F4F2EC !important;
+}
+
+/* ================================================
+   SHOWCASE — full-bleed alternating bands
+   Fixed brand colours, independent of the theme toggle.
+   ================================================ */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: clip;
+}
+
+.band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 3.5rem calc(50vw - 50%);
+}
+
+.band--dark {
+  background-color: #0E1116;
+  color: #F4F2EC;
+}
+
+.band--light {
+  background-color: #F4F2EC;
+  color: #0E1116;
+}
+
+.band__text {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+/* ================================================
+   SHOWCASE — hero band
+   ================================================ */
+.hero-band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 4rem calc(50vw - 50%) 3rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(180deg, #0E1116 0, #0E1116 20%, rgba(14, 17, 22, 0) 60%),
+    radial-gradient(820px 400px at 50% 72%, rgba(94, 138, 63, 0.22), transparent 72%),
+    #0E1116;
+  color: #F4F2EC;
+  text-align: center;
+}
+
+.hero-band__logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 560px;
+  max-width: 80%;
+  height: auto;
+  margin: 0 auto 1.75rem;
+  filter: drop-shadow(0 6px 34px rgba(127, 175, 90, 0.35));
+}
+
+.hero-band .hero-claim {
+  margin: 0 auto 0.9rem;
+  max-width: none;
+  font-size: 2.6rem;
+}
+
+.hero-band__sub {
+  max-width: 62ch;
+  margin: 0 auto 1.6rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.hero-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero-band .md-button--primary {
+  background-color: #F4F2EC !important;
+  border-color: #F4F2EC !important;
+  color: #0E1116 !important;
+}
+
+.hero-band .md-button--primary:hover {
+  background-color: #A3CF7A !important;
+  border-color: #A3CF7A !important;
+  color: #0E1116 !important;
+}
+
+.hero-band .md-button {
+  border-color: rgba(163, 207, 122, 0.5) !important;
+  color: #A3CF7A !important;
+}
+
+.hero-band .author-link--github {
+  margin-left: 0.15rem;
+}
+
+/* ================================================
+   SHOWCASE — stack strip
+   ================================================ */
+.stack-strip {
+  max-width: 76rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stack-strip__label {
+  margin: 0 0 1rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.stack-pill {
+  padding: 0.28rem 0.7rem;
+  border-radius: 99rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(94, 138, 63, 0.09);
+  color: #3d5c28;
+  border: 1px solid rgba(94, 138, 63, 0.26);
+}
+
+/* ================================================
+   SHOWCASE — section heading
+   ================================================ */
+.section-head {
+  max-width: 76rem;
+  margin: 0 auto 2rem;
+}
+
+.section-head h2 {
+  margin: 0 0 0.5rem;
+  font-size: 2.25rem;
+}
+
+.section-head p {
+  max-width: 70ch;
+  margin: 0;
+  opacity: 0.88;
+}
+
+.section-head--center {
+  text-align: center;
+}
+
+.section-head--center p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.band--dark .section-head h2 {
+  color: #A3CF7A !important;
+}
+
+.band--light .section-head h2 {
+  color: #5E8A3F !important;
+}
+
+/* ================================================
+   SHOWCASE — work cards
+   ================================================ */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.band--dark .work-card {
+  background: rgba(127, 175, 90, 0.06);
+  border: 1px solid rgba(127, 175, 90, 0.2);
+}
+
+.work-card__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.work-card__body {
+  padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.work-card__tag {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  padding: 0.22rem 0.75rem;
+  border-radius: 99rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3d5c28;
+  background: #E9EFE0;
+  border: 1px solid #C7D9B4;
+}
+
+.work-card__title {
+  margin: 0.3rem 0 0.5rem;
+  font-size: 1.1rem;
+  color: #A3CF7A !important;
+}
+
+.work-card__title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.work-card__pitch {
+  margin: 0 0 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.work-card__link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #A3CF7A !important;
+}
+
+/* ================================================
+   SHOWCASE — capability cards
+   ================================================ */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.cap-card {
+  padding: 1.2rem 1.3rem;
+  border-radius: 1rem;
+}
+
+.band--light .cap-card {
+  background: rgba(94, 138, 63, 0.06);
+  border: 1px solid rgba(94, 138, 63, 0.18);
+}
+
+.cap-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #5E8A3F !important;
+}
+
+.cap-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ================================================
+   SHOWCASE — proof stat cards
+   ================================================ */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.stat-card {
+  padding: 1.3rem 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: rgba(127, 175, 90, 0.07);
+  border: 1px solid rgba(127, 175, 90, 0.18);
+}
+
+.stat-card__num {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #A3CF7A;
+}
+
+.stat-card__num--sm {
+  padding-top: 0.3rem;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.stat-card__label {
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.stat-card small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+}
+
+.stat-card small a {
+  color: #A3CF7A;
+  opacity: 0.75;
+}
+
+/* ================================================
+   SHOWCASE — quote
+   ================================================ */
+.quote-card {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2rem 2.2rem;
+  border-left: 5px solid #5E8A3F;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: rgba(94, 138, 63, 0.06);
+}
+
+.quote-card p {
+  margin: 0 0 0.8rem;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #0E1116;
+}
+
+.quote-card cite {
+  font-style: normal;
+  font-weight: 600;
+  color: #5E8A3F;
+}
+
+/* ================================================
+   SHOWCASE — what's next
+   ================================================ */
+.next-block {
+  max-width: 62rem;
+  margin: 2.5rem auto 0;
+}
+
+.next-block h2 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+  color: #5E8A3F !important;
+}
+
+.next-block ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.next-block li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+/* ================================================
+   SHOWCASE — responsive
+   ================================================ */
+@media (max-width: 900px) {
+  .band {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .work-grid,
+  .cap-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-band {
+    padding-top: 2.75rem;
+  }
+
+  .hero-band .hero-claim {
+    font-size: 1.9rem;
+  }
+
+  .work-grid,
+  .cap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-card {
+    padding: 1.4rem 1.4rem;
+  }
+}
+
+/* ================================================
+   SHOWCASE — dark header until the hero is scrolled
+   ================================================ */
+html.home-dark .md-header,
+html.home-dark .md-tabs {
+  background-color: #0E1116;
+  transition: background-color 0.35s ease;
+}
+
+html.home-dark .md-header__title,
+html.home-dark .md-header__topic,
+html.home-dark .md-ellipsis {
+  color: #F4F2EC !important;
+}
+
+html.home-dark .md-tabs__link {
+  color: rgba(244, 242, 236, 0.72) !important;
+}
+
+html.home-dark .md-tabs__link--active,
+html.home-dark .md-tabs__link:hover {
+  color: #A3CF7A !important;
+}
+
+html.home-dark .md-search__form {
+  background-color: rgba(244, 242, 236, 0.12);
+}
+
+html.home-dark .md-search__input,
+html.home-dark .md-search__icon {
+  color: #F4F2EC;
+}
+
+html.home-dark .md-search__input::placeholder {
+  color: rgba(244, 242, 236, 0.6);
+}
+
+/* Once the hero has scrolled past, return to the theme surface. */
+html.home-dark.hero-scrolled .md-header,
+html.home-dark.hero-scrolled .md-tabs {
+  background-color: var(--md-default-bg-color);
+}
+
+html.home-dark.hero-scrolled .md-header__title,
+html.home-dark.hero-scrolled .md-header__topic,
+html.home-dark.hero-scrolled .md-ellipsis {
+  color: var(--md-default-fg-color) !important;
+}
+
+html.home-dark.hero-scrolled .md-tabs__link {
+  color: var(--md-default-fg-color--light) !important;
+}
+
+html.home-dark.hero-scrolled .md-tabs__link--active,
+html.home-dark.hero-scrolled .md-tabs__link:hover {
+  color: var(--md-accent-fg-color) !important;
+}
+
+html.home-dark.hero-scrolled .md-search__form {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+html.home-dark.hero-scrolled .md-search__input,
+html.home-dark.hero-scrolled .md-search__icon {
+  color: var(--md-default-fg-color);
+}
+
+/* Header icon buttons follow the surface, not the primary background colour. */
+.md-header__button {
+  color: var(--md-default-fg-color);
+}
+
+html.home-dark .md-header__button {
+  color: #F4F2EC;
+}
+
+html.home-dark.hero-scrolled .md-header__button {
+  color: var(--md-default-fg-color);
+}
+
+/* The hero owns the first screen; drop the content gaps above it. */
+html.home-dark .md-main__inner {
+  margin-top: 0 !important;
+}
+
+html.home-dark .md-content__inner {
+  padding-top: 0;
 }

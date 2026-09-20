@@ -1,67 +1,22 @@
 # Open Source Projects
 
-While building DataHub.local we ran into gaps in the ecosystem — charts that didn't exist, tools that didn't support ARM64, or upstream projects that suddenly changed their license. Rather than keeping the fixes private, we published them so other homelab builders and data engineers can benefit too.
+While building DataHub.local we ran into gaps in the ecosystem: charts that
+didn't exist, tools that didn't support ARM64, or upstream projects that suddenly
+changed their license. Rather than keeping the fixes private, we published them.
 
-Each project below is actively used in production inside this cluster.
-
----
-
-## spark-apps-helm
-
-[![GitHub](https://img.shields.io/badge/GitHub-spark--apps--helm-181717?logo=github)](https://github.com/datahub-local/spark-apps-helm)
-
-A Helm chart for deploying `SparkApplication` resources on Kubernetes using the [Spark Operator](https://github.com/kubeflow/spark-operator).
-
-**Why we created it:** Every `SparkApplication` resource requires significant boilerplate YAML — driver/executor resources, image pull secrets, S3 credentials, Nessie catalog config, and more. We needed a way to define shared runtime defaults once and let each job override only what it needs, without copy-pasting hundreds of lines per pipeline.
+Each project below is actively used in production inside this cluster. The
+[Projects catalogue](../projects/index.md#open-source-lessons) is the place for
+narratives and lessons, while this page is the index of artifacts.
 
 ---
 
-## garage-helm
-
-[![GitHub](https://img.shields.io/badge/GitHub-garage--helm-181717?logo=github)](https://github.com/datahub-local/garage-helm)
-
-A Helm chart for deploying [Garage](https://garagehq.deuxfleurs.fr/) — a lightweight, distributed, S3-compatible object storage system — on Kubernetes.
-
-**Why we created it:** MinIO changed its license and removed its open-source container images with little notice, forcing a migration. Garage was the best replacement for a small heterogeneous cluster (single binary, ARM64-friendly, no commercial lock-in) but its official Helm chart was minimal — no automatic cluster initialisation, no bucket provisioning, no observability. We built what was missing and published it.
-
----
-
-## servarr
-
-[![GitHub](https://img.shields.io/badge/GitHub-servarr-181717?logo=github)](https://github.com/datahub-local/servarr)
-
-A comprehensive Helm chart that deploys the complete Servarr media management stack — Jellyfin, Sonarr, Radarr, Prowlarr, qBittorrent, Bazarr, Jellyseerr, and Flaresolverr — in a single command.
-
-**Why we created it:** Deploying the *arr ecosystem meant managing many separate, inconsistent Helm charts. We wanted one chart with shared NFS storage, selective app enabling, and Traefik ingress already wired up — so the whole stack comes up with a single `helm install`.
-
----
-
-## node-exporter-textfiles
-
-[![GitHub](https://img.shields.io/badge/GitHub-node--exporter--textfiles-181717?logo=github)](https://github.com/datahub-local/node-exporter-textfiles)
-
-A collection of shell scripts that generate Prometheus textfile metrics for node-exporter — covering custom hardware and system metrics not provided by the standard exporter.
-
-**Why we created it:** Several metrics specific to our hardware (SBC temperatures, GPIO states, UPS status) were not exposed by the standard node-exporter. These scripts fill that gap and feed into our Grafana dashboards.
-
----
-
-## ollama-metrics
-
-[![GitHub](https://img.shields.io/badge/GitHub-ollama--metrics-181717?logo=github)](https://github.com/datahub-local/ollama-metrics)
-
-A lightweight Ollama metrics sidecar and transparent proxy that exposes
-Prometheus metrics for local LLM deployments.
-
-**What it provides:** token usage, request duration, time to first token,
-inference speed, loaded-model status, and model memory usage. It supports both
-Ollama's native `/api` endpoints and its OpenAI-compatible `/v1` endpoints,
-including streamed responses.
-
-**Why we created it:** Local inference needs the same operational visibility as
-the rest of the platform. The sidecar adds detailed Ollama metrics without
-modifying Ollama or requiring changes to clients, and includes a Grafana
-dashboard for tracking model performance and resource usage.
+| Project | What it is | Source |
+| ------- | ---------- | ------ |
+| **spark-apps-helm** | Helm chart for deploying `SparkApplication` resources with shared runtime defaults | [GitHub](https://github.com/datahub-local/spark-apps-helm) |
+| **garage-helm** | Helm chart for Garage S3 object storage, adding cluster init, bucket provisioning, and observability | [GitHub](https://github.com/datahub-local/garage-helm) |
+| **servarr** | One Helm chart for the complete Servarr media stack with shared storage and ingress | [GitHub](https://github.com/datahub-local/servarr) |
+| **node-exporter-textfiles** | Shell scripts exporting custom hardware and system metrics as Prometheus textfiles | [GitHub](https://github.com/datahub-local/node-exporter-textfiles) |
+| **ollama-metrics** | Ollama metrics sidecar and proxy exposing token, latency, and model metrics | [GitHub](https://github.com/datahub-local/ollama-metrics) |
 
 ---
 
@@ -70,3 +25,6 @@ All charts are published as OCI artifacts via **GitHub Container Registry (GHCR)
 ```bash
 helm install <release-name> oci://ghcr.io/datahub-local/<chart-name>
 ```
+
+See also [Vendor-risk lessons](../lessons-learned.md) for the incidents that
+produced several of these projects.

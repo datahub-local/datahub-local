@@ -1,0 +1,57 @@
+# Scope and sources for the site maintainer.
+#
+# This file is data: it says what is in scope, not what to do with it. The
+# reasoning behind the split lives in the change artifacts and the skills.
+
+orgs:
+  - datahub-local
+  - alvsanand
+
+# Repository scope for the content domain. An entry in `include` is always in
+# scope; otherwise a repository is in scope when its org is listed above, it is
+# not a fork, and it is not named in `exclude`. Archived repositories stay in
+# scope so their card can be marked archived rather than silently dropped.
+repositories:
+  include: []
+  exclude:
+    - datahub-local/datahub-local-private-config
+    - datahub-local/datahub-local-secrets
+    - datahub-local/demo-repository
+    - datahub-local/datahub-local-home-assistant-config
+    - datahub-local/Byparr
+    - datahub-local/dagster-celery-k8s-oci
+    - datahub-local/docker-lineageos
+    - datahub-local/container-helm-version-updater
+    - datahub-local/dagster-user-code-example
+    - alvsanand/infra_aws_alvsanand
+
+# Repositories whose releases the content domain tracks for version proof points.
+release_tracked:
+  - garage-helm
+  - spark-apps-helm
+  - node-exporter-textfiles
+  - ollama-metrics
+
+# Local link checking. Remote URLs are opt-in because they are slow and flaky.
+links:
+  check_remote: false
+  ignore_prefixes:
+    - "mailto:"
+    - "tel:"
+    - "javascript:"
+
+# Where the config-of-record lives, relative to the site repository root.
+# Every path has an environment override so a scheduler can point elsewhere.
+paths:
+  bootstrap_inventory:
+    default: ../datahub-local-bootstrap/inventory.yml
+    env: SITE_MAINTAINER_BOOTSTRAP_INVENTORY
+  core_versions:
+    default: ../datahub-local-core/values/_version.yaml
+    env: SITE_MAINTAINER_CORE_VERSIONS
+
+# Pages that carry platform and service claims, so checks know where to look.
+pages:
+  architecture: docs/architecture/overview.md
+  hardware: docs/cluster_setup/hardware.md
+  services_glob: docs/services/*.md

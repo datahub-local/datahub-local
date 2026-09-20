@@ -10,6 +10,7 @@ repo_url: https://github.com/datahub-local/datahub-local
 
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/img/logo-icon.svg
   favicon: assets/img/favicon.png
   font:
@@ -72,21 +73,49 @@ plugins:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - assets/javascripts/header-theme.js
+
+extra:
+  personal_site_url: https://alvsanand.com
+
 nav:
   - Home: index.md
-  - Architecture: architecture/overview.md
-  - Cluster Setup:
-      - Hardware: cluster_setup/hardware.md
-      - Provisioning: cluster_setup/provisioning.md
-  - Services:
-      - System: services/core.md
-      - CI/CD: services/cicd.md
-      - Security: services/security.md
-      - Data Stack: services/data.md
-      - Automation: services/automation.md
-      - Monitoring: services/monitoring.md
-      - AI & LLMs: services/ai.md
-      - Media & Utilities: services/media-and-other.md
-  - Open Source: open-source/index.md
-  - Roadmap: roadmap.md
-  - Lessons Learned: lessons-learned.md
+  - Projects:
+      - Catalogue: projects/index.md
+      - Data & Analytics:
+          - Lakehouse core: projects/lakehouse-core.md
+          - Bodega: projects/bodega.md
+          - Personal finance: projects/personal-finance.md
+          - Semantic layer: projects/semantic-layer.md
+          - Data quality & lineage: projects/data-quality-lineage.md
+      - AI & Agents:
+          - SRE agents: projects/sre-agents.md
+          - MCP platform: projects/mcp-platform.md
+          - Cluster oracle: projects/oracle-responder.md
+          - AI content engine: projects/ai-content-engine.md
+          - Local inference: projects/local-inference.md
+      - Platform & Operations:
+          - Cloud at home: projects/cloud-at-home.md
+          - GitOps platform: projects/gitops-platform.md
+          - Observability: projects/observability.md
+      - Open Source & Lessons:
+          - OSS charts: projects/oss-charts.md
+          - Vendor risk: projects/vendor-risk.md
+  - Platform:
+      - Architecture: architecture/overview.md
+      - Cluster Setup:
+          - Hardware: cluster_setup/hardware.md
+          - Provisioning: cluster_setup/provisioning.md
+      - Services:
+          - System: services/core.md
+          - CI/CD: services/cicd.md
+          - Security: services/security.md
+          - Data Stack: services/data.md
+          - Automation: services/automation.md
+          - Monitoring: services/monitoring.md
+          - AI & LLMs: services/ai.md
+          - Media & Utilities: services/media-and-other.md
+  - Open Source & Lessons:
+      - Open Source: open-source/index.md
+      - Lessons Learned: lessons-learned.md

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="A rack of cluster nodes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a0f"/>
+      <stop offset="1" stop-color="#0E1116"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <g fill="none" stroke="#A3CF7A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="300" y="90" width="200" height="70" rx="12"/>
+    <rect x="300" y="180" width="200" height="70" rx="12"/>
+    <rect x="300" y="270" width="200" height="70" rx="12"/>
+  </g>
+  <g fill="#5E8A3F">
+    <circle cx="335" cy="125" r="9"/>
+    <circle cx="335" cy="215" r="9"/>
+    <circle cx="335" cy="305" r="9"/>
+  </g>
+  <g stroke="#7FAF5A" stroke-width="6" stroke-linecap="round">
+    <path d="M470 125h40M470 215h40M470 305h40"/>
+    <path d="M510 125c50 0 50 90 0 90M510 215c50 0 50 90 0 90"/>
+  </g>
+</svg>
