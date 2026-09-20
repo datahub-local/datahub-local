@@ -1,0 +1,18 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DataHub.local icon">
+  <!-- Pentagon / data-hub house outline (dark, for light backgrounds) -->
+  <polygon
+    points="50,12 88,38 88,88 12,88 12,38"
+    fill="rgba(14,17,22,0.06)"
+    stroke="#0E1116"
+    stroke-width="3"
+    stroke-linecap="square"
+    stroke-linejoin="miter"/>
+  <!-- Data row bars -->
+  <rect x="26" y="48" width="48" height="9" rx="0.5" fill="#0E1116"/>
+  <rect x="26" y="62" width="48" height="9" rx="0.5" fill="#0E1116"/>
+  <rect x="26" y="76" width="48" height="9" rx="0.5" fill="#0E1116"/>
+  <!-- Status indicator dots (moss) -->
+  <circle cx="33" cy="52.5" r="2.2" fill="#7FAF5A"/>
+  <circle cx="33" cy="66.5" r="2.2" fill="#7FAF5A"/>
+  <circle cx="33" cy="80.5" r="2.2" fill="#7FAF5A"/>
+</svg>

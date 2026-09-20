@@ -1,0 +1,19 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DataHub.local favicon">
+  <!-- Pentagon (house) scaled from 100x100 → 32x32: multiply by 0.32, then offset -->
+  <!-- Original: 50,12 88,38 88,88 12,88 12,38 → ×0.295 + offset 0.5 -->
+  <polygon
+    points="16,3 28.5,11.5 28.5,29 3.5,29 3.5,11.5"
+    fill="none"
+    stroke="#7FAF5A"
+    stroke-width="1.2"
+    stroke-linecap="square"
+    stroke-linejoin="miter"/>
+  <!-- Data bars -->
+  <rect x="7" y="14.5" width="15.5" height="3" rx="0.3" fill="#7FAF5A"/>
+  <rect x="7" y="19"   width="15.5" height="3" rx="0.3" fill="#7FAF5A"/>
+  <rect x="7" y="23.5" width="15.5" height="3" rx="0.3" fill="#7FAF5A"/>
+  <!-- Status dots -->
+  <circle cx="9.2" cy="16"   r="0.9" fill="#F4F2EC"/>
+  <circle cx="9.2" cy="20.5" r="0.9" fill="#F4F2EC"/>
+  <circle cx="9.2" cy="25"   r="0.9" fill="#F4F2EC"/>
+</svg>
