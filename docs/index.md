@@ -59,7 +59,7 @@ hide:
   </div>
   <div class="work-grid">
     <article class="work-card">
-      <a class="work-card__art" href="projects/cloud-at-home.md"><img src="assets/img/project-cloud.svg" alt="A rack of cluster nodes"></a>
+      <a class="work-card__art" href="projects/cloud-at-home.md"><img src="assets/img/homelab_20260920_ai.jpg" alt="The DataHub.local cluster, a seven-node mini-PC rack in a dark studio setting"></a>
       <div class="work-card__body">
         <p class="work-card__tag">Platform</p>
         <h3 class="work-card__title"><a href="projects/cloud-at-home.md">Cloud-at-home on mini-PCs</a></h3>
@@ -112,6 +112,14 @@ hide:
         <a class="work-card__link" href="projects/bodega.md">Read the case study →</a>
       </div>
     </article>
+  </div>
+</div>
+
+<div class="hardware-band">
+  <div class="hardware-band__inner">
+    <h2>Seven nodes you can touch</h2>
+    <p>Two architectures, three storage tiers, and a GPU node in a single home rack. Every service in this catalogue runs on this hardware.</p>
+    <a href="projects/cloud-at-home.md">Read the cloud-at-home case study →</a>
   </div>
 </div>
 

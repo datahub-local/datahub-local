@@ -9,6 +9,11 @@ operated from Git. It is the foundation every other project runs on.
 | **Status** | Running |
 | **Source** | [`datahub-local-bootstrap`](https://github.com/datahub-local/datahub-local-bootstrap), [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core) |
 
+<figure markdown="span">
+  ![The DataHub.local cluster, a seven-node mini-PC rack in a dark studio setting](../assets/img/homelab_20260920_ai.jpg){ width="1024" }
+  <figcaption>The seven-node cluster, from the UPS and network switch to the ARM boards and the GPU node</figcaption>
+</figure>
+
 ## Problem
 
 Running production-like workloads at home means starting without the safety nets

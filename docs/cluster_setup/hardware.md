@@ -7,8 +7,8 @@ This document outlines the hardware setup for our Homelab — a cluster designed
 All cluster hardware (except the UPS) is mounted in a **DeskPi RackMate T1-Plus** — a compact, open-frame desktop rack designed for mini-PCs and SBCs.
 
 <figure markdown="span">
-  ![Homelab cluster — May 2026](../assets/img/homelab_20260524.jpg){ width="700" }
-  <figcaption>The current homelab cluster — May 2026</figcaption>
+  ![Homelab cluster, September 2026](../assets/img/homelab_20260920_ai.jpg){ width="700" }
+  <figcaption>The current homelab cluster, September 2026</figcaption>
 </figure>
 
 ### DeskPi RackMate T1-Plus

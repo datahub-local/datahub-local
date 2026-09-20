@@ -534,8 +534,9 @@ body {
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(180deg, #0E1116 0, #0E1116 20%, rgba(14, 17, 22, 0) 60%),
-    radial-gradient(820px 400px at 50% 72%, rgba(94, 138, 63, 0.22), transparent 72%),
+    linear-gradient(180deg, rgba(14, 17, 22, 0.97) 0%, rgba(14, 17, 22, 0.78) 42%, rgba(14, 17, 22, 0.97) 100%),
+    radial-gradient(820px 400px at 50% 78%, rgba(94, 138, 63, 0.18), transparent 72%),
+    url("../assets/img/homelab_20260920_ai.jpg") center 30% / cover no-repeat,
     #0E1116;
   color: #F4F2EC;
   text-align: center;
@@ -695,6 +696,8 @@ body {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .work-card__body {
@@ -997,4 +1000,41 @@ html.home-dark .md-main__inner {
 
 html.home-dark .md-content__inner {
   padding-top: 0;
+}
+
+/* ================================================
+   SHOWCASE — hardware band
+   ================================================ */
+.hardware-band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 4rem calc(50vw - 50%);
+  background:
+    radial-gradient(700px 320px at 50% 50%, rgba(94, 138, 63, 0.2), transparent 70%),
+    #0E1116;
+  color: #F4F2EC;
+  text-align: center;
+}
+
+.hardware-band__inner {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.hardware-band h2 {
+  margin: 0 0 0.8rem;
+  color: #A3CF7A !important;
+}
+
+.hardware-band p {
+  max-width: 52ch;
+  margin: 0 auto 1.1rem;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+.hardware-band a {
+  color: #A3CF7A !important;
+  font-weight: 600;
+  text-decoration: none !important;
 }

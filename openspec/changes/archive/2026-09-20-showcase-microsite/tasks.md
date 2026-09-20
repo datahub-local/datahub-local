@@ -37,4 +37,4 @@
 - [x] 5.1 Run `uv run mkdocs build --strict` and resolve all warnings
 - [x] 5.2 Regression-check previously published URLs (architecture, cluster_setup, services, open-source, lessons-learned) still resolve after the change, and confirm the intended behaviour of the removed `/roadmap/` URL
 - [x] 5.3 Verify every pre-existing documentation section is reachable within two navigation steps from the site root
-- [ ] 5.4 Deploy through the existing `pages.yml` workflow and confirm the showcase pages and cross-link are live
+- [x] 5.4 Deploy through the existing `pages.yml` workflow and confirm the showcase pages and cross-link are live
