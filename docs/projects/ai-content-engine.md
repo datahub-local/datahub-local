@@ -46,6 +46,23 @@ through the same GitOps path as services.
 - **MCP** and **GitHub** events as triggers
 - **datahub-local-workflows** for versioned definitions
 
+## Authored video
+
+Text and diagrams were the first outputs; video is the harder one, because the
+artifact has to be a file rather than a promise. The `pi-render` harness in
+`datahub-local-ai` runs a HyperFrames composition author inside the cluster: the
+composer writes the composition from a brief, the engine lints and renders it, and
+the caller fetches the result — one call, one artifact, no preview gate.
+
+The card below is the artifact of one such run, authored and rendered in the
+pipeline at 1280×670. Nothing in it is a template: the lockup, the chips and the
+interface window are drawn from the brand tokens the brief carries.
+
+<figure markdown="span">
+  ![A dark launch card reading "Ask for a video. Receive a file.", with a run trace beside it and a returned out.mp4 panel](../assets/img/showcase/ai-agents/pi-render-launch-card.webp){ width="1024" }
+  <figcaption>A launch card authored inside the run: composition, render and returned file in one call</figcaption>
+</figure>
+
 ## Outcome
 
 The platform turns events into drafted, reviewable output automatically, with
