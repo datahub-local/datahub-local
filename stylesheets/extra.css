@@ -1,0 +1,1110 @@
+/* ================================================
+   MOSS BRAND PALETTE
+   #0E1116  brand dark  (shell background)
+   #F4F2EC  brand cream (light text / light bg)
+   #5E8A3F  moss deep   (primary)
+   #7FAF5A  moss mid    (accent / icon stroke)
+   #A3CF7A  moss light  (hover / highlight)
+   ================================================ */
+
+/* ── Google Fonts ─────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Dark scheme: moss on shell ───────────────── */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:              #7FAF5A;
+  --md-primary-fg-color--light:       #A3CF7A;
+  --md-primary-fg-color--dark:        #5E8A3F;
+  --md-primary-bg-color:              #0E1116;
+  --md-primary-bg-color--light:       rgba(14, 17, 22, 0.54);
+
+  --md-accent-fg-color:               #A3CF7A;
+  --md-accent-fg-color--transparent:  rgba(163, 207, 122, 0.10);
+  --md-accent-bg-color:               #0E1116;
+
+  /* Page background: brand dark */
+  --md-default-bg-color:              #0E1116;
+  --md-default-bg-color--light:       #131a11;
+  --md-default-bg-color--lighter:     #182016;
+  --md-default-bg-color--lightest:    #1e2b1c;
+
+  /* Text: brand cream */
+  --md-default-fg-color:              #F4F2EC;
+  --md-default-fg-color--light:       rgba(244, 242, 236, 0.75);
+  --md-default-fg-color--lighter:     rgba(244, 242, 236, 0.42);
+  --md-default-fg-color--lightest:    rgba(244, 242, 236, 0.07);
+
+  /* Code blocks */
+  --md-code-bg-color:                 #141a12;
+  --md-code-fg-color:                 #c8e6a8;
+
+  /* Admonitions / callouts */
+  --md-admonition-bg-color:           rgba(127, 175, 90, 0.06);
+}
+
+/* ── Light scheme: moss on cream ─────────────── */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:              #5E8A3F;
+  --md-primary-fg-color--light:       #7FAF5A;
+  --md-primary-fg-color--dark:        #3d5c28;
+  --md-primary-bg-color:              #F4F2EC;
+  --md-primary-bg-color--light:       rgba(244, 242, 236, 0.54);
+
+  --md-accent-fg-color:               #7FAF5A;
+  --md-accent-fg-color--transparent:  rgba(127, 175, 90, 0.10);
+  --md-accent-bg-color:               #F4F2EC;
+
+  --md-default-bg-color:              #F4F2EC;
+  --md-default-fg-color:              #0E1116;
+
+  --md-code-bg-color:                 #eceae3;
+  --md-code-fg-color:                 #3d5c28;
+}
+
+/* ── Navigation header — seamless with page bg ── */
+.md-header {
+  background-color: var(--md-default-bg-color);
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* Header text follows the scheme fg colour */
+.md-header__title,
+.md-header__topic,
+.md-ellipsis {
+  color: var(--md-default-fg-color) !important;
+}
+
+/* Nav logo sizing */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 28px;
+  width: auto;
+}
+
+/* ── Navigation tabs — seamless with page bg ───── */
+.md-tabs {
+  background-color: var(--md-default-bg-color);
+  border-bottom: none;
+}
+
+.md-tabs__link {
+  color: var(--md-default-fg-color--light) !important;
+  font-weight: 500;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--md-accent-fg-color) !important;
+}
+
+/* ── Reduce gap between navigation bar and page content ── */
+.md-main__inner {
+  margin-top: 0.35rem !important;
+}
+
+/* ── Headings — moss green accent ────────────── */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--md-accent-fg-color);
+}
+
+/* ── Grid card titles — same green as headings ── */
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > strong,
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > a > strong,
+.md-typeset .grid.cards > :is(ul, ol) > li > p:first-child > strong > a {
+  color: var(--md-accent-fg-color);
+}
+
+/* ── Sidebar ──────────────────────────────────── */
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: #A3CF7A;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+  color: #A3CF7A;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    order: 2;
+    padding-left: 1.2rem;
+    padding-right: 0;
+  }
+  .md-sidebar--secondary {
+    order: -1;
+    padding-left: 0;
+    padding-right: 1.2rem;
+  }
+}
+
+/* ================================================
+   BUTTONS
+   ================================================ */
+
+/* Primary "Explore Architecture" button:
+   uses the OPPOSITE of the green page palette so it pops.
+   Dark theme → cream fill + dark text (uses the site's fg colours).
+   Light theme → dark fill + cream text (same logic, reversed). */
+[data-md-color-scheme="slate"] .md-button--primary {
+  background-color: #F4F2EC !important;
+  border-color: #F4F2EC !important;
+  color: #0E1116 !important;
+}
+
+[data-md-color-scheme="slate"] .md-button--primary:hover {
+  background-color: #A3CF7A !important;
+  border-color: #A3CF7A !important;
+  color: #0E1116 !important;
+}
+
+[data-md-color-scheme="default"] .md-button--primary {
+  background-color: #0E1116 !important;
+  border-color: #0E1116 !important;
+  color: #F4F2EC !important;
+}
+
+[data-md-color-scheme="default"] .md-button--primary:hover {
+  background-color: #5E8A3F !important;
+  border-color: #5E8A3F !important;
+  color: #F4F2EC !important;
+}
+
+.md-button {
+  border-color: rgba(127, 175, 90, 0.45) !important;
+  color: #7FAF5A !important;
+}
+
+.md-button:hover {
+  background-color: rgba(127, 175, 90, 0.10) !important;
+  border-color: #7FAF5A !important;
+}
+
+/* ================================================
+   MERMAID DIAGRAM ENHANCEMENTS
+   ================================================ */
+.mermaid {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+[data-md-color-scheme="slate"] .mermaid {
+  background: rgba(127, 175, 90, 0.04);
+}
+
+/* ── Mermaid: edges / arrows ── */
+[data-md-color-scheme="slate"] .mermaid .edgePath .path,
+[data-md-color-scheme="slate"] .mermaid .flowchart-link {
+  stroke: #7FAF5A !important;
+}
+[data-md-color-scheme="slate"] .mermaid .arrowheadPath,
+[data-md-color-scheme="slate"] .mermaid marker path {
+  fill: #7FAF5A !important;
+  stroke: none !important;
+}
+[data-md-color-scheme="default"] .mermaid .edgePath .path,
+[data-md-color-scheme="default"] .mermaid .flowchart-link {
+  stroke: #5E8A3F !important;
+}
+[data-md-color-scheme="default"] .mermaid .arrowheadPath,
+[data-md-color-scheme="default"] .mermaid marker path {
+  fill: #5E8A3F !important;
+  stroke: none !important;
+}
+
+/* ── Mermaid: subgraph / cluster boxes ── */
+[data-md-color-scheme="slate"] .mermaid .cluster rect {
+  fill: rgba(30, 43, 28, 0.45) !important;
+  stroke: #5E8A3F !important;
+}
+[data-md-color-scheme="slate"] .mermaid .cluster span,
+[data-md-color-scheme="slate"] .mermaid .cluster .nodeLabel {
+  color: #A3CF7A !important;
+}
+[data-md-color-scheme="default"] .mermaid .cluster rect {
+  fill: rgba(94, 138, 63, 0.08) !important;
+  stroke: #5E8A3F !important;
+}
+
+/* ── Mermaid: edge label backgrounds ── */
+[data-md-color-scheme="slate"] .mermaid .edgeLabel rect,
+[data-md-color-scheme="slate"] .mermaid .edgeLabel .label rect {
+  fill: #0E1116 !important;
+  opacity: 0.85;
+}
+[data-md-color-scheme="slate"] .mermaid .edgeLabel .label {
+  color: #F4F2EC !important;
+}
+
+/* ================================================
+   CODE BLOCKS — shell feel
+   ================================================ */
+[data-md-color-scheme="slate"] .highlight pre,
+[data-md-color-scheme="slate"] code {
+  background-color: #0a1008 !important;
+  border: 1px solid rgba(127, 175, 90, 0.12);
+}
+
+/* Inline code accent */
+[data-md-color-scheme="slate"] code {
+  color: #A3CF7A;
+  padding: 0.1em 0.35em;
+  border-radius: 0.25em;
+}
+
+/* ================================================
+   FOOTER — seamless with page bg
+   ================================================ */
+.md-footer {
+  background-color: var(--md-default-bg-color);
+  border-top: none;
+}
+
+.md-footer-meta {
+  background-color: var(--md-default-bg-color);
+}
+
+/* ================================================
+   GRID CARDS — shared brand surface
+   ================================================ */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > :is(ul, ol) > li {
+  border-radius: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li,
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > :is(ul, ol) > li {
+  background: rgba(127, 175, 90, 0.04);
+  border: 1px solid rgba(127, 175, 90, 0.10);
+  box-shadow: none;
+}
+
+[data-md-color-scheme="default"] .md-typeset .grid.cards > ul > li,
+[data-md-color-scheme="default"] .md-typeset .grid.cards > :is(ul, ol) > li {
+  background: rgba(94, 138, 63, 0.04);
+  border: 1px solid rgba(94, 138, 63, 0.14);
+  box-shadow: none;
+}
+
+/* ================================================
+   AUTHORS GRID — 2-column portrait cards
+   ================================================ */
+.authors-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.author-card {
+  flex: 0 1 30rem;
+  max-width: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  border-radius: 1rem;
+  gap: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] .author-card {
+  background: rgba(127, 175, 90, 0.05);
+  border: 1px solid rgba(127, 175, 90, 0.18);
+}
+
+[data-md-color-scheme="default"] .author-card {
+  background: rgba(94, 138, 63, 0.05);
+  border: 1px solid rgba(94, 138, 63, 0.20);
+}
+
+.author-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid rgba(127, 175, 90, 0.40);
+  box-shadow: 0 4px 20px rgba(127, 175, 90, 0.18);
+}
+
+.author-info {
+  width: 100%;
+}
+
+.author-name {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--md-accent-fg-color) !important;
+  margin: 0 0 0.4rem !important;
+  padding: 0 !important;
+}
+
+.author-name::after { display: none !important; }
+
+.author-bio {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  opacity: 0.82;
+  margin: 0 0 1rem;
+}
+
+.author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Author and hero links use the shared .link-pill component, defined with the
+   project badges below, so every outbound link looks the same. */
+
+/* Author cards wrap and stay centred; on mobile they take the full width. */
+@media (max-width: 640px) {
+  .author-card {
+    flex-basis: 100%;
+  }
+}
+
+/* ================================================
+   SERVICE TAGS
+   ================================================ */
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.3rem 0 0.9rem;
+}
+
+.svc-tag {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border-radius: 99rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  cursor: default;
+  user-select: none;
+}
+
+[data-md-color-scheme="slate"] .svc-tag {
+  background: rgba(127, 175, 90, 0.12);
+  color: #A3CF7A;
+  border: 1px solid rgba(127, 175, 90, 0.28);
+}
+
+[data-md-color-scheme="default"] .svc-tag {
+  background: rgba(94, 138, 63, 0.09);
+  color: #5E8A3F;
+  border: 1px solid rgba(94, 138, 63, 0.28);
+}
+
+/* ================================================
+   SHOWCASE — hero claim
+   ================================================ */
+.hero-claim {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.85rem;
+  color: var(--md-accent-fg-color) !important;
+}
+
+@media (max-width: 640px) {
+  .hero-claim {
+    font-size: 1.6rem;
+  }
+}
+
+/* ================================================
+   SHOWCASE — personal-site cross-link (footer)
+   ================================================ */
+.personal-crosslink {
+  text-align: center;
+  padding: 0.5rem 1rem 1.25rem;
+}
+
+.personal-crosslink__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: var(--md-accent-fg-color) !important;
+  transition: filter 0.18s ease;
+}
+
+.personal-crosslink__link:hover {
+  filter: brightness(1.15);
+}
+
+.personal-crosslink__icon svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* ================================================
+   SHOWCASE — full-bleed alternating bands
+   Fixed brand colours, independent of the theme toggle.
+   ================================================ */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: clip;
+}
+
+.band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 3.5rem calc(50vw - 50%);
+}
+
+.band--dark {
+  background-color: #0E1116;
+  color: #F4F2EC;
+}
+
+.band--light {
+  background-color: #F4F2EC;
+  color: #0E1116;
+}
+
+.band__text {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+/* ================================================
+   SHOWCASE — hero band
+   ================================================ */
+.hero-band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 4rem calc(50vw - 50%) 3rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(180deg, rgba(14, 17, 22, 0.97) 0%, rgba(14, 17, 22, 0.78) 42%, rgba(14, 17, 22, 0.97) 100%),
+    radial-gradient(820px 400px at 50% 78%, rgba(94, 138, 63, 0.18), transparent 72%),
+    url("../assets/img/homelab_20260920_ai.jpg") center 30% / cover no-repeat,
+    #0E1116;
+  color: #F4F2EC;
+  text-align: center;
+}
+
+.hero-band__logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 560px;
+  max-width: 80%;
+  height: auto;
+  margin: 0 auto 1.75rem;
+  filter: drop-shadow(0 6px 34px rgba(127, 175, 90, 0.35));
+}
+
+.hero-band .hero-claim {
+  margin: 0 auto 0.9rem;
+  max-width: none;
+  font-size: 2.6rem;
+}
+
+.hero-band__sub {
+  max-width: 62ch;
+  margin: 0 auto 1.6rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.hero-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero-band .md-button--primary {
+  background-color: #F4F2EC !important;
+  border-color: #F4F2EC !important;
+  color: #0E1116 !important;
+}
+
+.hero-band .md-button--primary:hover {
+  background-color: #A3CF7A !important;
+  border-color: #A3CF7A !important;
+  color: #0E1116 !important;
+}
+
+.hero-band .md-button {
+  border-color: rgba(163, 207, 122, 0.5) !important;
+  color: #A3CF7A !important;
+}
+
+.hero-band .link-pill {
+  margin-left: 0.15rem;
+}
+
+/* ================================================
+   SHOWCASE — open-source badges
+   ================================================ */
+.stack-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.stack-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.32rem 0.8rem;
+  border-radius: 99rem;
+  border: 1px solid rgba(94, 138, 63, 0.26);
+  background: rgba(94, 138, 63, 0.07);
+  color: #3d5c28;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.stack-badge img {
+  width: 1.15em;
+  height: 1.15em;
+  display: block;
+}
+
+/* ================================================
+   SHOWCASE — section heading
+   ================================================ */
+.section-head {
+  max-width: 76rem;
+  margin: 0 auto 2rem;
+}
+
+.section-head h2 {
+  margin: 0 0 0.5rem;
+  font-size: 2.25rem;
+}
+
+.section-head p {
+  max-width: 70ch;
+  margin: 0;
+  opacity: 0.88;
+}
+
+.section-head--center {
+  text-align: center;
+}
+
+.section-head--center p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.band--dark .section-head h2 {
+  color: #A3CF7A !important;
+}
+
+.band--light .section-head h2 {
+  color: #5E8A3F !important;
+}
+
+/* ================================================
+   SHOWCASE — work cards
+   ================================================ */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.band--dark .work-card {
+  background: rgba(127, 175, 90, 0.06);
+  border: 1px solid rgba(127, 175, 90, 0.2);
+}
+
+.work-card__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.work-card__body {
+  padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.work-card__tag {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  padding: 0.22rem 0.75rem;
+  border-radius: 99rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3d5c28;
+  background: #E9EFE0;
+  border: 1px solid #C7D9B4;
+}
+
+.work-card__title {
+  margin: 0.3rem 0 0.5rem;
+  font-size: 1.1rem;
+  color: #A3CF7A !important;
+}
+
+.work-card__title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.work-card__pitch {
+  margin: 0 0 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.work-card__link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #A3CF7A !important;
+}
+
+/* ================================================
+   SHOWCASE — capability cards
+   ================================================ */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.cap-card {
+  padding: 1.2rem 1.3rem;
+  border-radius: 1rem;
+}
+
+.band--light .cap-card {
+  background: rgba(94, 138, 63, 0.06);
+  border: 1px solid rgba(94, 138, 63, 0.18);
+}
+
+.band--dark .cap-card {
+  background: rgba(127, 175, 90, 0.08);
+  border: 1px solid rgba(127, 175, 90, 0.22);
+}
+
+.band--dark .cap-card h3 {
+  color: #A3CF7A !important;
+}
+
+.cap-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #5E8A3F !important;
+}
+
+.cap-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* ================================================
+   SHOWCASE — proof stat cards
+   ================================================ */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.stat-card {
+  padding: 1.3rem 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: rgba(127, 175, 90, 0.07);
+  border: 1px solid rgba(127, 175, 90, 0.18);
+}
+
+.stat-card__num {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #A3CF7A;
+}
+
+.stat-card__num--sm {
+  padding-top: 0.3rem;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.stat-card__label {
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.stat-card small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+}
+
+.stat-card small a {
+  color: #A3CF7A;
+  opacity: 0.75;
+}
+
+.band--light .stat-card__num {
+  color: #3d5c28;
+}
+
+.band--light .stat-card small a {
+  color: #5E8A3F;
+}
+
+.band--light .proof-cta a {
+  color: #5E8A3F !important;
+}
+
+/* ================================================
+   SHOWCASE — quote
+   ================================================ */
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.lesson-card {
+  margin: 0;
+  padding: 1.5rem;
+  border-left: 4px solid #5E8A3F;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: rgba(94, 138, 63, 0.07);
+}
+
+.lesson-card__tag {
+  margin: 0 0 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5E8A3F;
+}
+
+.lesson-card blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: #0E1116;
+}
+
+.lesson-card figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+.lesson-card figcaption a {
+  color: #5E8A3F !important;
+  font-weight: 600;
+}
+
+/* ================================================
+   SHOWCASE — what's next
+   ================================================ */
+.next-list {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding-left: 1.2rem;
+}
+
+.next-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+/* ================================================
+   SHOWCASE — responsive
+   ================================================ */
+@media (max-width: 900px) {
+  .band {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .work-grid,
+  .cap-grid,
+  .lesson-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-band {
+    padding-top: 2.75rem;
+  }
+
+  .hero-band .hero-claim {
+    font-size: 1.9rem;
+  }
+
+  .work-grid,
+  .cap-grid,
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================
+   SHOWCASE — dark header until the hero is scrolled
+   ================================================ */
+html.home-dark .md-header,
+html.home-dark .md-tabs {
+  background-color: #0E1116;
+  transition: background-color 0.35s ease;
+}
+
+html.home-dark .md-header__title,
+html.home-dark .md-header__topic,
+html.home-dark .md-ellipsis {
+  color: #F4F2EC !important;
+}
+
+html.home-dark .md-tabs__link {
+  color: rgba(244, 242, 236, 0.72) !important;
+}
+
+html.home-dark .md-tabs__link--active,
+html.home-dark .md-tabs__link:hover {
+  color: #A3CF7A !important;
+}
+
+html.home-dark .md-search__form {
+  background-color: rgba(244, 242, 236, 0.12);
+}
+
+html.home-dark .md-search__input,
+html.home-dark .md-search__icon {
+  color: #F4F2EC;
+}
+
+html.home-dark .md-search__input::placeholder {
+  color: rgba(244, 242, 236, 0.6);
+}
+
+/* Once the hero has scrolled past, return to the theme surface. */
+html.home-dark.hero-scrolled .md-header,
+html.home-dark.hero-scrolled .md-tabs {
+  background-color: var(--md-default-bg-color);
+}
+
+html.home-dark.hero-scrolled .md-header__title,
+html.home-dark.hero-scrolled .md-header__topic,
+html.home-dark.hero-scrolled .md-ellipsis {
+  color: var(--md-default-fg-color) !important;
+}
+
+html.home-dark.hero-scrolled .md-tabs__link {
+  color: var(--md-default-fg-color--light) !important;
+}
+
+html.home-dark.hero-scrolled .md-tabs__link--active,
+html.home-dark.hero-scrolled .md-tabs__link:hover {
+  color: var(--md-accent-fg-color) !important;
+}
+
+html.home-dark.hero-scrolled .md-search__form {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+html.home-dark.hero-scrolled .md-search__input,
+html.home-dark.hero-scrolled .md-search__icon {
+  color: var(--md-default-fg-color);
+}
+
+/* Header icon buttons follow the surface, not the primary background colour. */
+.md-header__button {
+  color: var(--md-default-fg-color);
+}
+
+html.home-dark .md-header__button {
+  color: #F4F2EC;
+}
+
+html.home-dark.hero-scrolled .md-header__button {
+  color: var(--md-default-fg-color);
+}
+
+/* The hero owns the first screen; drop the content gaps above it. */
+html.home-dark .md-main__inner {
+  margin-top: 0 !important;
+}
+
+html.home-dark .md-content__inner {
+  padding-top: 0;
+}
+
+/* ================================================
+   SHOWCASE — hardware band
+   ================================================ */
+/* Call to action under the "Power on the desk" stat cards. */
+.proof-cta {
+  text-align: center;
+  margin-top: 1.6rem;
+}
+
+.proof-cta a {
+  color: #A3CF7A !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+/* Project metadata badges on the deep-dive pages, in place of the old table. */
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3rem 0.72rem;
+  border-radius: 99rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid rgba(127, 175, 90, 0.35);
+  background: rgba(127, 175, 90, 0.1);
+  color: var(--md-default-fg-color);
+  text-decoration: none !important;
+}
+
+.meta-pill--area {
+  border-color: rgba(127, 175, 90, 0.6);
+}
+
+.meta-pill--status {
+  background: rgba(127, 175, 90, 0.18);
+}
+
+.meta-pill--privacy {
+  border-color: rgba(244, 242, 236, 0.3);
+  background: rgba(244, 242, 236, 0.06);
+}
+
+/* Shared pill for GitHub and every other outbound link, identical to the
+   project badge pills. Used in the hero, the author card, and on the project
+   pages, so a link looks the same wherever it appears. */
+.link-pill,
+.meta-pill--github,
+.meta-pill--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3rem 0.72rem;
+  border-radius: 99rem;
+  border: 1px solid rgba(127, 175, 90, 0.35);
+  background: rgba(127, 175, 90, 0.1);
+  color: var(--md-default-fg-color) !important;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none !important;
+}
+
+/* The bands use fixed brand colours, independent of the theme toggle, so a pill
+   inside a band cannot rely on the theme text colour. */
+.band--dark .link-pill,
+.band--dark .meta-pill--github,
+.band--dark .meta-pill--link,
+.hero-band .link-pill {
+  color: #F4F2EC !important;
+}
+
+.band--light .link-pill,
+.band--light .meta-pill--github,
+.band--light .meta-pill--link {
+  color: #0E1116 !important;
+}
+
+.link-pill:hover,
+.meta-pill--github:hover,
+.meta-pill--link:hover {
+  background: rgba(127, 175, 90, 0.24);
+}
+
+.link-pill svg,
+.meta-pill--github svg,
+.meta-pill--link svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.meta-pill svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.project-meta__note {
+  margin: -0.6rem 0 1.2rem;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
