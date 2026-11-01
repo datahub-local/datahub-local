@@ -18,14 +18,14 @@
   evidence, and the reply format for Slack.
 - [ ] 2.2 Mount it read-only at `/opt/data/skills/devops/taskboard-loop` in
   `values/hermes.yaml.gotmpl`.
-- [ ] 2.3 Add an idempotent init container that runs
+- [x] 2.3 Add a `gateway:startup` hook that runs
   `hermes cron create 10m --name taskboard-tick --skill taskboard-loop ...` only
-  when `hermes cron list` does not already contain the job, so a fresh volume is
+  when `jobs.json` does not already contain the job, so a fresh volume is
   provisioned and an existing one is left alone.
 - [ ] 2.4 Give Hermes the values the job needs and cannot read from the skill: the
   owner login and the Slack delivery target, as `extraEnv`.
-- [ ] 2.5 `helmfile template` renders: one ConfigMap, one mount, one init
-  container, and the existing init containers unchanged.
+- [x] 2.5 `helmfile template` renders: one ConfigMap, the skill mount and the hook
+  mount, with no `cron-seed` init container.
 - [ ] 2.6 Deploy, then confirm from inside the Pod that
   `hermes cron list` shows `taskboard-tick`, `hermes skills` lists
   `taskboard-loop`, and one manual `hermes cron run taskboard-tick` reaches the

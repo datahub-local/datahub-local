@@ -145,7 +145,7 @@ source of truth for the same fact.
 | --- | --- | --- |
 | The lifecycle, as a human page | `datahub-local` | This is the published site and the taskboard's home |
 | The tick's instructions (Hermes skill) | `datahub-local-core` | It ships beside the Hermes release it configures, as a ConfigMap |
-| The cron entry | `datahub-local-core` | Idempotent init container, so a fresh `HERMES_HOME` gets the loop |
+| The cron entry | `datahub-local-core` | A `gateway:startup` hook, so a fresh or restored `HERMES_HOME` gets the loop |
 | The agent's session contract | `datahub-local-ai` | It is baked into the adapter image, next to `AGENTS.md` |
 | Nothing | `datahub-local-ai-mcp` | The seven tools already cover the loop |
 

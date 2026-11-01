@@ -266,6 +266,6 @@ SHALL come up with the scheduled job already present.
 #### Scenario: Hermes loses its volume
 
 - **WHEN** Hermes starts with an empty `HERMES_HOME`
-- **THEN** the init container creates the `taskboard-tick` job
+- **THEN** the gateway hook creates the `taskboard-tick` job
 - **AND** the skill is present from the image or the mounted ConfigMap
 - **AND** no manual step is needed to restore the loop

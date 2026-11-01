@@ -37,8 +37,9 @@ sets, and nothing says what "help" looks like.
   reviews the diff, moves the issue to `Testing`, requests the owner's review, and
   reports on the issue.
 - **Declared configuration.** The loop's instructions live as a Hermes skill in
-  `datahub-local-core` as a ConfigMap, and the cron job is created idempotently by
-  an init container, so a fresh `HERMES_HOME` comes up with the loop running.
+  `datahub-local-core` as a ConfigMap, and the cron job is created by a
+  `gateway:startup` hook, so a fresh or restored `HERMES_HOME` comes up with the loop
+  running and no extra container exists for it.
 
 ## Capabilities
 
@@ -58,9 +59,9 @@ existing capability changes meaning.
 - `datahub-local`: this change and a page under `docs/architecture/` that states the
   lifecycle for a human reader; `AGENTS.md` gains the one line that a task starts
   when an issue reaches `Ready`.
-- `datahub-local-core`: a Hermes skill ConfigMap, its volume mount, an idempotent
-  cron-seed init container, and the job's schedule and delivery target in the
-  `hermes` release values.
+- `datahub-local-core`: a Hermes skill ConfigMap, its volume mount, a
+  `gateway:startup` hook that creates the job, and the schedule and delivery target
+  in the `hermes` release values.
 - `datahub-local-ai`: the OpenCode adapter's `AGENTS.md` and `taskboard` skill gain
   the session contract (claim, ask, open, report), and the adapter image is
   rebuilt and re-pinned in core.
