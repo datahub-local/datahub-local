@@ -68,8 +68,10 @@ shell prompt and it does not guess.
 ## What is not automated
 
 - No merge. The owner reviews and merges every pull request.
-- No parallel work. One session at a time, because the workspace and the MCP shim
-  are both single-writer. A blocked issue holds the queue, and the tick says so.
+- No parallelism today, though the design allows it. The agent runs one turn at a
+  time (`OPENCODE_MAX_CONCURRENT`), and two turns never share a checkout whatever
+  the limit: one repository, one writer. A session waiting on a question does not
+  hold the queue, because it is not consuming anything.
 - No issue creation from anywhere except a person or Hermes in Slack. An issue is
   a decision, and the `Ready` move is the owner reading it.
 - No status guessing. When the shim is down or a turn fails, Hermes reports the

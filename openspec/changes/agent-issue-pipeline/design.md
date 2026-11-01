@@ -41,14 +41,28 @@ notices nothing.
 The job carries `--skill taskboard-loop`, so its instructions live in the skill
 file, in this repository, and the cron entry stays a schedule plus a name.
 
-### 3 — Serial by construction, and that is stated
+### 3 — Parallel by design, one slot by default
 
-`run_task` returns `busy` while any session is active, and a session waiting on a
-question counts as active, because the API reports it that way. The pipeline
-therefore runs one issue at a time, and a `Blocked` issue holds the queue. With one
-owner and one agent that is honest rather than limiting: two concurrent edits on
-the same repositories would collide in `/workspace` anyway. The tick reports the
-queue in Slack when an issue waits behind a blocked one, so the wait is visible.
+The shim owns the limit: `OPENCODE_MAX_CONCURRENT`, default 1. The tick does not
+count sessions itself; it dispatches `Ready` issues in order and stops at the first
+`busy`, so raising the environment variable is the whole change.
+
+Two rules make that safe rather than optimistic:
+
+- **A checkout is single-writer.** The shim reads each working session's directory
+  from the session itself and refuses a new task in a directory that already has a
+  turn, whatever the limit. `/workspace/<repo>` therefore serialises per
+  repository, which is the only collision that corrupts work.
+- **A question is not work.** `/api/session/active` reports a session waiting for an
+  answer as running. It spends no CPU and makes no progress, so the shim does not
+  count it against the limit. Without that rule, one question stops the queue until
+  the owner replies, which is the behaviour "serial by construction" had.
+
+The tick passes `directory=<repo>` when the issue names exactly one repository, so
+two issues in different repositories run in parallel once the limit is raised, and
+two in the same repository queue behind each other. Raising the limit above one
+also needs a resource bump on `opencode-server`, whose 2 CPU / 4Gi is sized for a
+single turn.
 
 ### 4 — The session is the work, and the issue remembers its id
 

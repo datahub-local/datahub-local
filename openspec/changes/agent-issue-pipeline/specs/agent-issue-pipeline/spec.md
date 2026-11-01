@@ -54,18 +54,30 @@ repository rule as one `run_task` prompt.
 - **THEN** the tick changes nothing and reports that there was nothing to do
 - **AND** it does not comment on any issue
 
-### Requirement: Work is serial, and a queued issue is reported
+### Requirement: Concurrency is bounded, configured, and never shared per checkout
 
-Because `run_task` reports `busy` while any session is active, the pipeline SHALL
-process one issue at a time, and when a `Ready` issue cannot start because a
-session is active, Hermes SHALL report the queue once rather than every tick.
+The pipeline SHALL dispatch `Ready` issues in order until the agent reports `busy`,
+and SHALL treat the agent's configured concurrency (`OPENCODE_MAX_CONCURRENT`,
+default one) as the only limit. Two turns SHALL NEVER run in one checkout. A
+session waiting on the owner SHALL NOT consume a concurrency slot, and a `Ready`
+issue that cannot start SHALL stay `Ready` and be reported once, not every tick.
 
-#### Scenario: A blocked session holds the queue
+#### Scenario: The limit is one
 
-- **WHEN** a `Ready` issue cannot start because a session is waiting for input
-- **THEN** the issue stays `Ready`
-- **AND** Hermes says once, in the reporting channel, which issue is waiting behind
-  which
+- **WHEN** one turn is running and another issue is `Ready`
+- **THEN** the second issue stays `Ready`
+- **AND** no session is created for it
+
+#### Scenario: The limit allows more than one
+
+- **WHEN** the limit is three and two turns run in two different repositories
+- **THEN** the third `Ready` issue starts in its own repository's checkout
+
+#### Scenario: A session is waiting on the owner
+
+- **WHEN** a session is parked on a question and a `Ready` issue exists
+- **THEN** the parked session does not count against the limit
+- **AND** the other issue may start
 
 ### Requirement: A session is durable and its id is recorded on the issue
 
