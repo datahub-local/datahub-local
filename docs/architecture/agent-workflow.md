@@ -45,7 +45,11 @@ in.
    with a prompt that carries the issue number, its title and its body.
 4. **Work.** The agent reads the issue, comments that it started, cuts a branch
    named `type/<issue>-<topic>`, implements, runs the repository's gate, and opens
-   one pull request with `Refs datahub-local/datahub-local#<n>` in the body.
+   one pull request with `Refs datahub-local/datahub-local#<n>` in the body. When
+   the change touches a capability the repository documents in `openspec/specs/`,
+   it writes the spec delta first; a fix, a version bump or a typo gets none. The
+   agent decides that, not the issue, because only the code shows whether a
+   capability is documented.
 5. **Review.** Hermes moves the issue to `Testing`, requests the owner's review on
    the pull request, and posts the link on the issue with one line in Slack.
 6. **Done.** When the owner merges, the issue closes and the tick moves it to

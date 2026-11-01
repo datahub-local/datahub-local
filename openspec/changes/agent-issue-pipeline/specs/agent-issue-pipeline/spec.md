@@ -195,8 +195,14 @@ and SHALL NOT retry the same turn automatically.
 ### Requirement: Intake produces an issue the agent can act on
 
 An issue created for the pipeline SHALL carry `What`, `Why`, `Acceptance` and
-`Repo`, the `agent` label, and one area label, and a task that needs design SHALL
-tell the agent to write an OpenSpec change before implementing.
+`Repo`, the `agent` label, and one area label.
+
+The issue SHALL NOT decide whether an OpenSpec change is needed. That is the
+agent's judgement, made against the repository's own rule after it has read the
+code: a capability the repository documents in `openspec/specs/` needs a delta when
+its behaviour changes, a new capability needs a change, and a fix, a version bump, a
+typo or a dependency update needs neither. The dispatch prompt therefore points at
+the agent's rules and never at OpenSpec.
 
 #### Scenario: Hermes creates an issue from a request
 
@@ -204,6 +210,19 @@ tell the agent to write an OpenSpec change before implementing.
 - **THEN** Hermes creates the issue in the taskboard with the four sections and the
   labels
 - **AND** the issue lands in `Backlog`
+- **AND** the issue does not say whether an OpenSpec change is required
+
+#### Scenario: The change touches a documented capability
+
+- **WHEN** the agent starts work and the capability already has `openspec/specs/<capability>/spec.md`
+- **THEN** it writes the delta before implementing
+- **AND** `openspec validate --all` is part of its gate
+
+#### Scenario: The change is a fix
+
+- **WHEN** the change is a one-line fix, a version bump, a typo or a dependency update
+- **THEN** no OpenSpec change is created
+- **AND** the issue and the pull request are the record
 
 ### Requirement: The loop is declared in the repositories
 
