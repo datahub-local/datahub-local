@@ -52,9 +52,15 @@ in.
    `openspec archive`, so the pull request merges a spec that is already true; a
    fix, a version bump or a typo gets none. The agent decides that, not the issue,
    because only the code shows whether a capability is documented.
-5. **Review.** Hermes moves the issue to `Testing`, requests the owner's review on
+5. **Second model.** Before reporting done, the agent has the diff reviewed by a
+   second agent on a different model, read-only, and posts that review on the pull
+   request. It fixes or answers every finding, re-runs the gate, and reviews at most
+   twice. Both models are environment variables on the OpenCode release
+   (`OPENCODE_MODEL`, `OPENCODE_REVIEW_MODEL`), so swapping one is a values change,
+   not an image rebuild.
+6. **Review.** Hermes moves the issue to `Testing`, requests the owner's review on
    the pull request, and posts the link on the issue with one line in Slack.
-6. **Done.** When the owner merges, the issue closes and the tick moves it to
+7. **Done.** When the owner merges, the issue closes and the tick moves it to
    `Done`.
 
 ## When the agent needs an answer

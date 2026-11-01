@@ -150,6 +150,23 @@ never sent twice.
 - **THEN** the forwarded marker excludes it
 - **AND** the session receives nothing
 
+### Requirement: A second model reviews the change before the handover
+
+After the repository's gate passes and the pull request exists, the agent SHALL have
+the change reviewed by a second model, SHALL post that review on the pull request,
+and SHALL fix or answer every finding before reporting the task done. The review
+SHALL be bounded at two rounds.
+
+#### Scenario: The reviewer blocks
+
+- **WHEN** the second model reports a blocking finding
+- **THEN** the agent fixes it, re-runs the gate, pushes, and reports what changed
+
+#### Scenario: The reviewer approves
+
+- **WHEN** the second model reports no blocking finding
+- **THEN** the review is on the pull request and the task moves to review
+
 ### Requirement: The agent opens the pull request, Hermes hands it over for review
 
 The agent SHALL create one branch per issue, open one pull request in the repository
