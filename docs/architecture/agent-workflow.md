@@ -40,9 +40,10 @@ in.
    lands in `Backlog`.
 2. **Ready.** The owner moves it to `Ready`. That move is the whole trigger; there
    is no assignment and no second signal.
-3. **Dispatch.** Hermes runs a tick every ten minutes. It reads the board, takes
-   the lowest-numbered `Ready` issue with the `agent` label, and starts a session
-   with a prompt that carries the issue number, its title and its body.
+3. **Dispatch.** Hermes runs a tick every ten minutes. It reads the board and
+   starts sessions on the `Ready` issues with the `agent` label, lowest number
+   first, until the agent reports it is full. With the default of one turn that is
+   one issue per tick.
 4. **Work.** The agent reads the issue, comments that it started, cuts a branch
    named `type/<issue>-<topic>`, implements, runs the repository's gate, and opens
    one pull request with `Refs datahub-local/datahub-local#<n>` in the body. When

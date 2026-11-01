@@ -60,7 +60,8 @@ The pipeline SHALL dispatch `Ready` issues in order until the agent reports `bus
 and SHALL treat the agent's configured concurrency (`OPENCODE_MAX_CONCURRENT`,
 default one) as the only limit. Two turns SHALL NEVER run in one checkout. A
 session waiting on the owner SHALL NOT consume a concurrency slot, and a `Ready`
-issue that cannot start SHALL stay `Ready` and be reported once, not every tick.
+issue that cannot start SHALL stay `Ready`, silently: a refusal is the configured
+limit working, not an event.
 
 #### Scenario: The limit is one
 

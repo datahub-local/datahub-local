@@ -68,5 +68,7 @@ existing capability changes meaning.
   loop, and adding a ninth tool would be the wrong place to fix an orchestration
   gap.
 
-Not in scope: a GitHub App for the agent, a merge bot, parallel sessions (the shim
-is serial by design), and webhook-driven dispatch.
+Not in scope: a GitHub App for the agent, a merge bot, and webhook-driven dispatch.
+Concurrency is configured rather than designed away: the shim allows
+`OPENCODE_MAX_CONCURRENT` turns, ships at one, and one checkout stays single-writer
+at any limit.
