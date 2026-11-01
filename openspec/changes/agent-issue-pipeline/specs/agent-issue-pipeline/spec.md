@@ -117,29 +117,37 @@ tick.
 - **WHEN** the session still reports the same form or request id
 - **THEN** no second comment is posted and no second notification is sent
 
-### Requirement: The first answer resumes the session
+### Requirement: Every owner comment reaches the session, exactly once
 
-Hermes SHALL resume a blocked session with the first answer that arrives, whether it
-is an owner comment newer than the help comment or an answer already given through
-the session's form, and SHALL set `In Progress` on that transition.
+Any comment the owner writes SHALL reach the session: one answering a question, one
+on an issue that is `In Progress`, and one reviewing a pull request. Hermes SHALL
+collect them from the issue and from the pull request's review into one queue,
+forward them oldest first, and record how far it has forwarded so the same words are
+never sent twice.
 
-#### Scenario: Owner answers on the issue
+#### Scenario: The owner answers a question on the issue
 
-- **WHEN** an issue is `Blocked` and a comment newer than the help marker exists and
-  was not written by the bot or the agent
-- **THEN** Hermes passes that text to `respond`
+- **WHEN** the owner comments on a `Blocked` issue
+- **THEN** Hermes forwards that text with `respond`
 - **AND** the issue becomes `In Progress`
 
-#### Scenario: Owner answers in the session instead
+#### Scenario: The owner comments while the pull request waits
 
-- **WHEN** an issue is `Blocked` and the session no longer reports `needs_input`
-- **THEN** Hermes forwards nothing and sets `In Progress`
+- **WHEN** the owner writes on an issue in `Testing`, or leaves an inline review
+  comment on its pull request
+- **THEN** Hermes sends it to the same session as a new turn
+- **AND** the issue returns to `In Progress`
 
-#### Scenario: Both answers arrive
+#### Scenario: The session answers the form instead
 
-- **WHEN** an owner comment and a session answer exist on the same tick
-- **THEN** the issue comment is forwarded
-- **AND** the issue comment is treated as the answer of record
+- **WHEN** the owner answers in the web UI and writes no comment
+- **THEN** the session is no longer waiting and nothing is forwarded
+
+#### Scenario: The same comment is seen twice
+
+- **WHEN** a tick runs again after forwarding a comment
+- **THEN** the forwarded marker excludes it
+- **AND** the session receives nothing
 
 ### Requirement: The agent opens the pull request, Hermes hands it over for review
 

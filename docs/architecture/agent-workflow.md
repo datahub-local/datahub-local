@@ -71,6 +71,18 @@ shell prompt and it does not guess.
 5. The next tick forwards the answer and sets `In Progress`. The issue comment
    wins when both exist, because the issue is the record.
 
+## Comments are turns
+
+A comment is not only an answer to a question. The owner can write on the issue at
+any point, and an inline review comment on the pull request is the same thing on a
+different surface. Hermes collects both into one queue and forwards each one to the
+session, oldest first, once. So a change requested during review does not need a new
+issue or a new session: it arrives as the agent's next turn, and the issue goes back
+to `In Progress` until the pull request is updated.
+
+Forwarding is recorded with a marker on the issue, so a tick that runs again, or one
+that restarts mid-way, never sends the same words twice.
+
 ## When the agent cannot continue
 
 Not every stop is a question. A missing tool, a permission it does not have, a step
