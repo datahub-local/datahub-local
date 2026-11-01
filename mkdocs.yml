@@ -115,4 +115,5 @@ nav:
           - Monitoring: services/monitoring.md
           - AI & LLMs: services/ai.md
           - Media & Utilities: services/media-and-other.md
+  - Repositories: repositories.md
   - Hard Lessons: lessons-learned.md
