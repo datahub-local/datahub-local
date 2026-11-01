@@ -103,6 +103,7 @@ nav:
           - Giving Back to the Community: projects/oss-charts.md
   - Platform:
       - Architecture: architecture/overview.md
+      - Agent workflow: architecture/agent-workflow.md
       - Cluster Setup:
           - Hardware: cluster_setup/hardware.md
           - Provisioning: cluster_setup/provisioning.md

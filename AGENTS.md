@@ -9,6 +9,10 @@ lives in the repository that holds the change and carries
 
 The gate is `uv run mkdocs build --strict`.
 
+Work starts when an issue reaches `Ready` on the Project board with the `agent`
+label. The status is the state; do not add labels that record it twice. The
+lifecycle is in [`docs/architecture/agent-workflow.md`](docs/architecture/agent-workflow.md).
+
 ## Writing style
 
 ### Do not use em dashes to join thoughts
