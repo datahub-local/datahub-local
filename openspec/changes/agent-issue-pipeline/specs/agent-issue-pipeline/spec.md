@@ -218,6 +218,13 @@ the agent's rules and never at OpenSpec.
 - **THEN** it writes the delta before implementing
 - **AND** `openspec validate --all` is part of its gate
 
+#### Scenario: A change with a spec delta is archived before review
+
+- **WHEN** the agent writes an OpenSpec change for its task
+- **THEN** it runs `openspec archive <id>` on the same branch before opening the pull request
+- **AND** the pull request carries the applied `openspec/specs/<capability>/spec.md` and the archived change
+- **AND** the repository's `openspec validate --all` gate is green
+
 #### Scenario: The change is a fix
 
 - **WHEN** the change is a one-line fix, a version bump, a typo or a dependency update
