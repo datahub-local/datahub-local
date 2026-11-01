@@ -120,6 +120,18 @@ Valkey is a Redis-compatible open-source alternative (following the Redis licens
 
 ---
 
+### :material-web: [Firecrawl](https://firecrawl.dev/)
+
+<div class="svc-tags"><span class="svc-tag">web-scraping</span> <span class="svc-tag">search</span> <span class="svc-tag">agents</span> <span class="svc-tag">internal</span></div>
+
+Firecrawl runs self-hosted as `datahub-local-core-data-firecrawl`: the API, a queue worker, a NuQ worker, Playwright and a dedicated NuQ Postgres, with no UI, no ingress and no account key. The API is internal on port 3002 and serves unauthenticated scrapes.
+
+The queue Postgres is a small disposable instance on a 1Gi Longhorn volume, initialised from the image's `nuq.sql` (`nuq` schema plus `pg_cron` reapers and cleaners). It is deliberately not backed up: losing the volume loses only pending jobs, which clients retry. Firecrawl reuses the shared Valkey on logical db 0 (cache/queue) and db 1 (rate limits); the eviction policy stays `noeviction`.
+
+Agents reach it through the `sympozium-firecrawl` MCP bridge in `automation`. Sympozium agents see only `fc_firecrawl_scrape`, `fc_firecrawl_search` and `fc_firecrawl_map`; Hermes connects directly, filters to the same three raw names, and has its native `web` and `browser` tools disabled. The MCP image is amd64-only, so a `MutatingAdmissionPolicy` pins that Deployment to amd64 nodes.
+
+---
+
 ### :material-cloud-sync: S3-GDrive Gateway
 
 <div class="svc-tags"><span class="svc-tag">integration</span> <span class="svc-tag">google-drive</span> <span class="svc-tag">s3</span> <span class="svc-tag">sync</span></div>
