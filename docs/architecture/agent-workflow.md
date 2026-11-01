@@ -65,10 +65,19 @@ shell prompt and it does not guess.
    options.
 2. It comments the question on the issue, mentions the owner, and sets `Blocked`.
 3. It sends the same text to Slack.
-4. The owner answers wherever is convenient: as a comment on the issue, or in the
-   session form in the browser.
+4. The owner answers wherever is convenient: a comment on the issue, the session
+   form in the browser, or by telling Hermes in Slack, which relays the words on
+   the issue verbatim. All three reach the session the same way.
 5. The next tick forwards the answer and sets `In Progress`. The issue comment
    wins when both exist, because the issue is the record.
+
+## When the agent cannot continue
+
+Not every stop is a question. A missing tool, a permission it does not have, a step
+only the owner may take, or three failed fixes end the turn with `BLOCKED`: Hermes
+posts the reason and what would unblock it, sets `Blocked`, and says it once in
+Slack. That is a different state from a branch waiting on review, and the board has
+a different status for it.
 
 ## What is not automated
 
