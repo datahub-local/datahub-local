@@ -2,13 +2,13 @@
 
 ## 1. Specification and the human page (`datahub-local`)
 
-- [ ] 1.1 Add `docs/architecture/agent-workflow.md`: the lifecycle table (status,
+- [x] 1.1 Add `docs/architecture/agent-workflow.md`: the lifecycle table (status,
   what moves it, who writes it), the help loop as a numbered sequence, the review
   handoff, and the serial limitation stated plainly.
-- [ ] 1.2 Add the page to the `Platform` nav in `mkdocs.yml`, after `Architecture`.
-- [ ] 1.3 State in `AGENTS.md` that a task starts when its issue reaches `Ready`
+- [x] 1.2 Add the page to the `Platform` nav in `mkdocs.yml`, after `Architecture`.
+- [x] 1.3 State in `AGENTS.md` that a task starts when its issue reaches `Ready`
   with the `agent` label, and that the board status is the state.
-- [ ] 1.4 `uv run mkdocs build --strict` passes.
+- [x] 1.4 `uv run mkdocs build --strict` passes.
 
 ## 2. Hermes side (`datahub-local-core`)
 
