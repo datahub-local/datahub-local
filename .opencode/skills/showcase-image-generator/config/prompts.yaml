@@ -251,6 +251,21 @@ images:
     prompt: >-
       A wide dark room with one hot ceramic block standing on a low plinth,
       warm moss-green light pooling across the floor and up the wall behind it.
+  - slug: agentic-code-automation
+    group: ai-agents
+    surface: cover
+    alt: A brass arm stitching green thread through a fan of blank slate plates
+    prompt: >-
+      A single slender brass arm stitching one pale green filament through a fan
+      of identical blank slate plates stacked at slight angles on a dark surface.
+  - slug: agentic-code-automation
+    group: ai-agents
+    surface: hero
+    alt: A dark workbench with one arm threading green filament from a ticket across many slate plates
+    prompt: >-
+      A wide dark workbench where one brass arm reaches across a row of identical
+      blank slate plates, a pale green filament running from a single paper ticket
+      into each plate in turn.
   # --- Platform & Operations ---
   - slug: gitops-platform
     group: platform-operations

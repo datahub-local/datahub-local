@@ -1,4 +1,31 @@
 images:
+  agentic-code-automation/cover:
+    alt: A brass arm stitching green thread through a fan of blank slate plates
+    date: '2026-11-02T12:59:03+00:00'
+    file: docs/assets/img/showcase/ai-agents/agentic-code-automation-cover.webp
+    height: 288
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.202
+    prompt_hash: sha256:ddb7a1d30ca06b7a55c26c9ac8d63d6ba68bc1bd792e981de3949f47cd20c4f1
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 512
+  agentic-code-automation/hero:
+    alt: A dark workbench with one arm threading green filament from a ticket across
+      many slate plates
+    date: '2026-11-02T12:59:12+00:00'
+    file: docs/assets/img/showcase/ai-agents/agentic-code-automation-hero.webp
+    height: 439
+    licence: to-verify
+    model: google/gemini-3.1-flash-image
+    moss_fraction: 0.213
+    prompt_hash: sha256:fd44ab492cfdaec9f2acbf5658d3190c6900be1be9d29bab8c6eb7d7f36fa74d
+    provenance: 'xmp/EXIF (c2pa skipped: no signing certificate)'
+    provider: openrouter
+    seed: null
+    width: 1024
   ai-content-engine/cover:
     alt: A loom weaving threads of light into a blank page
     date: '2026-09-20T12:52:05+00:00'

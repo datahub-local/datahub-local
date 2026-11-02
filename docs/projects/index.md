@@ -1,7 +1,7 @@
 # Projects
 
 The platform is not the point. What it produces is. This catalogue lists the
-fourteen use cases built on DataHub.local across four areas. Every card opens a
+fifteen use cases built on DataHub.local across four areas. Every card opens a
 full case study with the problem, approach, technologies, outcome, and source.
 
 ---
@@ -85,6 +85,13 @@ full case study with the problem, approach, technologies, outcome, and source.
 
     A GPU worker serving a local model through Ollama for private, offline
     inference and agent workloads.
+
+- ![A brass arm stitching green thread through a fan of blank slate plates](../assets/img/showcase/ai-agents/agentic-code-automation-cover.webp)
+
+    :material-robot-happy: **[Agentic code automation](agentic-code-automation.md)**
+
+    An issue becomes a reviewed pull request in any repository, with one agent
+    owning the code and the board owning the state.
 
 </div>
 
