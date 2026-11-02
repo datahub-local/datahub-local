@@ -1,4 +1,4 @@
-# System
+# Cluster foundation
 
 Foundational services bootstrapped by Ansible before GitOps takes over. These run in `kube-system` (or `automation` for ArgoCD) and form the immutable base the rest of the platform builds on.
 
