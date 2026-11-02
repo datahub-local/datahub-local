@@ -158,3 +158,27 @@ Velero orchestrates Kubernetes-level backups (deployments, configmaps, secrets, 
 ### :material-robot-excited: Sympozium
 
 Sympozium runs the active autonomous agent ensembles in `automation`. Its current production-facing groups are `homelab-ops`, `homelab-responder`, and `homelab-reviewer`. They are delivered from `datahub-local-ai` and use Kubernetes, Prometheus, Loki, and repository context through bounded MCP tools and scheduled tasks.
+
+### :material-robot-happy: Hermes
+
+<div class="svc-tags"><span class="svc-tag">agent</span> <span class="svc-tag">github</span> <span class="svc-tag">slack</span> <span class="svc-tag">taskboard</span></div>
+
+Hermes is the chat-driven agent in `automation`. It runs the `nousresearch/hermes-agent` image against the local LiteLLM model, keeps its state on one Longhorn volume, and reaches the homelab from one Slack app over Socket Mode. The dashboard sits behind OIDC; Slack is the everyday surface.
+
+It has two jobs. A `taskboard-tick` job reads the GitHub Project board every ten minutes, starts a session on the lowest-numbered `Ready` issue that carries the `agent` label, and moves the card as the work advances. Between ticks it answers the owner: a question, a comment forwarded to a running session, or a board request.
+
+#### Board from Slack
+
+The Slack app declares one command, `/hermes`. Registering the agent's full command set filled the workspace menu with fifty entries, so the board did not get an app of its own. Board requests are the words after the command:
+
+| Command | Effect |
+| --- | --- |
+| `/hermes board list [status]` | open issues on the board, optionally one column |
+| `/hermes board ready` | `Ready` issues that carry the `agent` label |
+| `/hermes board show 116` | one issue with its status, labels and link |
+| `/hermes board move 116 ready` | set the issue's `Status` field |
+| `/hermes board comment 116 ...` | comment on the issue as the owner |
+
+A board request is not a tick. It runs one `taskboard.py` subcommand and answers, and it never dispatches an agent turn or moves a card nobody named. The tick calls the same script, so the board is read and written one way from both surfaces.
+
+Hermes holds no personal access token. A sidecar mints a GitHub App installation token on loopback for each call, so the token lasts an hour and the process that runs the model never sees the App key. The release and the board helper ship from `datahub-local-core` (`releases/automation/values/hermes.yaml.gotmpl`), and a deploy replaces what the pod runs rather than editing it in place.
