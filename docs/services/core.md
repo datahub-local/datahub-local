@@ -2,6 +2,8 @@
 
 Foundational services bootstrapped by Ansible before GitOps takes over. These run in `kube-system` (or `automation` for ArgoCD) and form the immutable base the rest of the platform builds on.
 
+The release that defines these services lives in [`datahub-local-core`](https://github.com/datahub-local/datahub-local-core), and the [repositories page](../repositories.md) maps which repository owns what.
+
 ```mermaid
 graph TB
     classDef gitops fill:#5E8A3F,color:#F4F2EC,stroke:#A3CF7A,stroke-width:2px
