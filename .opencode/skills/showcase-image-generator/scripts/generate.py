@@ -27,6 +27,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
 
@@ -115,7 +116,17 @@ def require_gateway_env() -> tuple[str, str]:
             + ", ".join(missing)
             + " (the gateway URL and key are never defaulted)"
         )
-    return base.rstrip("/"), key
+    base = (base or "").rstrip("/")
+    # The image route is registered on the proxy root as /openrouter/images, not
+    # under /v1, so a base that already carries a path silently posts to
+    # /v1/openrouter/images and comes back as an empty 200.
+    path = urlparse(base).path
+    if path not in ("", "/"):
+        raise SystemExit(
+            f"{GATEWAY_URL_ENV}={base} must be the gateway root with no path "
+            f"(the image route is {path}/openrouter/images)"
+        )
+    return base, key or ""
 
 
 def call_gateway(base: str, key: str, path: str, body: dict, timeout: float = 180.0):
@@ -130,10 +141,18 @@ def call_gateway(base: str, key: str, path: str, body: dict, timeout: float = 18
     )
     if resp.status_code >= 400:
         raise GenerationError(f"gateway HTTP {resp.status_code}: {resp.text[:300]}")
-    payload = resp.json()
+    try:
+        payload = resp.json()
+    except ValueError as error:
+        raise GenerationError(
+            f"gateway answered {resp.status_code} with {resp.headers.get('content-type', 'no content-type')}, "
+            f"not JSON: {resp.text[:300]!r}"
+        ) from error
     items = payload.get("data") or []
     if not items:
-        raise GenerationError("gateway returned no image")
+        # An empty 200 usually means the request missed the route, not that the
+        # provider refused: the body says which.
+        raise GenerationError(f"gateway returned no image from {url}: {json.dumps(payload)[:300]}")
     item = items[0]
     b64 = item.get("b64_json")
     if not b64:

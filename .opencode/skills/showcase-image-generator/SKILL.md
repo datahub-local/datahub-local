@@ -37,6 +37,11 @@ invocation, or an add request, must not touch any image that already exists.
 
 ## Commands
 
+`LITELLM_BASE_URL` is the gateway root, with no path: the image route is
+registered there as `/openrouter/images`, so a base ending in `/v1` posts to the
+wrong path and comes back as an empty 200. The script refuses that base instead of
+failing per image.
+
 Run from the repository root. The script never edits the catalog; you do.
 
 ```bash
