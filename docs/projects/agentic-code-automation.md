@@ -42,7 +42,13 @@ two components can disagree about where a task stands.
   signal.
 - **A tick every ten minutes.** Hermes reads the board and starts a session on the
   lowest-numbered `Ready` issue, one at a time, and stops when the agent has no
-  free turn. A session parked on a question does not hold the queue.
+  free turn. The dispatch waits up to two minutes, long enough to catch a question
+  the agent asks before it starts editing. A session parked on a question does not
+  hold the queue.
+- **Every board write is announced.** A card added at `Backlog` or moved between
+  statuses posts one line to Slack. The helper that writes the board posts the
+  line itself, so a forgotten report cannot hide a move. Pull request and merge
+  links stay in full on the issue, where GitHub sends its own notifications.
 - **The agent works in the repository.** It claims the issue, cuts
   `type/<issue>-<topic>`, implements, runs that repository's gate, and opens one
   pull request with `Refs datahub-local/datahub-local#<n>`. When the change touches
@@ -53,8 +59,10 @@ two components can disagree about where a task stands.
   review happens at most twice.
 - **Questions come back to the owner.** The agent asks once with concrete options
   and stops. The question lands on the issue, the card moves to `Blocked`, and one
-  line goes to Slack. The answer, written on the issue or in the channel, arrives
-  as the agent's next turn.
+  line goes to Slack. Both the comment and the Slack line carry the OpenCode
+  session link, so the owner can answer in writing or pick an option in the web
+  UI. The answer, written on the issue or in the channel, arrives as the agent's
+  next turn.
 - **The owner merges.** Nothing merges automatically.
 - **The board answers in Slack.** `/hermes board list`, `show`, `move` and
   `comment` run the same helper the tick uses, so a chat request reads and writes
