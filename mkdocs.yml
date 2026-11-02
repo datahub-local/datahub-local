@@ -95,6 +95,7 @@ nav:
           - Cluster oracle: projects/oracle-responder.md
           - AI content engine: projects/ai-content-engine.md
           - Local inference: projects/local-inference.md
+          - Agentic code automation: projects/agentic-code-automation.md
       - Platform & Operations:
           - Cloud at home: projects/cloud-at-home.md
           - GitOps platform: projects/gitops-platform.md
