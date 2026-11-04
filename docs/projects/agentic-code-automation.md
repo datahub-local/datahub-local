@@ -2,7 +2,8 @@
 
 One agent turns an issue into a reviewed pull request in any datahub-local
 repository. The board carries the state, the issue carries the task, and the
-owner's merge is the only step that stays human.
+owner keeps three steps: review the pull request, merge it, and test the change
+once it is live.
 
 <p class="project-meta" markdown="span">
   <span class="meta-pill meta-pill--area">AI &amp; Agents</span>
@@ -33,10 +34,10 @@ The loop splits judgement from state. The agent decides and writes code. Hermes,
 the chat-driven agent in the `automation` namespace, owns every board write, so no
 two components can disagree about where a task stands.
 
-- **The board is the state.** Six statuses on the GitHub Project, and each one is
+- **The board is the state.** Seven statuses on the GitHub Project, and each one is
   written by exactly one actor: `Backlog` by the issue creator, `Ready` by the
-  owner, `In Progress`, `Blocked` and `Testing` by Hermes, `Done` when the pull
-  request merges or the issue closes.
+  owner, `In Progress`, `Blocked`, `Code Review` and `Testing` by Hermes, `Done`
+  when the issue closes after the owner has verified the change.
 - **The issue is the record.** `What`, `Why`, `Acceptance` and `Repo`, labelled
   `agent`. Moving it to `Ready` is the whole trigger: no assignment, no second
   signal.
@@ -56,17 +57,117 @@ two components can disagree about where a task stands.
   pull request merges a spec that is already true.
 - **A second model reviews the diff** before the handover, read-only, on a
   different model. Findings are fixed or answered, the gate runs again, and the
-  review happens at most twice.
+  review happens at most twice. That is the agent's own gate; the board's
+  `Code Review` is where the owner first sees the pull request.
 - **Questions come back to the owner.** The agent asks once with concrete options
   and stops. The question lands on the issue, the card moves to `Blocked`, and one
   line goes to Slack. Both the comment and the Slack line carry the OpenCode
   session link, so the owner can answer in writing or pick an option in the web
   UI. The answer, written on the issue or in the channel, arrives as the agent's
   next turn.
-- **The owner merges.** Nothing merges automatically.
+- **The owner merges.** Nothing merges automatically. The merge is also the
+  deploy: ArgoCD reconciles `main`, and the tick moves the card to `Testing` when
+  it sees the merge.
+- **Testing is a real state.** The owner tries the live change and closes the
+  issue once it works, which is when the card reaches `Done`. A comment on a
+  `Testing` card moves it back to `In Progress`: the agent cuts a new branch from
+  `main`, opens a new pull request, and the card goes through `Code Review` and
+  back to `Testing` on merge. One pull request is open at a time.
 - **The board answers in Slack.** `/hermes board list`, `show`, `move` and
   `comment` run the same helper the tick uses, so a chat request reads and writes
   state without starting a turn.
+
+## Architecture
+
+Every box is a service. The outer group is the cluster, the inner groups are
+namespaces, and the dashed boxes sit outside the homelab. LiteLLM is the single
+exit for model calls, so the code turn can run on the local model or on a hosted
+provider without changing anything above it.
+
+```mermaid
+flowchart TB
+    classDef external fill:#0E1116,color:#F4F2EC,stroke:#7FAF5A,stroke-width:2px,stroke-dasharray:4 3
+    classDef control fill:#5E8A3F,color:#F4F2EC,stroke:#A3CF7A,stroke-width:2px
+    classDef code fill:#A3CF7A,color:#0E1116,stroke:#5E8A3F,stroke-width:2px
+    classDef model fill:#7FAF5A,color:#0E1116,stroke:#A3CF7A,stroke-width:2px
+    classDef deploy fill:#0E1116,color:#A3CF7A,stroke:#A3CF7A,stroke-width:2px
+
+    subgraph External["External"]
+        subgraph Chat["Communication"]
+            Slack["Slack"]:::external
+        end
+        subgraph SCM["Source control"]
+            GitHub["GitHub"]:::external
+        end
+        subgraph Providers["Model providers"]
+            OpenCodeGo["OpenCode Go"]:::external
+            OpenRouter["OpenRouter"]:::external
+        end
+    end
+
+    subgraph Cluster["Homelab Kubernetes cluster"]
+        subgraph Automation["automation namespace"]
+            Hermes["Hermes"]:::control
+            MCP["OpenCode MCP"]:::code
+            OpenCode["OpenCode"]:::code
+            ArgoCD["ArgoCD"]:::deploy
+        end
+        subgraph Data["data namespace"]
+            LiteLLM["LiteLLM"]:::model
+            Ollama["Ollama"]:::model
+        end
+    end
+
+    Slack -->|"/hermes board ..."| Hermes
+    GitHub -->|"Ready issue, owner comment"| Hermes
+    Hermes -->|"status write"| GitHub
+    Hermes -->|"dispatch, respond"| MCP
+    MCP --> OpenCode
+    OpenCode -->|"branch, commit, pull request"| GitHub
+    OpenCode -->|"model calls"| LiteLLM
+    LiteLLM -->|"local model"| Ollama
+    LiteLLM -->|"hosted models"| OpenCodeGo
+    LiteLLM -->|"hosted models"| OpenRouter
+    GitHub -->|"watch main, merge deploys"| ArgoCD
+    ArgoCD -->|"deploy"| Cluster
+```
+
+## Workflow
+
+The board is a state machine with four owner turns. Two of them are review and
+testing, which the old `Testing` column used to share.
+
+```mermaid
+flowchart LR
+    classDef waiting fill:#F4F2EC,color:#0E1116,stroke:#5E8A3F,stroke-width:2px
+    classDef blocked fill:#F4F2EC,color:#5E8A3F,stroke:#5E8A3F,stroke-width:2px,stroke-dasharray:4 3
+    classDef working fill:#5E8A3F,color:#F4F2EC,stroke:#A3CF7A,stroke-width:2px
+    classDef review fill:#A3CF7A,color:#0E1116,stroke:#5E8A3F,stroke-width:2px
+    classDef testing fill:#7FAF5A,color:#0E1116,stroke:#A3CF7A,stroke-width:2px
+    classDef closed fill:#0E1116,color:#F4F2EC,stroke:#7FAF5A,stroke-width:2px
+
+    Backlog["Backlog"]:::waiting
+    Ready["Ready"]:::waiting
+    Progress["In Progress"]:::working
+    Review["Code Review\npull request open"]:::review
+    Testing["Testing\nmerged and deployed"]:::testing
+    Blocked["Blocked\nquestion for the owner"]:::blocked
+    Done["Done\nissue closed"]:::closed
+
+    Backlog -->|"owner: pick it up"| Ready
+    Ready -->|"tick: dispatch"| Progress
+    Progress -->|"pull request opens"| Review
+    Review -->|"owner merges, ArgoCD deploys"| Testing
+    Testing -->|"owner closes the issue"| Done
+    Testing -->|"owner comments a fix"| Progress
+    Progress -->|"agent asks a question"| Blocked
+    Review -->|"agent asks a question"| Blocked
+    Blocked -->|"owner answers"| Progress
+```
+
+A card only leaves `Testing` in two ways: the owner closes the issue, or the
+owner finds something to fix. The second is a new cycle, not an amendment, so the
+agent starts from `main` and the loop runs again.
 
 ## Technologies
 
