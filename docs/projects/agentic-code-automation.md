@@ -64,7 +64,8 @@ two components can disagree about where a task stands.
   line goes to Slack. Both the comment and the Slack line carry the OpenCode
   session link, so the owner can answer in writing or pick an option in the web
   UI. The answer, written on the issue or in the channel, arrives as the agent's
-  next turn.
+  next turn. An option picked in the web UI is written on the issue by the agent,
+  because no tick sees that answer in time.
 - **The owner merges.** Nothing merges automatically. The merge is also the
   deploy: ArgoCD reconciles `main`, and the tick moves the card to `Testing` when
   it sees the merge.
@@ -72,7 +73,8 @@ two components can disagree about where a task stands.
   issue once it works, which is when the card reaches `Done`. A comment on a
   `Testing` card moves it back to `In Progress`: the agent cuts a new branch from
   `main`, opens a new pull request, and the card goes through `Code Review` and
-  back to `Testing` on merge. One pull request is open at a time.
+  back to `Testing` on merge. One pull request is open at a time, and every fix
+  round leaves one comment on the issue with what changed and the gate result.
 - **The board answers in Slack.** `/hermes board list`, `show`, `move` and
   `comment` run the same helper the tick uses, so a chat request reads and writes
   state without starting a turn.
