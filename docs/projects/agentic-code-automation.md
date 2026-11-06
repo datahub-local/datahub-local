@@ -46,6 +46,11 @@ two components can disagree about where a task stands.
   free turn. The dispatch waits up to two minutes, long enough to catch a question
   the agent asks before it starts editing. A session parked on a question does not
   hold the queue.
+- **Only a trusted login reaches the agent.** The repositories are public, so the
+  loop forwards a comment to the session only when a configured login wrote it.
+  Anyone else's comment is named on the issue and never sent, which also means a
+  stranger cannot answer a blocked card. GitHub additionally limits issue and pull
+  request creation on these repositories to collaborators.
 - **Every board write is announced.** A card added at `Backlog` or moved between
   statuses posts one line to Slack. The helper that writes the board posts the
   line itself, so a forgotten report cannot hide a move. Pull request and merge
