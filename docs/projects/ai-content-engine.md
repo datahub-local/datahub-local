@@ -63,6 +63,52 @@ interface window are drawn from the brand tokens the brief carries.
   <figcaption>A launch card authored inside the run: composition, render and returned file in one call</figcaption>
 </figure>
 
+## The article lane
+
+Articles run through a second harness, `pi-writer` in `datahub-local-ai`, because
+a long post is not one prompt: it needs research, a draft, a review and an edit,
+and the research has to be verifiable afterwards. The adapter owns every model
+turn and the workflow owns every count.
+
+Two processes share one filesystem. The session server receives the request,
+renders the prompt from its own files, and spawns the Pi agent as a child
+process in a per-row directory. Pi reads the pages, writes the draft and a
+ledger naming the page every fenced block came from, and answers on stdout.
+
+```
+n8n (900 s per turn)
+  │ POST /v1/chat/completions  {task, brief, session_id, attempt, source_hosts}
+  ▼
+session-server.mjs  ── Node, one serialized queue per session
+  │  1. resolveRunDir(workDir, session_id)   → /tmp/pi-writer/runs/article-<row>/
+  │  2. articlePrompt(brief)                 → the adapter's own prompt files
+  │  3. articleTurnInstruction({isIteration})→ "write" or "edit in place"
+  │  4. fillSourceHosts(writing.md, hosts)   → sandbox map + citation allowlist
+  ▼
+spawn("pi", [...])   child process, cwd = the run directory
+  │  reads $HOME/.pi/agent/{models.json, mcp.json, settings.json}
+  ├──► LiteLLM gateway        (egress policy: the model namespace only)
+  ├──► MCP servers on 8080    (egress policy: pods labelled mcpserver)
+  │      firecrawl: search / scrape / map    github: read tools only
+  └──► loopback proxy on 8081 (same process; no route out of the pod)
+  │
+  │  writes into cwd:  article.md, sources.json
+  ▼ stdout (the draft, the verdict, the findings)
+session-server.mjs
+  │  5. splitArticle(stdout) → title + body
+  │  6. revalidateLedger(...) → every cited page re-read, through Firecrawl
+  │  7. serialiseLedger → sources.json rewritten
+  ▼
+response { article: {title, text, word_count, sources, quoted, dropped} }
+```
+
+The boundary that matters: **the model owns the prose and the files; the server
+owns every fact about them.** Pi gets a prompt and a proxy and returns text; the
+server decides the paths, reads the artifacts, re-reads the sources through the
+one egress path the pod has, and counts the words. A fence whose page the server
+cannot read again is rejected, so an invented command never reaches the publish
+step.
+
 ## Outcome
 
 The platform turns events into drafted, reviewable output automatically, with
